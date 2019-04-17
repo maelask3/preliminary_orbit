@@ -4,6 +4,7 @@
 #include <complex.h>
 #include <stdbool.h>
 #include <string.h>
+#include "rpoly.h"
 
 double norm(double *v)
 {
@@ -46,7 +47,28 @@ double det2x2(double m[][2])
 
 double *roots(double *v)
 {
-	return 1;
+	double *real, *imagin;
+	real = (double*) malloc(15*sizeof(double));
+	imagin = (double*) malloc(15*sizeof(double));
+	int info[15];
+	int solutions = rpoly( v, 15, real, imagin, info);
+	
+	double aux[solutions];
+	int j = 0;
+	for(int i = 0; i< solutions; i++){
+		if(fabs(imagin[i]) == 0.0){
+			aux[j] = real[i];
+			j++;
+		}
+	}
+
+	double *dev;
+	dev = (double*) malloc(j*sizeof(double));
+	for(int i = 0; i<j; i++){
+		dev[i] = aux[i];
+	}
+
+	return dev;	
 }
 
 bool isreal(double complex n)
