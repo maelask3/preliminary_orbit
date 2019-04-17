@@ -1,6 +1,7 @@
 CFLAGS+=-std=c99 -pedantic -Wall
 LDFLAGS+=-lm
-TESTSRC = MatlabUtils.o MatlabUtilsTest.o 
+MATLABUTILS-SRC = MatlabUtils.o rpoly.o
+TESTSRC = $(MATLABUTILS-SRC) MatlabUtilsTest.o 
 TESTBIN = test
 ARTIFACTS = *.o $(TESTBIN)
 
@@ -11,7 +12,7 @@ test: run_test
 
 run_test: build_test
 	./test
-build_test: MatlabUtils.o MatlabUtilsTest.o
+build_test: $(TESTSRC)
 	$(CC) $(CFLAGS) -o $(TESTBIN) $(TESTSRC) $(LDFLAGS)
 
 clean: 
