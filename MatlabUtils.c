@@ -4,6 +4,7 @@
 #include <complex.h>
 #include <stdbool.h>
 #include <string.h>
+#include "rpoly.h"
 
 double norm(double *v)
 {
@@ -17,17 +18,17 @@ double dot(double *v, double *t)
 
 double sign(double n)
 {
-	if(n == 0)
+    if(fabs(n) < 10e-12)
 		return 0.0;
 	else
 		return ((n>0)? 1.0 : -1.0);
 }
 
-double **zeros(int rows, int cols)
+double **zeros(size_t rows, size_t cols)
 {
 	double **matrix;
   	matrix = (double **)malloc (rows*sizeof(double *));
-  	for(int i=0; i<rows; i++)
+    for(size_t i=0; i<rows; i++)
 	{
     		matrix[i] = (double *) calloc (cols, sizeof(double));
   	}
@@ -44,14 +45,26 @@ double det2x2(double m[][2])
 	return m[0][0]*m[1][1]-m[1][0]*m[0][1];
 }
 
-double *roots(double *v)
+int roots(double *coef, double *sols_reales)
 {
-	return 1;
-}
+	double *real, *im;
+	real = (double*) malloc(16 * sizeof(double));
+	im = (double*) malloc(16 * sizeof(double));
+	int info[15];
+    int solut = rpoly(coef, 16, real, im, info);
+	int j = 0;
+    size_t nr_sols = (size_t) solut;
+    sols_reales = (double*) malloc(nr_sols * sizeof(double));
+	for(int i=0; i<solut; i++)
+	{
+        if(fabs(im[i]) < 10e-12)
+		{
+			sols_reales[j] = real[i];
+			j++;
+		}
+	}
 
-bool isreal(double complex n)
-{
-	return(cimag(n)==0);
+	return j;
 }
 
 double *cross(double *v1, double *v2)

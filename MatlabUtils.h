@@ -1,5 +1,5 @@
-#ifndef __MATLABUTILS_H_
-#define __MATLABUTILS_H_
+#ifndef __MATLABUTILS_H
+#define __MATLABUTILS_H
 
 #include <stdbool.h>
 #include <complex.h>
