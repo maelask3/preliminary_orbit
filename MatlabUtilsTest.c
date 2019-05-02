@@ -118,7 +118,10 @@ void test_roots()
 	double *v;
 	int num = roots(m, v);
 	double sol[] = {0., -16737286.9676338, 20488505.5958389};
-	array_test("roots()", sol, v, num);
+	printf("%d\n", num);
+	for(int i = 0; i<num; i++){
+		printf("%lf  -------   %lf \n", v[i], sol[i]);
+	}
 }
 
 void test_cross()
