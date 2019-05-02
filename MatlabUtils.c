@@ -1,3 +1,4 @@
+#include "MatlabUtils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -5,6 +6,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "rpoly.h"
+
 
 double norm(double *v)
 {
@@ -45,30 +47,40 @@ double det2x2(double m[][2])
 	return m[0][0]*m[1][1]-m[1][0]*m[0][1];
 }
 
-int roots(double *coef, double *sols_reales)
+double_arr roots(double *coef)
 {
 	double *real, *im;
-	real = (double*) malloc(16 * sizeof(double));
-	im = (double*) malloc(16 * sizeof(double));
+    double_arr result;
+    real = (double*) calloc(16, sizeof(double));
+    im = (double*) calloc(16, sizeof(double));
+
 	int info[15];
     int solut = rpoly(coef, 16, real, im, info);
 
     if(solut < 0)
-        return solut;
+    {
+        result.data = NULL;
+        result.length = solut;
 
-	int j = 0;
+        return result;
+    }
+
+    int j = 0;
     unsigned int nr_sols = (unsigned int) solut;
-    sols_reales = (double*) malloc(nr_sols * sizeof(double));
+    double *v = (double*) calloc(nr_sols, sizeof(double));
 	for(int i=0; i<solut; i++)
 	{
         if(fabs(im[i]) < 10e-12)
 		{
-			sols_reales[j] = real[i];
+            v[j] = real[i];
 			j++;
+            printf("%lf+%lf*i\n",real[i],im[i]);
 		}
 	}
 
-	return j;
+    result.data = v;
+    result.length = j;
+    return result;
 }
 
 double *cross(double *v1, double *v2)

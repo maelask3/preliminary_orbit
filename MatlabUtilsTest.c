@@ -59,10 +59,10 @@ void array_test(char *test_name, double *expected, double *actual, int sz)
 	printf("Now running test %s:\n",test_name);
 	printf("Actual = ");
 	array_pretty_print(actual, sz);
+    printf("Expected = ");
+    array_pretty_print(expected, sz);
 	for(int i=0; i<sz; i++)
 		assert(fabs(expected[i] - actual[i]) < DELTA);
-	printf("Expected = ");
-	array_pretty_print(expected, sz);
     printf("PASS\n");
 }
 
@@ -117,7 +117,11 @@ void test_det()
 
 void test_roots()
 {
-
+        double m[] = {1., 0., -73120740632127.3, 0., 0., -1.58793679567731e+36, 0., 0., -1.19853848536924e+58, 0., 0., 0., 0., 0., 0., 0.};
+        double_arr actual = roots(m);
+        printf("%d\n", actual.length);
+        double sol[] = {0., -16737286.9676338, 20488505.5958389};
+        array_test("roots()", sol, actual.data, actual.length);
 }
 
 void test_cross()
