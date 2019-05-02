@@ -33,13 +33,14 @@ void matrix_test(char *test_name, double **expected, double **actual, int rows, 
 {
 	printf("================================================================================\n");
 	printf("Now running test %s:\n",test_name);
-	printf("Actual = ");
+    printf("Actual = \n");
 	matrix_pretty_print(actual, rows, cols);
 	for(int i=0; i<rows; i++)
         for(int j=0; j<cols; j++)
 			assert(fabs(expected[i][j] - actual[i][j]) < DELTA);
-	printf("Expected = ");
+    printf("Expected = \n");
 	matrix_pretty_print(expected, rows, cols);
+    printf("PASS\n");
 }
 
 void double_test(char *test_name, double expected, double actual)
@@ -49,6 +50,7 @@ void double_test(char *test_name, double expected, double actual)
 	printf("Actual = %lf\n", actual);
 	assert(fabs(expected - actual) < DELTA);
 	printf("Expected = %lf\n", expected);
+    printf("PASS\n");
 }
 
 void array_test(char *test_name, double *expected, double *actual, int sz)
@@ -61,6 +63,7 @@ void array_test(char *test_name, double *expected, double *actual, int sz)
 		assert(fabs(expected[i] - actual[i]) < DELTA);
 	printf("Expected = ");
 	array_pretty_print(expected, sz);
+    printf("PASS\n");
 }
 
 void test_norm()

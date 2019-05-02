@@ -10,8 +10,7 @@ double sign(double n);
 double **zeros(int rows, int cols);
 double det(double M[][3]);
 double det2x2(double m[][2]);
-double *roots(double *v);
-bool isreal(double complex z);
+int roots(double *coef, double *sols_reales)
 double *cross(double *v1, double *v2);
 
 // PRODUCTO DOS MATRICES

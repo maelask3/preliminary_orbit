@@ -28,7 +28,7 @@ double **zeros(size_t rows, size_t cols)
 {
 	double **matrix;
   	matrix = (double **)malloc (rows*sizeof(double *));
-    for(size_t i=0; i<rows; i++)
+    for(unsigned int i=0; i<rows; i++)
 	{
     		matrix[i] = (double *) calloc (cols, sizeof(double));
   	}
@@ -52,8 +52,12 @@ int roots(double *coef, double *sols_reales)
 	im = (double*) malloc(16 * sizeof(double));
 	int info[15];
     int solut = rpoly(coef, 16, real, im, info);
+
+    if(solut < 0)
+        return solut;
+
 	int j = 0;
-    size_t nr_sols = (size_t) solut;
+    unsigned int nr_sols = (unsigned int) solut;
     sols_reales = (double*) malloc(nr_sols * sizeof(double));
 	for(int i=0; i<solut; i++)
 	{
