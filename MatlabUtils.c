@@ -51,10 +51,10 @@ int roots(double *coef, double *sols_reales)
 	real = (double*) malloc(16 * sizeof(double));
 	im = (double*) malloc(16 * sizeof(double));
 	int info[15];
-    int solut = rpoly(coef, 16, real, im, info);
+	int solut = real_poly_roots(coef, 16, real, im);
 	int j = 0;
-    size_t nr_sols = (size_t) solut;
-    sols_reales = (double*) malloc(nr_sols * sizeof(double));
+    	size_t nr_sols = (size_t) solut;
+    	sols_reales = (double*) malloc(nr_sols * sizeof(double));
 	for(int i=0; i<solut; i++)
 	{
         if(fabs(im[i]) < 10e-12)

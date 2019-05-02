@@ -10,7 +10,7 @@ double sign(double n);
 double **zeros(int rows, int cols);
 double det(double M[][3]);
 double det2x2(double m[][2]);
-double *roots(double *v);
+int roots(double *coef, double *sols_reales);
 bool isreal(double complex z);
 double *cross(double *v1, double *v2);
 
