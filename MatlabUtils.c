@@ -47,24 +47,24 @@ double det2x2(double m[][2])
 
 int roots(double *coef, double *sols_reales)
 {
-	double *real, *im;
-	real = (double*) malloc(16 * sizeof(double));
-	im = (double*) malloc(16 * sizeof(double));
-	int info[15];
-	int solut = real_poly_roots(coef, 16, real, im);
-	int j = 0;
-    	size_t nr_sols = (size_t) solut;
-    	sols_reales = (double*) malloc(nr_sols * sizeof(double));
-	for(int i=0; i<solut; i++)
-	{
-        if(fabs(im[i]) < 10e-12)
-		{
-			sols_reales[j] = real[i];
-			j++;
-		}
-	}
+	double *real, *imagin;
+        real = (double*) malloc(15*sizeof(double));
+        imagin = (double*) malloc(15*sizeof(double));
+        int solutions = real_poly_roots( coef, 15, real, imagin);
 
-	return j;
+        double aux[solutions];
+        int j = 0;
+        for(int i = 0; i< solutions; i++){
+                if(fabs(imagin[i]) == 0.0){
+                        aux[j] = real[i];
+                        j++;
+                }
+        }
+        for(int i = 0; i<j; i++){
+                sols_reales[i] = aux[i];
+        }
+
+        return solutions;
 }
 
 double *cross(double *v1, double *v2)

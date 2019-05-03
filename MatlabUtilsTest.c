@@ -116,11 +116,15 @@ void test_roots()
 {
 	double m[] = {1., 0., -73120740632127.3, 0., 0., -1.58793679567731e+36, 0., 0., -1.19853848536924e+58, 0., 0., 0., 0., 0., 0., 0.};
 	double *v;
+	v = (double*) malloc(15*sizeof(double));
 	int num = roots(m, v);
 	double sol[] = {0., -16737286.9676338, 20488505.5958389};
 	printf("%d\n", num);
 	for(int i = 0; i<num; i++){
-		printf("%lf  -------   %lf \n", v[i], sol[i]);
+		printf("%lf  -------   %lf \n", v[i]);
+	}
+	for(int i = 0; i<3; i++){
+		printf("%lf \n", sol[i]);
 	}
 }
 
