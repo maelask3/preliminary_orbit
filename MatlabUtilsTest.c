@@ -118,14 +118,18 @@ void test_roots()
 	double *v;
 	v = (double*) malloc(15*sizeof(double));
 	int num = roots(m, v);
-	double sol[] = {0., -16737286.9676338, 20488505.5958389};
-	printf("%d\n", num);
+	double sol[] = {0., 0., 0., 0., 0., 0., 0., 20488505.5958389, -16737286.9676338, 0., 0., 0., 0., 0., 0.};
+	printf("================================================================================\n");
+        printf("Now running test %s:\n","roots()");
+	printf("Actual ---------------  Expected\n");
 	for(int i = 0; i<num; i++){
-		printf("%lf  -------   %lf \n", v[i]);
+		printf("%lf ---------------  %lf\n", v[i], sol[i]);
 	}
+	/*printf("===========================\n");
 	for(int i = 0; i<3; i++){
 		printf("%lf \n", sol[i]);
-	}
+	}*/
+
 }
 
 void test_cross()
