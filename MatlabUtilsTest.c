@@ -57,8 +57,10 @@ void array_test(char *test_name, double *expected, double *actual, int sz)
 	printf("Now running test %s:\n",test_name);
 	printf("Actual = ");
 	array_pretty_print(actual, sz);
-	for(int i=0; i<sz; i++)
-		assert(fabs(expected[i] - actual[i]) < DELTA);
+	for(int i=0; i<sz; i++){
+		//printf("%lf \n",fabs( expected[i]-actual[i]));
+		assert(fabs(actual[i] - expected[i]) < DELTA);
+	}
 	printf("Expected = ");
 	array_pretty_print(expected, sz);
 }
@@ -114,11 +116,11 @@ void test_det()
 
 void test_roots()
 {
-	double m[] = {1., 0., -73120740632127.3, 0., 0., -1.58793679567731e+36, 0., 0., -1.19853848536924e+58, 0., 0., 0., 0., 0., 0., 0.};
+	double m[] = {1., 0., -73120740632072.03, 0., 0., -1.587936795676375e+36, 0., 0., -1.198538485369091e+58, 0., 0., 0., 0., 0., 0., 0.};
 	double *v;
 	v = (double*) malloc(15*sizeof(double));
 	int num = roots(m, v);
-	double sol[] = {0., 0., 0., 0., 0., 0., 0., 20488505.5958389, -16737286.9676338, 0., 0., 0., 0., 0., 0.};
+	double sol[] = {0., 0., 0., 0., 0., 0., 0., 20488505.59583733, -16734286.96763425};
 	printf("================================================================================\n");
         printf("Now running test %s:\n","roots()");
 	printf("Actual ---------------  Expected\n");
@@ -129,6 +131,7 @@ void test_roots()
 	for(int i = 0; i<3; i++){
 		printf("%lf \n", sol[i]);
 	}*/
+//	array_test("roots()", sol, v, num);
 
 }
 

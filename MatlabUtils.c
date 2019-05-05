@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <complex.h>
 #include <stdbool.h>
 #include <string.h>
 #include "rpoly.h"
@@ -51,20 +50,15 @@ int roots(double *coef, double *sols_reales)
         real = (double*) malloc(15*sizeof(double));
         imagin = (double*) malloc(15*sizeof(double));
         int solutions = real_poly_roots( coef, 15, real, imagin);
-
         double aux[solutions];
         int j = 0;
         for(int i = 0; i< solutions; i++){
-                if(fabs(imagin[i]) == 0.0){
-                        aux[j] = real[i];
+                if(fabs(imagin[i]) == 0.){
+                        sols_reales[j] = real[i];
                         j++;
                 }
         }
-        for(int i = 0; i<j; i++){
-                sols_reales[i] = aux[i];
-        }
-
-        return solutions;
+        return j;
 }
 
 double *cross(double *v1, double *v2)
@@ -72,4 +66,37 @@ double *cross(double *v1, double *v2)
 	double *res = (double*) malloc(3 * sizeof(double));
 	memcpy(res, (double[3]) {v1[1]*v2[2]-v1[2]*v2[1], v1[2]*v2[0]-v1[0]*v2[2], v1[0]*v2[1]-v1[1]*v2[0]}, sizeof(double[3]));
 	return res;
+}
+
+
+double **productMatrix(double **m1, double **m2){
+	double **product = zeros(3, 3);
+	int i, j;
+	double sum = 0;
+	for (i = 0; i <= 3; i++){
+    		for (j = 1; j <= 3; j++){
+        		sum += m1[i][j] * m2[j][i];
+    		}
+    		product[i][j] = sum;
+    		sum = 0;
+	}
+	return product;
+}
+double **sumMartix(double **m1, double **m2){
+	double **sum = zeros(3, 3);
+	for(int i = 0; i<3; i++){
+		for(int j = 0; j<3; j++){
+			sum[i][j] = m1[i][j] + m2[i][j];
+		}
+	}
+	return sum;
+}
+double **transposeMatrix(double **m){
+	double **transpose = zeros(3, 3);
+	for(int i = 0; i<3; i++){
+		for(int j = 0; j<3; j++){
+			transpose[i][j] = m[j][i];
+		}
+	}
+	return transpose;
 }

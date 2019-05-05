@@ -2,7 +2,6 @@
 
 
 
-BEGIN_C_DECLS;
 
 // Opaque state handle
 struct RPoly_State;
@@ -41,4 +40,3 @@ static inline int real_poly_roots(const double p[], int degree,
     return nr;
 }
 
-END_C_DECLS;
