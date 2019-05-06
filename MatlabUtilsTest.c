@@ -117,11 +117,28 @@ void test_det()
 
 void test_roots()
 {
-        double m[] = {1., 0., -73120740632127.3, 0., 0., -1.58793679567731e+36, 0., 0., -1.19853848536924e+58, 0., 0., 0., 0., 0., 0., 0.};
-        double_arr actual = roots(m);
-        printf("%d\n", actual.length);
-        double sol[] = {0., -16737286.9676338, 20488505.5958389};
-        array_test("roots()", sol, actual.data, actual.length);
+        double *m = (double*) calloc(16, sizeof(double));
+        double *v = (double*) calloc(16, sizeof(double));
+        m[0] = 1.0;
+        m[1] = 0.0;
+        m[2] = -73120740632127.34375;
+        m[3] = 0.0;
+        m[4] = 0.0;
+        m[5] = -1587936795677189147685214247486226432.0 ;
+        m[6] = 0.0;
+        m[7] = 0.0;
+        m[8] = -11985384853690594734217583339479868539727097108863410765824.0;
+        m[9] = 0.0;
+        m[10] = 0.0;
+        m[11] = 0.0;
+        m[12] = 0.0;
+        m[13] = 0.0;
+        m[14] = 0.0;
+        m[15] = 0.0;
+        int num = roots(m, &v);
+        printf("%d\n", num);
+        double sol[] = {-16737286.9676338, 20488505.5958389};
+        array_test("roots()", sol, v, num);
 }
 
 void test_cross()

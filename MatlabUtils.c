@@ -47,30 +47,24 @@ double det2x2(double m[][2])
 	return m[0][0]*m[1][1]-m[1][0]*m[0][1];
 }
 
-double_arr roots(double *coef)
+int roots(double *coef, double **sols_reales)
 {
 	double *real, *im;
-    double_arr result;
-    real = (double*) calloc(16, sizeof(double));
-    im = (double*) calloc(16, sizeof(double));
+    real = (double*) malloc(16 * sizeof(double));
+    im = (double*) malloc(16 * sizeof(double));
 
 	int info[15];
     int solut = rpoly(coef, 16, real, im, info);
 
+    printf("roots() dice que %d\n", solut);
     if(solut < 0)
-    {
-        result.data = NULL;
-        result.length = solut;
-
-        return result;
-    }
-
+        return solut;
     int j = 0;
     unsigned int nr_sols = (unsigned int) solut;
     double *v = (double*) calloc(nr_sols, sizeof(double));
 	for(int i=0; i<solut; i++)
 	{
-        if(fabs(im[i]) < 10e-12)
+        if((fabs(im[i]) < 10e-12) && (fabs(real[i]) > 10e-12))
 		{
             v[j] = real[i];
 			j++;
@@ -78,9 +72,8 @@ double_arr roots(double *coef)
 		}
 	}
 
-    result.data = v;
-    result.length = j;
-    return result;
+    *sols_reales = v;
+    return j;
 }
 
 double *cross(double *v1, double *v2)
