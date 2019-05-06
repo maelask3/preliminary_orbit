@@ -27,7 +27,7 @@ double **zeros(size_t rows, size_t cols)
 {
 	double **matrix;
   	matrix = (double **)malloc (rows*sizeof(double *));
-    for(size_t i=0; i<rows; i++)
+    for(unsigned int i=0; i<rows; i++)
 	{
     		matrix[i] = (double *) calloc (cols, sizeof(double));
   	}
@@ -44,22 +44,31 @@ double det2x2(double m[][2])
 	return m[0][0]*m[1][1]-m[1][0]*m[0][1];
 }
 
-int roots(double *coef, double *sols_reales)
+int roots(double *coef, double **sols_reales)
 {
-	double *real, *imagin;
+	double *real, *imagin, *aux;
         real = (double*) malloc(15*sizeof(double));
         imagin = (double*) malloc(15*sizeof(double));
-        int solutions = real_poly_roots( coef, 15, real, imagin);
-        double aux[solutions];
+        int solutions = real_poly_roots(coef, 15, real, imagin);
+	
+	if(solutions < 0)
+		return solutions;
+
+	aux = (double*) calloc(solutions * sizeof(double));	
         int j = 0;
-        for(int i = 0; i< solutions; i++){
-                if(fabs(imagin[i]) == 0.){
-                        sols_reales[j] = real[i];
+        for(int i = 0; i< solutions; i++)
+	{
+
+                if((fabs(imagin[i]) < 10e-12) && (fabs(real[i]) > 10e-12))
+		{
+                        aux[j] = real[i];
                         j++;
                 }
         }
+	*sols_reales = aux;
         return j;
 }
+
 
 double *cross(double *v1, double *v2)
 {
@@ -82,7 +91,7 @@ double **productMatrix(double **m1, double **m2){
 	}
 	return product;
 }
-double **sumMartix(double **m1, double **m2){
+double **sumMatrix(double **m1, double **m2){
 	double **sum = zeros(3, 3);
 	for(int i = 0; i<3; i++){
 		for(int j = 0; j<3; j++){
