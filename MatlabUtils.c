@@ -54,18 +54,18 @@ int roots(double *coef, double **sols_reales)
 	if(solutions < 0)
 		return solutions;
 
-	aux = (double*) calloc(solutions * sizeof(double));	
+    aux = (double*) calloc(solutions, sizeof(double));
         int j = 0;
         for(int i = 0; i< solutions; i++)
-	{
+        {
 
                 if((fabs(imagin[i]) < 10e-12) && (fabs(real[i]) > 10e-12))
-		{
+                {
                         aux[j] = real[i];
                         j++;
                 }
         }
-	*sols_reales = aux;
+        *sols_reales = aux;
         return j;
 }
 

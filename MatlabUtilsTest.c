@@ -53,19 +53,22 @@ void double_test(char *test_name, double expected, double actual)
     printf("PASS\n");
 }
 
-void array_test(char *test_name, double *expected, double *actual, int sz)
+void array_test_delta(char *test_name, double *expected, double *actual, int sz, double delta)
 {
 	printf("================================================================================\n");
 	printf("Now running test %s:\n",test_name);
 	printf("Actual = ");
 	array_pretty_print(actual, sz);
-	for(int i=0; i<sz; i++){
-		//printf("%lf \n",fabs( expected[i]-actual[i]));
-		assert(fabs(actual[i] - expected[i]) < DELTA);
-	}
-	printf("Expected = ");
-	array_pretty_print(expected, sz);
+    printf("Expected = ");
+    array_pretty_print(expected, sz);
+	for(int i=0; i<sz; i++)
+    assert(fabs(expected[i] - actual[i]) < delta);
     printf("PASS\n");
+}
+
+void array_test(char *test_name, double *expected, double *actual, int sz)
+{
+    array_test_delta(test_name, expected, actual, sz, DELTA);
 }
 
 void test_norm()
@@ -119,23 +122,29 @@ void test_det()
 
 void test_roots()
 {
-	double m[] = {1., 0., -73120740632072.03, 0., 0., -1.587936795676375e+36, 0., 0., -1.198538485369091e+58, 0., 0., 0., 0., 0., 0., 0.};
-	double *v;
-	v = (double*) malloc(15*sizeof(double));
-	int num = roots(m, v);
-	double sol[] = {0., 0., 0., 0., 0., 0., 0., 20488505.59583733, -16734286.96763425};
-	printf("================================================================================\n");
-        printf("Now running test %s:\n","roots()");
-	printf("Actual ---------------  Expected\n");
-	for(int i = 0; i<num; i++){
-		printf("%lf ---------------  %lf\n", v[i], sol[i]);
-	}
-	/*printf("===========================\n");
-	for(int i = 0; i<3; i++){
-		printf("%lf \n", sol[i]);
-	}*/
-//	array_test("roots()", sol, v, num);
+        double *m = (double*) calloc(16, sizeof(double));
+        double *v = (double*) calloc(16, sizeof(double));
+        m[0] = 1.0;
+        m[1] = 0.0;
+        m[2] = -73120740632127.34375;
+        m[3] = 0.0;
+        m[4] = 0.0;
+        m[5] = -1587936795677189147685214247486226432.0 ;
+        m[6] = 0.0;
+        m[7] = 0.0;
+        m[8] = -11985384853690594734217583339479868539727097108863410765824.0;
+        m[9] = 0.0;
+        m[10] = 0.0;
+        m[11] = 0.0;
+        m[12] = 0.0;
+        m[13] = 0.0;
+        m[14] = 0.0;
+        m[15] = 0.0;
 
+        int num = roots(m, &v);
+        printf("%d\n", num);
+        double sol[] = {20488505.5958389, -16734286.9676338};
+        array_test_delta("roots()", sol, v, num, 10e-7);
 }
 
 void test_cross()
