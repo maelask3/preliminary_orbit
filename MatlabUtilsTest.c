@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <math.h>
-#define DELTA 10e-12
+#define DELTA 10^(-12)
 
 void array_pretty_print(double *v, int sz)
 {
@@ -58,7 +58,6 @@ void array_test(char *test_name, double *expected, double *actual, int sz)
 	printf("Actual = ");
 	array_pretty_print(actual, sz);
 	for(int i=0; i<sz; i++){
-		//printf("%lf \n",fabs( expected[i]-actual[i]));
 		assert(fabs(actual[i] - expected[i]) < DELTA);
 	}
 	printf("Expected = ");
@@ -121,17 +120,7 @@ void test_roots()
 	v = (double*) malloc(15*sizeof(double));
 	int num = roots(m, v);
 	double sol[] = {0., 0., 0., 0., 0., 0., 0., 20488505.59583733, -16734286.96763425};
-	printf("================================================================================\n");
-        printf("Now running test %s:\n","roots()");
-	printf("Actual ---------------  Expected\n");
-	for(int i = 0; i<num; i++){
-		printf("%lf ---------------  %lf\n", v[i], sol[i]);
-	}
-	/*printf("===========================\n");
-	for(int i = 0; i<3; i++){
-		printf("%lf \n", sol[i]);
-	}*/
-//	array_test("roots()", sol, v, num);
+	array_test("roots()", sol, v, num);
 
 }
 
