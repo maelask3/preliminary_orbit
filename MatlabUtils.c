@@ -1,9 +1,11 @@
+#include "MatlabUtils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <stdbool.h>
 #include <string.h>
 #include "rpoly.h"
+
 
 double norm(double *v)
 {
@@ -54,7 +56,7 @@ int roots(double *coef, double **sols_reales)
 	if(solutions < 0)
 		return solutions;
 
-    aux = (double*) calloc(solutions, sizeof(double));
+    	aux = (double*) calloc(solutions, sizeof(double));
         int j = 0;
         for(int i = 0; i< solutions; i++)
         {

@@ -33,14 +33,14 @@ void matrix_test(char *test_name, double **expected, double **actual, int rows, 
 {
 	printf("================================================================================\n");
 	printf("Now running test %s:\n",test_name);
-    printf("Actual = \n");
+    	printf("Actual = \n");
 	matrix_pretty_print(actual, rows, cols);
 	for(int i=0; i<rows; i++)
         for(int j=0; j<cols; j++)
-			assert(fabs(expected[i][j] - actual[i][j]) < DELTA);
-    printf("Expected = \n");
+		assert(fabs(expected[i][j] - actual[i][j]) < DELTA);
+    	printf("Expected = \n");
 	matrix_pretty_print(expected, rows, cols);
-    printf("PASS\n");
+    	printf("PASS\n");
 }
 
 void double_test(char *test_name, double expected, double actual)
@@ -50,7 +50,7 @@ void double_test(char *test_name, double expected, double actual)
 	printf("Actual = %lf\n", actual);
 	assert(fabs(expected - actual) < DELTA);
 	printf("Expected = %lf\n", expected);
-    printf("PASS\n");
+    	printf("PASS\n");
 }
 
 void array_test_delta(char *test_name, double *expected, double *actual, int sz, double delta)
@@ -59,11 +59,11 @@ void array_test_delta(char *test_name, double *expected, double *actual, int sz,
 	printf("Now running test %s:\n",test_name);
 	printf("Actual = ");
 	array_pretty_print(actual, sz);
-    printf("Expected = ");
-    array_pretty_print(expected, sz);
+    	printf("Expected = ");
+    	array_pretty_print(expected, sz);
 	for(int i=0; i<sz; i++)
-    assert(fabs(expected[i] - actual[i]) < delta);
-    printf("PASS\n");
+    		assert(fabs(expected[i] - actual[i]) < delta);
+    	printf("PASS\n");
 }
 
 void array_test(char *test_name, double *expected, double *actual, int sz)
@@ -140,11 +140,18 @@ void test_roots()
         m[13] = 0.0;
         m[14] = 0.0;
         m[15] = 0.0;
+<<<<<<< HEAD
 
         int num = roots(m, &v);
         printf("%d\n", num);
         double sol[] = {20488505.5958389, -16734286.9676338};
         array_test_delta("roots()", sol, v, num, 10e-7);
+=======
+        int num = roots(m, &v);
+        printf("%d\n", num);
+        double sol[] = {-16737286.9676338, 20488505.5958389};
+        array_test("roots()", sol, v, num);
+>>>>>>> f25027adc363ab533e3c90948958e4c97b146ccf
 }
 
 void test_cross()

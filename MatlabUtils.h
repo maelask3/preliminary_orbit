@@ -1,13 +1,18 @@
 #ifndef __MATLABUTILS_H
 #define __MATLABUTILS_H
-
+#include <stdlib.h>
 #include <stdbool.h>
 
+
+typedef struct {
+    double *data;
+    int length;
+} double_arr;
 
 double norm(double *v);
 double dot(double *v1, double *v2);
 double sign(double n);
-double **zeros(int rows, int cols);
+double **zeros(size_t rows, size_t cols);
 double det(double M[][3]);
 double det2x2(double m[][2]);
 int roots(double *coef, double **sols_reales);
