@@ -140,18 +140,11 @@ void test_roots()
         m[13] = 0.0;
         m[14] = 0.0;
         m[15] = 0.0;
-<<<<<<< HEAD
 
         int num = roots(m, &v);
         printf("%d\n", num);
         double sol[] = {20488505.5958389, -16734286.9676338};
         array_test_delta("roots()", sol, v, num, 10e-7);
-=======
-        int num = roots(m, &v);
-        printf("%d\n", num);
-        double sol[] = {-16737286.9676338, 20488505.5958389};
-        array_test("roots()", sol, v, num);
->>>>>>> f25027adc363ab533e3c90948958e4c97b146ccf
 }
 
 void test_cross()

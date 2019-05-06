@@ -3,12 +3,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-
-typedef struct {
-    double *data;
-    int length;
-} double_arr;
-
 double norm(double *v);
 double dot(double *v1, double *v2);
 double sign(double n);
