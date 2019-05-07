@@ -33,8 +33,12 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 99)
 set_property(TARGET ${PROJECT_NAME} PROPERTY ENABLE_EXPORTS TRUE)
 
 if(docs)
+    execute_process(
+        COMMAND git rev-parse HEAD
+        OUTPUT_VARIABLE rev)
+    string(STRIP ${rev} rev)
     add_custom_target(docs
-        COMMAND doxygen .)
+        COMMAND PROJECT_NUMBER=${rev} doxygen Doxyfile)
 endif()
 
 target_link_libraries(${PROJECT_NAME} ${N_LIBS})
