@@ -134,27 +134,9 @@ void test_det()
 
 void test_roots()
 {
-        double *m = (double*) calloc(16, sizeof(double));
         double *v = (double*) calloc(16, sizeof(double));
-        m[0] = 1.0;
-        m[1] = 0.0;
-        m[2] = -73120740632127.34375;
-        m[3] = 0.0;
-        m[4] = 0.0;
-        m[5] = -1587936795677189147685214247486226432.0 ;
-        m[6] = 0.0;
-        m[7] = 0.0;
-        m[8] = -11985384853690594734217583339479868539727097108863410765824.0;
-        m[9] = 0.0;
-        m[10] = 0.0;
-        m[11] = 0.0;
-        m[12] = 0.0;
-        m[13] = 0.0;
-        m[14] = 0.0;
-        m[15] = 0.0;
-
+        double *m = (double*)(double[16]) {1.0, 0.0, -73120740632127.34375, 0., 0., -1587936795677189147685214247486226432.0, 0., 0.,  -11985384853690594734217583339479868539727097108863410765824.0, 0., 0., 0., 0., 0., 0., 0.};
         int num = roots(m, &v);
-        free(m);
         printf("%d\n", num);
         double sol[] = {20488505.5958389, -16734286.9676338};
         array_test_delta("roots()", sol, v, num, 10e-7);
@@ -175,11 +157,11 @@ void test_cross()
 
 void test_producto()
 {
-    double **mm = zeros(3, 3);
+    double **mm = malloc(3 * sizeof(double*));
     mm[0] = (double*)(double[3]){1.,2.,3.};
     mm[1] = (double*)(double[3]){4.,5.,6.};
     mm[2] = (double*)(double[3]){7.,8.,9.};
-    double **nn = zeros(3, 3);
+    double **nn = malloc(3 * sizeof(double*));
     nn[0] = (double*)(double[3]) {9.,1.,1.};
     nn[1] = (double*)(double[3]) {1.,1.,2.};
     nn[2] = (double*)(double[3]) {5.,4.,3.};
@@ -187,11 +169,55 @@ void test_producto()
     free(mm);
     free(nn);
 
-    double **sol = zeros(3, 3);
+    double **sol = malloc(3 * sizeof(double*));
     sol[0] = (double*)(double[3]) {26., 15., 14.};
     sol[1] = (double*)(double[3]) {71., 33., 32.};
     sol[2] = (double*)(double[3]) {116., 51., 50.};
     matrix_test("productMatrix()", sol, pp, 3, 3);
+    free(pp);
+    free(sol);
+}
+
+void test_suma()
+{
+    double **mm = malloc(3 * sizeof(double*));
+    mm[0] = (double*)(double[3]){1.,2.,3.};
+    mm[1] = (double*)(double[3]){4.,5.,6.};
+    mm[2] = (double*)(double[3]){7.,8.,9.};
+    double **nn = malloc(3 * sizeof(double*));
+    nn[0] = (double*)(double[3]) {9.,1.,1.};
+    nn[1] = (double*)(double[3]) {1.,1.,2.};
+    nn[2] = (double*)(double[3]) {5.,4.,3.};
+    double **pp = sumMatrix(mm, nn);
+    free(mm);
+    free(nn);
+
+    double **sol = malloc(3 * sizeof(double*));
+    sol[0] = (double*)(double[3]) {10., 3., 4.};
+    sol[1] = (double*)(double[3]) {5., 6., 8.};
+    sol[2] = (double*)(double[3]) {12., 12., 12.};
+
+    matrix_test("sumMatrix()", sol, pp, 3, 3);
+    free(sol);
+    free(pp);
+}
+
+void test_transpuesta()
+{
+    double **mm = malloc(3 * sizeof(double*));
+    mm[0] = (double*)(double[3]){1.,2.,3.};
+    mm[1] = (double*)(double[3]){4.,5.,6.};
+    mm[2] = (double*)(double[3]){7.,8.,9.};
+    double **tt = transposeMatrix(mm);
+    free(mm);
+
+    double **sol = malloc(3 * sizeof(double*));
+    sol[0] = (double*)(double[3]) {1., 4., 7.};
+    sol[1] = (double*)(double[3]) {2., 5., 8.};
+    sol[2] = (double*)(double[3]) {3., 6., 9.};
+    matrix_test("transposeMatrix()", sol, tt, 3, 3);
+    free(sol);
+    free(tt);
 }
 
 int main()
@@ -205,5 +231,7 @@ int main()
 	test_roots();
     test_cross();
     test_producto();
+    test_suma();
+    test_transpuesta();
 	return 0;
 }

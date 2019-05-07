@@ -30,13 +30,7 @@ double **zeros(unsigned int rows, unsigned int cols)
     matrix = malloc (rows*sizeof(double *));
     for(unsigned int i=0; i<rows; i++)
 	{
-            //matrix[i] = calloc (cols, sizeof(double));
-            size_t colsz = cols * sizeof(double);
-            matrix[i] = malloc(colsz);
-            for(unsigned int j=0; j<cols; j++)
-            {
-                matrix[i][j] = 0.;
-            }
+            matrix[i] = calloc(cols, sizeof(double));
   	}
 	return(matrix);
 }
@@ -90,7 +84,6 @@ double *cross(double *v1, double *v2)
 //O(n^3), fuente: www.kkhaydarov.com/matrux-multiplication-algorithms/, naive matrix
 double **productMatrix(double **m1, double **m2){
 	double **product = zeros(3, 3);
-	double sum = 0;
 	for(int i=0; i<3; i++)
 	{
 		for(int j=0; j<3; j++)
