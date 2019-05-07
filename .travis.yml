@@ -8,8 +8,7 @@ addons:
         sonarcloud:
                 organization: "maelask3-github"
                 token:
-                        secure: "jdQWLFLWO53YATYKIihsgMGDbJrJ993K6rKQ4rP3wmfDmZ2swMAqU67TIvdpYSCdRMtHY/bMJ2kkTAOE5JI++iByTcRLWjZ7mQIJQfAqEWmXSowqedP5bMwhgkN7iDdXaslDY0IR8t4an/AIcTPAbQDczW25lBAj9bfngR84E1sizOVR/7UdZzLyqgBVZb4PCRIgV3Ec0y0IKHMjvL2cUhk/eYCggv2Wjb8tQInuCt8oaM2oS56z63f66z8+/fNURH5birIhRl1OMfsAiYz9AOp05cKe7Mxev5MVqdqhgBYCi9Pd2W337SZVZK7KOvA9kYYWSgvYrdV+BFR7REnabMFRBeTvaIg2wK6WtjvHJVB8KqVTMV+FP6x0st8PwycBFU3ck+yRnWEsfdPOHjK1s8PohOScUVNl0w+LCTKFejPUZ7pF2/K3d6xjv9uK41LsIgG5bbUVDvd+Am/r7rmO7IoiDtARveVWOqTb0y7BeTRlbmBhUSME2gqKug51aqzpjn3yYKh75hx77xBjwIPkBdwkmH+Ys0qjNaCzk2ZYIlkvo+bolcCKBytc7crOTxdV/AJ7RTrl16fLs9tQYs4guJ4rS5CFxWJEaO63P7FTrCnFryczIdzUNK9tS2f1fTVmcgdlJx7bbvPyuQdqi/UIkedJ5ns9tsb/rKJycw6lwe8="
-
+                        secure: "XsF+agpCwH5cSP3HrLd+mlVSikFjDptu0xxSUnqPcEReR2ShXgN66KUYrNKBTGTt8LBqkG0zF810R6T+v2Axe/BxuqB/XzZxJSB2FyEqaQTdkAJ/YQE8roi3g+YrrGWYApVhahA2Mws8qyqTLUEx+y4wsZxCUk/vkGX2bao6qSDzligQzaWduXB7Kn8m/W5RSF9RxHsKrbxEa6Q10xtfA6OJgm0TnupzX+wfil3ZdJak47e/83nBVzSDYAHq7bq4uKpU2NwORD0KaFG9kuYShnBjoHG4GrjEercbPijLdmLXA3Os3atdSjNsaGsb8QDmCDw0fMW18PGbvk1jZiRcoSFHHrTBS1RwyDtCfh6zAaUfXhmKK7lmUKLobpUsLCpQGnYI5vxt6BtmBKQCRjNUMIEg8i/ZX6EBBWmsgDFvAp5rhzxpXc4K0uJ88vkrZ4pvaGnVtoQqWX2wrNL1K4YLhxZ7YuZClvXysLRix9q4KUhGpMBCTvvzTyzzOdLqENAkg2jrFihg+ffmLFL8DdyxSyxFzhzJMQlR399z++GnKJbn5WPrd035TOFDtp4NeqB2IcQUIZFmb9QlWiKs+C+qSr7LARGhrp12GlUAJUrL8R5B+uvQdppI9xaA3VVjC9/EW7rocMpY0OPHI0Q75psgjTLq7B6DCBS/F6COxQf6Who="
 
 script:
         - cmake . 
