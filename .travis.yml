@@ -12,6 +12,7 @@ addons:
                         secure: "gXVwVdF1p7pUV7/Kd8KT7Kl4Dvgb3GOe4BH+8ap0EeEr7zinC4VGxhJtKq/CeocdHFHcHKjib/o/9jLy52n5J4SuNkiDiy/OhJ1Pcjj/Qek+hn/kdqoDs+WlnurVtEltmJQ1vhINK6D2U0OKC+hXim8NxRHHHjl4+vlABTLJDA7en1k5To0u6O2ry8TZrFL7SIE4Xh+/qmk7JByw/qK6SVBVe94BESrbxMDGAgKUlhqDwCfM9J+F9PEw1Apjq2BtY6qG8gD4pHauOlegq8JsHHvNBnuoV9dTdmxMwF4X2b9P36pJHcThsiCFsJL+sri/12l8lawOWHcNSNPEZxdc+TedxYQZN8atlOQnW/pnmHSKkWKcZxDLaweoD/elUC3WnGsq/1aYC3kmOIFpWK4oPQKJDKynhUgR2k7hod7g66kqw8qoVkZVy3OY54n+sv8WtT8dUEeVMW5lPT0zUjGK5RoZD0VVr+vEqbjhXERfK8EaNciO8oubCcl62NeArf0Sj2Jmn/7VPQcq/Ub9vEt2fg3zq849ShtttDiDvJh8T0Y55ipsazlei7YZaBArdjlAuAh00a3GyjRZBvSc4Wh+5S5JguCvYw2b0z8dybXQGNUmePJ84CiVZzPiLquS6fX8WdHtMEX4t4zq6a0sybVBDNHzOfOo59WNyta+HjRQfVw="
 
 script:
-        - cmake . && build-wrapper-linux-x86_64 make
+        - cmake . 
+        - build-wrapper-linux-x86-64 make
         - sonar-scanner
         - ./POrbitD
