@@ -13,5 +13,6 @@ addons:
 script:
         - cmake . 
         - build-wrapper-linux-x86-64 --out-dir bw-output make
-        - sonar-scanner
         - ./POrbitD
+        - gcov *.c
+        - sonar-scanner
