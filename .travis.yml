@@ -13,6 +13,6 @@ addons:
 
 script:
         - cmake . 
-        - build-wrapper-linux-x86-64 make
+        - build-wrapper-linux-x86-64 --outdir bw-output make
         - sonar-scanner
         - ./POrbitD
