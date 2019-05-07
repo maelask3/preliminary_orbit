@@ -1,3 +1,8 @@
+/**
+ * @file MatlabUtils.c
+ * @Autor Davide Pérez y Millán Santamaría
+ * @brief Es una libreria de funciones presentes en Matlab y no en C.
+ */
 #include "MatlabUtils.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,16 +11,32 @@
 #include <string.h>
 #include "rpoly.h"
 
+/**
+ * @brief Calcula la norma de un vector de dimensión 3
+ * @param v es un vector de doubles de dimensión 3
+ * @return Devuelve la norma de v
+ */
 double norm(double *v)
 {
         return(sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2]));
 }
 
+/**
+ * @brief Calcula el producto escalar de dos vectores de tamaño 3
+ * @param v es un vector de doubles de tamaño 3
+ * @param t es un vector de doubles de tamaño 3
+ * @return Devuelve el producto escalar de v y t
+ */
 double dot(double *v, double *t)
 {
 	return(v[0]*t[0]+v[1]*t[1]+v[2]*t[2]);
 }
 
+/**
+ * @brief Determina el signo de un número.
+ * @param n es un número de tipo double con signo.
+ * @return Devuelve 0.0 si n es cero, -1.0 sin n es menor que cero y 1.0 si n es mayor que cero.
+ */
 double sign(double n)
 {
     if(fabs(n) < 10e-12)
@@ -24,6 +45,12 @@ double sign(double n)
 		return ((n>0)? 1.0 : -1.0);
 }
 
+/**
+ * @brief Inicializa matrices de tamano rows x cols.
+ * @param rows es un int sin signo que refiere al número de filas.
+ * @param cols es u int sin signo que refiere al número de columnas.
+ * @return Devuelve una matriz de ceros de tamano rows x cols.
+ */
 double **zeros(unsigned int rows, unsigned int cols)
 {
 	double **matrix;
@@ -35,16 +62,32 @@ double **zeros(unsigned int rows, unsigned int cols)
 	return(matrix);
 }
 
+/**
+ * @brief Calcula el determinante de una matrix 3x3.
+ * @param m es una matriz de doubles de tamaño 3x3.
+ * @return Devuelve el determinante de m.
+ */
 double det(double m[][3])
 {
 	return m[0][0]*m[1][1]*m[2][2]+m[0][1]*m[1][2]*m[2][0]+m[0][2]*m[1][0]*m[2][1]-m[2][0]*m[1][1]*m[0][2]-m[2][1]*m[1][2]*m[0][0]-m[2][2]*m[1][0]*m[0][1];
 }
 
+/**
+ * @brief Calcula el determinante de una matrix 2x2.
+ * @param m es una matriz de doubles de tamaño 2x2.
+ * @return Devuelve el determinante de m.
+ */
 double det2x2(double m[][2])
 {
 	return m[0][0]*m[1][1]-m[1][0]*m[0][1];
 }
 
+/**
+ * @brief Calcula las raices reales de un polinomio.
+ * @param coef es un vector de doubles de tamaño 16, sus componentes son los coeficientes ordenamos de de mayor a menor grado
+ * @param sols_reales es un vector de doubles vacio de tamaño 15 . Es un parametro de entrada/salida, en el se devuelven las raices encontradas.
+ * @return Devuelve un int que es el número de raices encontradas, es decir hasta que indice de sols_reales debemos iterar.
+ */
 int roots(double *coef, double **sols_reales)
 {
 	double *real, *imagin, *aux;
@@ -73,7 +116,12 @@ int roots(double *coef, double **sols_reales)
     return j;
 }
 
-
+/**
+ * @brief Calcula el producto cruzado de dos vectores de tamaño 3 .
+ * @param v1 es un vector de doubles de tamaño 3 .
+ * @param v2 es un vector de doubles de tamaño 3 .
+ * @return Devuelve el producto cruzado de v1 y v2.
+ */
 double *cross(double *v1, double *v2)
 {
     double *res = malloc(3 * sizeof(double));
@@ -82,6 +130,12 @@ double *cross(double *v1, double *v2)
 }
 
 //O(n^3), fuente: www.kkhaydarov.com/matrux-multiplication-algorithms/, naive matrix
+/**
+ * @brief Calcula el producto de dos matrices de tamaño 3x3.
+ * @param m1 es una matriz de doubles de tamaño 3x3.
+ * @param m2 es una matriz de doubles de tamaño 3x3.
+ * @return Devuelve el producto de m1 y m2, una matrix 3x3 de doubles.
+ */
 double **productMatrix(double **m1, double **m2){
 	double **product = zeros(3, 3);
 	for(int i=0; i<3; i++)
@@ -98,6 +152,13 @@ double **productMatrix(double **m1, double **m2){
 
 	return product;
 }
+
+/**
+ * @brief Calcula la suma de dos matrices 3x3.
+ * @param m1 es una matriz de doubles de tamaño 3x3.
+ * @param m2 es una matriz de doubles de tamaño 3x3.
+ * @return Devuelve la suma de m1 y m2, una matrix 3x3 de doubles.
+ */
 double **sumMatrix(double **m1, double **m2){
 	double **sum = zeros(3, 3);
 	for(int i = 0; i<3; i++){
@@ -107,6 +168,12 @@ double **sumMatrix(double **m1, double **m2){
 	}
 	return sum;
 }
+
+/**
+ * @brief Calcula la matriz transpuesta de uma matriz de tamaño 3x3.
+ * @param m es una matriz de doubles de tamaño 3x3.
+ * @return Devuelve la matriz transpuesta de m.
+ */
 double **transposeMatrix(double **m){
 	double **transpose = zeros(3, 3);
 	for(int i = 0; i<3; i++){
