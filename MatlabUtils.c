@@ -87,19 +87,22 @@ double *cross(double *v1, double *v2)
 	return res;
 }
 
-
+//O(n^3), fuente: www.kkhaydarov.com/matrux-multiplication-algorithms/, naive matrix
 double **productMatrix(double **m1, double **m2){
 	double **product = zeros(3, 3);
 	double sum = 0;
-    	for (int i = 0; i < 3; i++)
+	for(int i=0; i<3; i++)
 	{
-            	for (int j = 0; j < 3; j++)
-	    	{
-        		sum += m1[i][j] * m2[j][i];
+		for(int j=0; j<3; j++)
+		{
+			product[i][j] = 0;
+			for(int k=0; k<3; k++)
+			{
+				product[i][j] += m1[i][k] * m2[k][j];
+			}
 		}
-            product[i][j] = sum;
-    		sum = 0;
 	}
+
 	return product;
 }
 double **sumMatrix(double **m1, double **m2){
