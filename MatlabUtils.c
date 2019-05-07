@@ -90,12 +90,13 @@ double *cross(double *v1, double *v2)
 
 double **productMatrix(double **m1, double **m2){
 	double **product = zeros(3, 3);
-	int i, j;
 	double sum = 0;
-    for (i = 0; i < 3; i++){
-            for (j = 0; j < 3; j++){
+    	for (int i = 0; i < 3; i++)
+	{
+            	for (int j = 0; j < 3; j++)
+	    	{
         		sum += m1[i][j] * m2[j][i];
-    		}
+		}
             product[i][j] = sum;
     		sum = 0;
 	}

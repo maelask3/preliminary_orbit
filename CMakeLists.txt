@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
 
 project(POrbitD)
 add_executable(${PROJECT_NAME} "MatlabUtils.c" "MatlabUtilsTest.c" "rpoly.c" "MatlabUtils.h" "rpoly.h")
