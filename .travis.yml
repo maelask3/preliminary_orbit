@@ -14,5 +14,5 @@ script:
         - cmake -Dcoverage=1 . 
         - build-wrapper-linux-x86-64 --out-dir bw-output make
         - ./POrbitD
-        - make gcov
+        - make coverage
         - sonar-scanner
