@@ -11,8 +11,8 @@ addons:
                         secure: "XsF+agpCwH5cSP3HrLd+mlVSikFjDptu0xxSUnqPcEReR2ShXgN66KUYrNKBTGTt8LBqkG0zF810R6T+v2Axe/BxuqB/XzZxJSB2FyEqaQTdkAJ/YQE8roi3g+YrrGWYApVhahA2Mws8qyqTLUEx+y4wsZxCUk/vkGX2bao6qSDzligQzaWduXB7Kn8m/W5RSF9RxHsKrbxEa6Q10xtfA6OJgm0TnupzX+wfil3ZdJak47e/83nBVzSDYAHq7bq4uKpU2NwORD0KaFG9kuYShnBjoHG4GrjEercbPijLdmLXA3Os3atdSjNsaGsb8QDmCDw0fMW18PGbvk1jZiRcoSFHHrTBS1RwyDtCfh6zAaUfXhmKK7lmUKLobpUsLCpQGnYI5vxt6BtmBKQCRjNUMIEg8i/ZX6EBBWmsgDFvAp5rhzxpXc4K0uJ88vkrZ4pvaGnVtoQqWX2wrNL1K4YLhxZ7YuZClvXysLRix9q4KUhGpMBCTvvzTyzzOdLqENAkg2jrFihg+ffmLFL8DdyxSyxFzhzJMQlR399z++GnKJbn5WPrd035TOFDtp4NeqB2IcQUIZFmb9QlWiKs+C+qSr7LARGhrp12GlUAJUrL8R5B+uvQdppI9xaA3VVjC9/EW7rocMpY0OPHI0Q75psgjTLq7B6DCBS/F6COxQf6Who="
 
 script:
-        - cmake . 
+        - cmake -Dcoverage=1 . 
         - build-wrapper-linux-x86-64 --out-dir bw-output make
         - ./POrbitD
-        - gcov *.c
+        - make gcov
         - sonar-scanner
