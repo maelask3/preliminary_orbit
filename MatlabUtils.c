@@ -6,7 +6,6 @@
 #include <string.h>
 #include "rpoly.h"
 
-
 double norm(double *v)
 {
         return(sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2]));
@@ -25,13 +24,19 @@ double sign(double n)
 		return ((n>0)? 1.0 : -1.0);
 }
 
-double **zeros(size_t rows, size_t cols)
+double **zeros(unsigned int rows, unsigned int cols)
 {
 	double **matrix;
-  	matrix = (double **)malloc (rows*sizeof(double *));
+    matrix = malloc (rows*sizeof(double *));
     for(unsigned int i=0; i<rows; i++)
 	{
-    		matrix[i] = (double *) calloc (cols, sizeof(double));
+            //matrix[i] = calloc (cols, sizeof(double));
+            size_t colsz = cols * sizeof(double);
+            matrix[i] = malloc(colsz);
+            for(unsigned int j=0; j<cols; j++)
+            {
+                matrix[i][j] = 0.;
+            }
   	}
 	return(matrix);
 }
@@ -49,32 +54,35 @@ double det2x2(double m[][2])
 int roots(double *coef, double **sols_reales)
 {
 	double *real, *imagin, *aux;
-        real = (double*) malloc(15*sizeof(double));
-        imagin = (double*) malloc(15*sizeof(double));
-        int solutions = real_poly_roots(coef, 15, real, imagin);
+    real = malloc(15*sizeof(double));
+    imagin = malloc(15*sizeof(double));
+    int solutions = real_poly_roots(coef, 15, real, imagin);
 	
 	if(solutions < 0)
 		return solutions;
 
-    	aux = (double*) calloc(solutions, sizeof(double));
-        int j = 0;
-        for(int i = 0; i< solutions; i++)
-        {
+    aux = calloc(solutions, sizeof(double));
+    int j = 0;
+    for(int i = 0; i< solutions; i++)
+    {
 
-                if((fabs(imagin[i]) < 10e-12) && (fabs(real[i]) > 10e-12))
-                {
-                        aux[j] = real[i];
-                        j++;
-                }
-        }
-        *sols_reales = aux;
-        return j;
+            if((fabs(imagin[i]) < 10e-12) && (fabs(real[i]) > 10e-12))
+            {
+                    aux[j] = real[i];
+                    j++;
+            }
+    }
+    *sols_reales = aux;
+
+    free(real);
+    free(imagin);
+    return j;
 }
 
 
 double *cross(double *v1, double *v2)
 {
-	double *res = (double*) malloc(3 * sizeof(double));
+    double *res = malloc(3 * sizeof(double));
 	memcpy(res, (double[3]) {v1[1]*v2[2]-v1[2]*v2[1], v1[2]*v2[0]-v1[0]*v2[2], v1[0]*v2[1]-v1[1]*v2[0]}, sizeof(double[3]));
 	return res;
 }
@@ -84,11 +92,11 @@ double **productMatrix(double **m1, double **m2){
 	double **product = zeros(3, 3);
 	int i, j;
 	double sum = 0;
-	for (i = 0; i <= 3; i++){
-    		for (j = 1; j <= 3; j++){
+    for (i = 0; i < 3; i++){
+            for (j = 0; j < 3; j++){
         		sum += m1[i][j] * m2[j][i];
     		}
-    		product[i][j] = sum;
+            product[i][j] = sum;
     		sum = 0;
 	}
 	return product;

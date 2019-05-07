@@ -33,14 +33,14 @@ void matrix_test(char *test_name, double **expected, double **actual, int rows, 
 {
 	printf("================================================================================\n");
 	printf("Now running test %s:\n",test_name);
-    	printf("Actual = \n");
+    printf("Actual = \n");
 	matrix_pretty_print(actual, rows, cols);
 	for(int i=0; i<rows; i++)
         for(int j=0; j<cols; j++)
-		assert(fabs(expected[i][j] - actual[i][j]) < DELTA);
-    	printf("Expected = \n");
+            assert(fabs(expected[i][j] - actual[i][j]) < DELTA);
+    printf("Expected = \n");
 	matrix_pretty_print(expected, rows, cols);
-    	printf("PASS\n");
+    printf("PASS\n");
 }
 
 void double_test(char *test_name, double expected, double actual)
@@ -59,11 +59,11 @@ void array_test_delta(char *test_name, double *expected, double *actual, int sz,
 	printf("Now running test %s:\n",test_name);
 	printf("Actual = ");
 	array_pretty_print(actual, sz);
-    	printf("Expected = ");
-    	array_pretty_print(expected, sz);
+    printf("Expected = ");
+    array_pretty_print(expected, sz);
 	for(int i=0; i<sz; i++)
-    		assert(fabs(expected[i] - actual[i]) < delta);
-    	printf("PASS\n");
+        assert(fabs(expected[i] - actual[i]) < delta);
+    printf("PASS\n");
 }
 
 void array_test(char *test_name, double *expected, double *actual, int sz)
@@ -102,6 +102,18 @@ void test_zeros()
 	}
 	double **m = zeros(3, 3);
 	matrix_test("zeros()", v, m, 3, 3);
+
+    for(int i=0; i<3; i++)
+    {
+        free(m[i]);
+    }
+    free(m);
+
+    for(int i=0; i<3; i++)
+    {
+        free(v[i]);
+    }
+    free(v);
 }
 
 void test_det2x2()
@@ -142,9 +154,11 @@ void test_roots()
         m[15] = 0.0;
 
         int num = roots(m, &v);
+        free(m);
         printf("%d\n", num);
         double sol[] = {20488505.5958389, -16734286.9676338};
         array_test_delta("roots()", sol, v, num, 10e-7);
+        free(v);
 }
 
 void test_cross()
@@ -152,9 +166,32 @@ void test_cross()
 	double v[3] = {1.,5.,8.};
 	double w[3] = {5.,9.,1.};
 	double vwce[3] = {-67., 39., -16.};
+    double *vwcap = cross(v, w);
 	double vwca[3];
-       	memcpy(vwca, cross(v, w), sizeof(double[3]));
+    memcpy(vwca, vwcap, sizeof(double[3]));
+    free(vwcap);
 	array_test("cross()", vwce, vwca, 3);
+}
+
+void test_producto()
+{
+    double **mm = zeros(3, 3);
+    mm[0] = (double*)(double[3]){1.,2.,3.};
+    mm[1] = (double*)(double[3]){4.,5.,6.};
+    mm[2] = (double*)(double[3]){7.,8.,9.};
+    double **nn = zeros(3, 3);
+    nn[0] = (double*)(double[3]) {9.,1.,1.};
+    nn[1] = (double*)(double[3]) {1.,1.,2.};
+    nn[2] = (double*)(double[3]) {5.,4.,3.};
+    double **pp = productMatrix(mm, nn);
+    free(mm);
+    free(nn);
+
+    double **sol = zeros(3, 3);
+    sol[0] = (double*)(double[3]) {26., 15., 14.};
+    sol[1] = (double*)(double[3]) {71., 33., 32.};
+    sol[2] = (double*)(double[3]) {116., 51., 50.};
+    matrix_test("productMatrix()", sol, pp, 3, 3);
 }
 
 int main()
@@ -166,7 +203,7 @@ int main()
 	test_det2x2();
 	test_det();
 	test_roots();
-	test_cross();
-
+    test_cross();
+    test_producto();
 	return 0;
 }
