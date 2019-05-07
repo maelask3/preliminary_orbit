@@ -134,6 +134,13 @@ void test_cross()
 	array_test("cross()", vwce, vwca, 3);
 }
 
+void test_productMatrix(){
+        double m[][3] = {{1.,2.,3.},{4.,5.,6.},{7.,8.,9.}};
+        double n[][3] = {{9.,1.,1.},{1.,1.,2.},{5.,4.,3.}};
+	double sol[][3] = {{26.,15.,14.}, {71.,33.,32.},{116.,51.,50.}};
+        matrix_test("productMatrix()", sol, productMatrix(m,n), 3,3);
+}
+
 int main()
 {
 	test_norm();
@@ -144,6 +151,7 @@ int main()
 	test_det();
 	test_roots();
 	test_cross();
-
+//	test_productMatrix();
+	
 	return 0;
 }
