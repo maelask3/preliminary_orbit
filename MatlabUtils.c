@@ -1,6 +1,6 @@
 /**
  * @file MatlabUtils.c
- * @Autor Davide Pérez y Millán Santamaría
+ * @author Davide Pérez y Millán Santamaría
  * @brief Es una libreria de funciones presentes en Matlab y no en C.
  */
 #include "MatlabUtils.h"
@@ -67,7 +67,7 @@ double **zeros(unsigned int rows, unsigned int cols)
  * @param m es una matriz de doubles de tamaño 3x3.
  * @return Devuelve el determinante de m.
  */
-double det(double m[][3])
+double det(double **m)
 {
 	return m[0][0]*m[1][1]*m[2][2]+m[0][1]*m[1][2]*m[2][0]+m[0][2]*m[1][0]*m[2][1]-m[2][0]*m[1][1]*m[0][2]-m[2][1]*m[1][2]*m[0][0]-m[2][2]*m[1][0]*m[0][1];
 }
@@ -77,7 +77,7 @@ double det(double m[][3])
  * @param m es una matriz de doubles de tamaño 2x2.
  * @return Devuelve el determinante de m.
  */
-double det2x2(double m[][2])
+double det2x2(double **m)
 {
 	return m[0][0]*m[1][1]-m[1][0]*m[0][1];
 }

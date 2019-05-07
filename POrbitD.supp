@@ -1,0 +1,34 @@
+{
+   calloc[Memcheck:Leak]
+   Memcheck:Leak
+   fun:calloc
+   fun:zeros
+   fun:productMatrix
+   fun:test_producto
+   fun:main
+}
+{
+   calloc[Memcheck:Leak]
+   Memcheck:Leak
+   fun:calloc
+   fun:zeros
+   fun:sumMatrix
+   fun:test_suma
+   fun:main
+}
+{
+   calloc[Memcheck:Leak]
+   Memcheck:Leak
+   fun:calloc
+   fun:zeros
+   fun:transposeMatrix
+   fun:test_transpuesta
+   fun:main
+}
+{
+   calloc[Memcheck:Leak]
+   Memcheck:Leak
+   fun:calloc
+   fun:test_roots
+   fun:main
+}

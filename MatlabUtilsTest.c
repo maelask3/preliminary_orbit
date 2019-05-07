@@ -1,3 +1,8 @@
+/**
+ * @file MatlabUtilsTest.c
+ * @author Davide Pérez y Millán Santamaría
+ * @brief Tests unitarios sobre MatlabUtils.c
+ */
 #include <assert.h>
 #include "MatlabUtils.h"
 #include <stdio.h>
@@ -118,23 +123,39 @@ void test_zeros()
 
 void test_det2x2()
 {
-    double m[][2] = {{1., 2.}, {3., 4.}};
+    double **m = malloc(2 * sizeof(double*));
+    m[0] = (double*)(double[2]){1., 2.};
+    m[1] = (double*)(double[2]){3., 4.};
     double_test("det2x2() 1", -2., det2x2(m));
-    double n[][2] = {{5., 9.}, {74., 25.}};
+    free(m);
+
+    double **n = malloc(2 * sizeof(double*));
+    n[0] = (double*)(double[2]){5., 9.};
+    n[1] = (double*)(double[2]){74., 25.};
     double_test("det2x2() 2", -541., det2x2(n));
+    free(n);
 }
 
 void test_det()
 {
-    double m[][3] = {{1.,2.,3.},{4.,5.,6.},{7.,8.,9.}};
-    double_test("det() 1", 0., det(m));
-    double n[][3] = {{9.,1.,1.},{1.,1.,2.},{5.,4.,3.}};
-    double_test("det() 2", -39., det(n));
+    double **mm = malloc(3 * sizeof(double*));
+    mm[0] = (double*)(double[3]){1.,2.,3.};
+    mm[1] = (double*)(double[3]){4.,5.,6.};
+    mm[2] = (double*)(double[3]){7.,8.,9.};
+    double_test("det() 1", 0., det(mm));
+    free(mm);
+
+    double **nn = malloc(3 * sizeof(double*));
+    nn[0] = (double*)(double[3]) {9.,1.,1.};
+    nn[1] = (double*)(double[3]) {1.,1.,2.};
+    nn[2] = (double*)(double[3]) {5.,4.,3.};
+    double_test("det() 2", -39., det(nn));
+    free(nn);
 }
 
 void test_roots()
 {
-    double *v = (double*) calloc(16, sizeof(double));
+    double *v = calloc(16, sizeof(double));
     double *m = (double*)(double[16]) {1.0, 0.0, -73120740632127.34375, 0., 0., -1587936795677189147685214247486226432.0, 0., 0.,  -11985384853690594734217583339479868539727097108863410765824.0, 0., 0., 0., 0., 0., 0., 0.};
     int num = roots(m, &v);
     printf("%d\n", num);
