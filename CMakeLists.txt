@@ -15,7 +15,7 @@ set(SOURCES
     "rpoly.h")
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} m gcov)
-set_property(TARGET ${PROJECT_NAME} PROPERTY CMAKE_C_STANDARD 99)
+set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 99)
 
 set(OBJECT_DIR ${CMAKE_BINARY_DIR}/CMakeFiles/${PROJECT_NAME}.dir)
 add_custom_target(gcov
