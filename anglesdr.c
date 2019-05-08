@@ -35,7 +35,8 @@ void anglesdr(double rtasc1, double rtasc2, double rtasc3, double decl1, double 
 
 	int ll=0;
 	
-	double f1, f2, q1, magr1, magr2, a, deltae32, f, g, magr1o, deltar1, magr2o, deltar2;
+	double f1, f2, q1, magr1, magr2, a, deltae32, f, g, magr1o, deltar1, magr2o, deltar2, f1delr2, f2delr2, q3, pf1pr2, pf2pr2, delta, pf1pr1, pf2pr1, delta1, delta2;
+	double *r3;
 	while(fabs(magr1in-magr1old) > tol && fabs(magr2in-magr2old) > tol && ll<=3){
 		ll = ll+1;
 		double *r3 = (double*) malloc(3*sizeof(double));
@@ -95,6 +96,6 @@ void anglesdr(double rtasc1, double rtasc2, double rtasc3, double decl1, double 
 	deltae32 = aux[6];
 
 	f  = 1 - a/magr2*(1-cos(deltae32));
-	g  = t3 - sqrt(a^3/GM_Earth)*(deltae32-sin(deltae32));
+	g  = t3 - sqrt((a*a*a)/GM_Earth)*(deltae32-sin(deltae32));
 	v2 = (r3 - f*r2)/g;
 }
