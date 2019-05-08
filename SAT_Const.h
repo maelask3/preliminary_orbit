@@ -1,6 +1,6 @@
 /**
  * @file SAT_Const.h
- * @Autor Davide Pérez y Millán Santamaría
+ * @author Davide Pérez y Millán Santamaría
  * @brief Es el fichero de constantes
  */
 #ifndef SAT_CONST_H

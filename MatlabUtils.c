@@ -1,6 +1,6 @@
 /**
  * @file MatlabUtils.c
- * @Autor Davide Pérez y Millán Santamaría
+ * @author Davide Pérez y Millán Santamaría
  * @brief Es una libreria de funciones presentes en Matlab y no en C.
  */
 #include "MatlabUtils.h"

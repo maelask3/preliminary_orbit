@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.1)
 project(POrbitD)
 #set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 99)
 set(CMAKE_C_STANDARD 99)
-set(p_version 0.2.0)
+set(p_version 0.2.1)
 
 set(N_LIBS
     m)
