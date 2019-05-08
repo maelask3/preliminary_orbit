@@ -8,11 +8,11 @@ double *Position(double lon, double lat, double h)
     double R_equ = R_Earth;
     double f = f_Earth;
 
-    double e2 = f*(2-f);
+    double e2 = 2*f-(f*f);
     double CosLat = cos(lat);
     double SinLat = sin(lat);
 
-    double N = R_equ/sqrt(1-e2*SinLat*SinLat);
+    double N = R_equ/sqrt(1-(e2*SinLat*SinLat));
 
     double *r = calloc(3, sizeof(double));
     r[0] = (N+h)*CosLat*cos(lon);

@@ -8,31 +8,31 @@
 
 void test_Position()
 {
-    double lon = -2.117969613666;
-    double lat = 0.683053277791;
+    double lon = -2.11796961366573;
+    double lat = 0.683053277790977;
     double h = 99.81638;
 
     double *expected = (double*)(double[3]) {-2577383.6395731382, -4230610.2467987221, 4004108.3320587045};
     double *actual = Position(lon, lat, h);
-    array_test_delta("Position() 1", expected, actual, 3, 10e-6);
+    array_test_delta("Position() 1", expected, actual, 3, 10e-7);
     free(actual);
 
-    lon = -1.504723397302;
-    lat = 0.533589040237;
+    lon = -1.50472339730215;
+    lat = 0.533589040236714;
     h = 0.;
 
     expected = (double*)(double[3]) {362889.51475075335,-5484262.3610134749,3225167.7284776145};
     actual = Position(lon, lat, h);
-    array_test_delta("Position() 2", expected, actual, 3, 10e-6);
+    array_test_delta("Position() 2", expected, actual, 3, 10e-7);
     free(actual);
 
-    lon = -1.919862177194;
-    lat = 0.698131700798;
+    lon = -1.91986217719376;
+    lat = 0.698131700797732;
     h = 2000.;
 
     expected = (double*)(double[3]) {-1673928.5598879098,-4599080.9200722268,4079271.1474197493};
     actual = Position(lon, lat, h);
-    array_test_delta("Position() 7", expected, actual, 3, 10e-6);
+    array_test_delta("Position() 7", expected, actual, 3, 10e-7);
     free(actual);
 }
 
