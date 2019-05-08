@@ -1,10 +1,13 @@
 #include "IERS.h"
 #include "SAT_Const.h"
 #include <math.h>
+#include <stdlib.h>
 
 void IERS(double **eop, int eop_length, double Mjd_UTC, char interp, double *UT1_UTC, double *TAI_UTC, double *x_pole, double *y_pole, double *ddpsi, double *ddeps)
 {
-    double *preeop, *nexteop;
+    double *preeop = calloc(13, sizeof(double));
+    double *nexteop = calloc(13, sizeof(double));
+
     if(interp == 'l')
     {
         double mj = floor(Mjd_UTC);
@@ -13,6 +16,8 @@ void IERS(double **eop, int eop_length, double Mjd_UTC, char interp, double *UT1
         {
             if(fabs(eop[i][3] - mj) < DELTA)
             {
+                free(preeop);
+                free(nexteop);
                 preeop = eop[i];
                 nexteop = eop[i+1];
                 break;
@@ -36,11 +41,12 @@ void IERS(double **eop, int eop_length, double Mjd_UTC, char interp, double *UT1
     } else if(interp == 'n') {
 
         double mj = floor(Mjd_UTC);
-        double *cureop;
+        double *cureop = calloc(13, sizeof(double));
         for(int i=0; i<eop_length; i++)
         {
             if(fabs(eop[i][3] - mj) < DELTA)
             {
+                free(cureop);
                 cureop = eop[i];
                 break;
             }
