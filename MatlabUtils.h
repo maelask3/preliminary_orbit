@@ -1,3 +1,8 @@
+/**
+ * @file MatlabUrils.h
+ * @Autor Davide Pérez y Millán Santamaría
+ * @brief Es el fichero de cabeceras de MAtlabUtils.c
+ */
 #ifndef __MATLABUTILS_H
 #define __MATLABUTILS_H
 #include <stdlib.h>
