@@ -1,6 +1,6 @@
 /**
  * @file MatlabUtils.c
- * @author Davide Pérez y Millán Santamaría
+ * @Autor Davide Pérez y Millán Santamaría
  * @brief Es una libreria de funciones presentes en Matlab y no en C.
  */
 #include "MatlabUtils.h"
@@ -67,7 +67,7 @@ double **zeros(unsigned int rows, unsigned int cols)
  * @param m es una matriz de doubles de tamaño 3x3.
  * @return Devuelve el determinante de m.
  */
-double det(double **m)
+double det(double m[][3])
 {
 	return m[0][0]*m[1][1]*m[2][2]+m[0][1]*m[1][2]*m[2][0]+m[0][2]*m[1][0]*m[2][1]-m[2][0]*m[1][1]*m[0][2]-m[2][1]*m[1][2]*m[0][0]-m[2][2]*m[1][0]*m[0][1];
 }
@@ -77,7 +77,7 @@ double det(double **m)
  * @param m es una matriz de doubles de tamaño 2x2.
  * @return Devuelve el determinante de m.
  */
-double det2x2(double **m)
+double det2x2(double m[][2])
 {
 	return m[0][0]*m[1][1]-m[1][0]*m[0][1];
 }
@@ -170,7 +170,7 @@ double **sumMatrix(double **m1, double **m2){
 }
 
 /**
- * @brief Calcula la matriz transpuesta de uma matriz de tamaño 3x3.
+ * @brief Calcula la matriz transpuesta de una matriz de tamaño 3x3.
  * @param m es una matriz de doubles de tamaño 3x3.
  * @return Devuelve la matriz transpuesta de m.
  */
@@ -182,4 +182,36 @@ double **transposeMatrix(double **m){
 		}
 	}
 	return transpose;
+}
+
+/**
+ * @brief Calcula el producto de un vector de tamaño 3 por un double
+ * @param v es un vector de tamaño 3
+ * @param d es un double
+ * @return Devuelve el producto del vector por el double.
+ */
+
+double *vectorProductDouble(double *v, double d){
+	double *sol;
+	sol =(double*) malloc(3*sizeof(double));
+	sol[0] = v[0]*d;
+       	sol[1] = v[1]*d;
+       	sol[2] = v[2]*d;
+	return sol;
+}
+
+/**
+ * @brief Calcula la suma de dos vectores de tamaño 3
+ * @param v1 es un vector de tamaño 3
+ * @param v1 es un vector de tamaño 3
+ * @return Devuelve la suma de los dos vectores.
+ */
+
+double *sumVector(double *v1, double *v2){
+	double *sol;
+        sol =(double*) malloc(3*sizeof(double));
+        sol[0] = v1[0]*v2[0];
+        sol[1] = v1[1]*v2[1];
+        sol[2] = v1[2]*v2[2];
+        return sol;
 }
