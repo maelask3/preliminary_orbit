@@ -3,19 +3,20 @@
  * @Autor Davide Pérez y Millán Santamaría
  * @brief Es el fichero de constantes
  */
-#ifndef __SAT_CONST_H
-#define __SAT_CONST_H
+#ifndef SAT_CONST_H
+#define SAT_CONST_H
 
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
 
-#define pi 3.141592653589793
-
-#define pi2 2.0*pi
-#define RAD pi/180.0
-#define Deg 180.0/pi
-#define Arcs 3600.0*180.0/pi
+#define pi2 2.0*M_PI
+#define Rad M_PI/180.0
+#define Deg 180.0/M_PI
+#define Arcs  3600.0*180.0/M_PI
 
 #define MJD_J2000 51544.5
-#define T_B1950 -0.500002108
+#define T_B1950 -0.500002018
 #define c_light 299792457.999999984
 #define AU 149597870659.999996
 
@@ -39,5 +40,4 @@
 #define GM_Pluto 1020.864920706286e9
 
 #define P_Sol 4.560e-6
-
-#endif // __SAT_CONST_H_
+#endif // SAT_CONST_H

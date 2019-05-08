@@ -117,6 +117,28 @@ int roots(double *coef, double **sols_reales)
 }
 
 /**
+ * @brief Redondea un número al entero más cercano a 0
+ * @param in Número
+ * @return Redondea hacia arriba si in es negativo, y hacia abajo si in es positivo.
+ */
+
+double fix(double in)
+{
+    return (in>0) ? floor(in) : ceil(in);
+}
+
+/**
+ * @brief Devuelve el módulo de la división entre a y m
+ * @param a Dividendo
+ * @param m Divisor
+ * @return Devuelve el módulo b tal que b = a - m*floor(a/m)
+ */
+double mod(double a, double m)
+{
+    return a - m*floor(a/m);
+}
+
+/**
  * @brief Calcula el producto cruzado de dos vectores de tamaño 3 .
  * @param v1 es un vector de doubles de tamaño 3 .
  * @param v2 es un vector de doubles de tamaño 3 .
@@ -191,13 +213,15 @@ double **transposeMatrix(double **m){
  * @return Devuelve el producto del vector por el double.
  */
 
-double *vectorProductDouble(double *v, double d){
-	double *sol;
-	sol =(double*) malloc(3*sizeof(double));
-	sol[0] = v[0]*d;
-       	sol[1] = v[1]*d;
-       	sol[2] = v[2]*d;
-	return sol;
+double *vectorProductDouble(double *v, double d)
+{
+	double *res = calloc(3, sizeof(double));
+	for(int i=0; i<3; i++)
+	{
+		res[i] = n * v[i];
+	}
+
+	return res;
 }
 
 /**
@@ -207,11 +231,13 @@ double *vectorProductDouble(double *v, double d){
  * @return Devuelve la suma de los dos vectores.
  */
 
-double *sumVector(double *v1, double *v2){
-	double *sol;
-        sol =(double*) malloc(3*sizeof(double));
-        sol[0] = v1[0]*v2[0];
-        sol[1] = v1[1]*v2[1];
-        sol[2] = v1[2]*v2[2];
-        return sol;
+double *sumVector(double *v1, double *v2)
+{
+	double *res = calloc(3, sizeof(double));
+	for(int i=0; i<3; i++)
+	{
+		res[i] = v1[i] + v2[i];
+	}
+
+	return res;
 }
