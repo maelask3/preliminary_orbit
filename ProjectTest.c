@@ -9,6 +9,7 @@
 #include "R_x.h"
 #include "R_y.h"
 #include "R_z.h"
+#include "unit.h"
 #include <stdlib.h>
 
 void test_Position()
@@ -313,6 +314,28 @@ void test_R_z()
     free(expected);
 }
 
+void test_unit()
+{
+    double *vec = (double*)(double[3]){-9341115904217.03, 16158801718408.7, 29720729511155.2};
+    double *actual = unit(vec);
+    double *expected = (double*)(double[3]){-0.266163758239956, 0.460425439329396, 0.846856108567397};
+
+    array_test("unit() 1", expected, actual, 3);
+
+    vec = (double*)(double[3]){2644218480744.88, -9104674845836.32, 19019299944092.7};
+    actual = unit(vec);
+    expected = (double*)(double[3]) {0.124425783694902, -0.428427647423945, 0.894968142044561};
+
+    array_test("unit() 2", expected, actual, 3);
+
+    vec = (double*)(double[3]){218961962953.224, 11038749223.2812, 38367764388851.1};
+    actual = unit(vec);
+    expected = (double*)(double[3]) {0.00570683207063089, 0.000287704227394504, 0.999983674513737};
+
+    array_test_delta("unit() 3", expected, actual, 3, 1e-10);
+    // La norma sale chunga, perdemos precision
+}
+
 int main()
 {
     test_Position();
@@ -324,5 +347,6 @@ int main()
     test_R_x();
     test_R_y();
     test_R_z();
+    test_unit();
     return MatlabUtilsTest();
 }
