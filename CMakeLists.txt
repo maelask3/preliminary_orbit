@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.1)
 
 project(POrbitD)
 
+set(p_version 0.1.1)
 
 set(N_LIBS
     m)
@@ -33,12 +34,15 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 99)
 set_property(TARGET ${PROJECT_NAME} PROPERTY ENABLE_EXPORTS TRUE)
 
 if(docs)
-    execute_process(
-        COMMAND git rev-parse HEAD
-        OUTPUT_VARIABLE rev)
-    string(STRIP ${rev} rev)
+    if(NOT p_version)
+        execute_process(
+            COMMAND git rev-parse HEAD
+            OUTPUT_VARIABLE rev)
+        string(STRIP ${rev} rev)
+        set(p_version ${rev})
+    endif()
     add_custom_target(docs
-        COMMAND PROJECT_NUMBER=${rev} doxygen Doxyfile)
+        COMMAND PROJECT_NUMBER=${p_version} doxygen Doxyfile)
 endif()
 
 target_link_libraries(${PROJECT_NAME} ${N_LIBS})
