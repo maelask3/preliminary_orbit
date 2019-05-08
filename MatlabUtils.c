@@ -205,3 +205,37 @@ double **transposeMatrix(double **m){
 	}
 	return transpose;
 }
+
+/**
+ * @brief Producto de un vector por un escalar
+ * @param v Vector
+ * @param n Escalar
+ * @return Devuelve un vector con cada componente de v multiplicada por n
+ */
+double *vectorScalarProduct(double *v, double n)
+{
+    double *res = calloc(3, sizeof(double));
+    for(int i=0; i<3; i++)
+    {
+        res[i] = n * v[i];
+    }
+
+    return res;
+}
+
+/**
+ * @brief Suma de vectores
+ * @param v1 Vector
+ * @param v2 Vector
+ * @return Devuelve un vector que tiene por componentes la suma de aquellas de v1 y v2
+ */
+double *sumVector(double *v1, double *v2)
+{
+    double *res = calloc(3, sizeof(double));
+    for(int i=0; i<3; i++)
+    {
+        res[i] = v1[i] + v2[i];
+    }
+
+    return res;
+}

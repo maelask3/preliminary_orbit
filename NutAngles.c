@@ -6,7 +6,7 @@
 
 void NutAngles(double Mjd_TT, double *dpsi, double *deps)
 {
-    double T = (Mjd_TT-MJD_J2000)/36525;
+    double T = (Mjd_TT-(MJD_J2000))/36525;
     double T2 = T*T;
     double T3 = T2*T;
     double rev = 360 * 3600;

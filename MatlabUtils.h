@@ -22,5 +22,7 @@ double *cross(double *v1, double *v2);
 double **productMatrix(double **m1, double **m2);
 double **sumMatrix(double **m1, double **m2);
 double **transposeMatrix(double **m);
+double *vectorScalarProduct(double *v, double n);
+double *sumVector(double *v1, double *v2);
 
 #endif // MATLABUTILS_H
