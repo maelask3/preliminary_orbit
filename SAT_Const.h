@@ -5,7 +5,7 @@
  */
 #ifndef SAT_CONST_H
 #define SAT_CONST_H
-
+#define DELTA 1e-12
 #define pi 3.14159265358979323846
 
 #define pi2 6.28318530717959

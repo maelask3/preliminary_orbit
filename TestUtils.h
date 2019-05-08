@@ -1,6 +1,6 @@
 #ifndef TESTUTILS_H
 #define TESTUTILS_H
-#define DELTA 10e-12
+#define DELTA 1e-12
 
 void array_pretty_print(double *v, int sz);
 void matrix_pretty_print(double **m, int rows, int cols);
