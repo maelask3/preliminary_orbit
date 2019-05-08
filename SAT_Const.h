@@ -6,14 +6,12 @@
 #ifndef SAT_CONST_H
 #define SAT_CONST_H
 
-#ifndef M_PI
-    #define M_PI 3.14159265358979323846
-#endif
+#define pi 3.14159265358979323846
 
-#define pi2 2.0*M_PI
-#define Rad M_PI/180.0
-#define Deg 180.0/M_PI
-#define Arcs  3600.0*180.0/M_PI
+#define pi2 2.0*pi
+#define Rad pi/180.0
+#define Deg 180.0/pi
+#define Arcs  3600.0*180.0/pi
 
 #define MJD_J2000 51544.5
 #define T_B1950 -0.500002018
