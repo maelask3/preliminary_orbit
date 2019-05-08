@@ -12,6 +12,7 @@
 #include "unit.h"
 #include "EqnEquinox.h"
 #include "gmst.h"
+#include "NutMatrix.h"
 #include <stdlib.h>
 
 void test_Position()
@@ -388,6 +389,47 @@ void test_gmst()
     double_test_delta("gmst() 3", expected, actual, 1e-10);
 }
 
+void test_NutMatrix()
+{
+    double in;
+    double **expected = malloc(3 * sizeof(double*));
+    double **actual;
+
+    in = 54977.6676696643;
+    expected[0] = (double*)(double[3]) {0.999999997896984, -5.95170051004573e-5, -2.58022713429399e-5};
+    expected[1] = (double*)(double[3]) {5.95164295625406e-5, 0.999999997980121, -2.23059014984317e-5};
+    expected[2] = (double*)(double[3]) {2.58035988712757e-5, 2.23043657924249e-5, 0.999999999418345};
+
+    actual = NutMatrix(in);
+
+    matrix_test("NutMatrix() 1", expected, actual, 3, 3);
+
+    free(actual);
+
+    in = 53989.1991812154;
+    expected[0] = (double*)(double[3]) {0.999999999974807, -6.51263906813664e-6, -2.82345706801941e-6};
+    expected[1] = (double*)(double[3]) {6.51250710857693e-6, 0.999999998886743, -4.67343651293639e-5};
+    expected[2] = (double*)(double[3]) {2.82376142892835e-6, 4.67343467404624e-5, 0.999999998903964};
+
+    actual = NutMatrix(in);
+
+    matrix_test("NutMatrix() 2", expected, actual, 3, 3);
+
+    free(actual);
+
+    in = 55565.9051733796;
+    expected[0] = (double*)(double[3]) {0.999999996178561, -8.02104091001633e-5, -3.47730872384987e-5};
+    expected[1] = (double*)(double[3]) {8.02104352944664e-5, 0.99999999678286, 7.51898494688596e-7};
+    expected[2] = (double*)(double[3]) {3.47730268165429e-5, -7.54687656367992e-07, 0.999999999395134};
+
+    actual = NutMatrix(in);
+
+    matrix_test("NutMatrix() 3", expected, actual, 3, 3);
+
+    free(actual);
+    free(expected);
+}
+
 int main()
 {
     MatlabUtilsTest();
@@ -403,5 +445,6 @@ int main()
     test_unit();
     test_EqnEquinox();
     test_gmst();
+    test_NutMatrix();
     return 0;
 }

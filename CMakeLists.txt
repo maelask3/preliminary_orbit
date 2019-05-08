@@ -40,6 +40,8 @@ set(COMMON_SOURCES
     "EqnEquinox.c"
     "gmst.h"
     "gmst.c"
+    "NutMatrix.h"
+    "NutMatrix.c"
 )
 set(TEST_SOURCES
     ${COMMON_SOURCES}
