@@ -117,6 +117,17 @@ int roots(double *coef, double **sols_reales)
 }
 
 /**
+ * @brief Redondea un número al entero más cercano a 0
+ * @param in Número
+ * @return Redondea hacia arriba si in es negativo, y hacia abajo si in es positivo.
+ */
+
+double fix(double in)
+{
+    return (in>0) ? floor(in) : ceil(in);
+}
+
+/**
  * @brief Calcula el producto cruzado de dos vectores de tamaño 3 .
  * @param v1 es un vector de doubles de tamaño 3 .
  * @param v2 es un vector de doubles de tamaño 3 .

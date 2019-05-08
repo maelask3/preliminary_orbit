@@ -177,6 +177,18 @@ void test_transpuesta()
     free(tt);
 }
 
+void test_fix()
+{
+    double a = -1.;
+    double b = -69.420;
+    double c = 13.69;
+    double d = 2.;
+
+    double_test("fix() 1", fix(a), -1.);
+    double_test("fix() 2", fix(b), -69.);
+    double_test("fix() 3", fix(c), 13.);
+    double_test("fix() 4", fix(d), 2.);
+}
 int MatlabUtilsTest()
 {
     test_norm();
@@ -190,5 +202,6 @@ int MatlabUtilsTest()
     test_producto();
     test_suma();
     test_transpuesta();
+    test_fix();
     return 0;
 }

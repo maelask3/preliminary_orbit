@@ -16,6 +16,8 @@ set(COMMON_SOURCES
     "SAT_Const.h"
     "Position.h"
     "Position.c"
+    "Mjday.h"
+    "Mjday.c"
 )
 set(TEST_SOURCES
     ${COMMON_SOURCES}
