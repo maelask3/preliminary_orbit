@@ -36,6 +36,8 @@ set(COMMON_SOURCES
     "unit.c"
     "IERS.h"
     "IERS.c"
+    "EqnEquinox.h"
+    "EqnEquinox.c"
 )
 set(TEST_SOURCES
     ${COMMON_SOURCES}

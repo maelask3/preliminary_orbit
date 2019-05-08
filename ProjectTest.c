@@ -10,6 +10,7 @@
 #include "R_y.h"
 #include "R_z.h"
 #include "unit.h"
+#include "EqnEquinox.h"
 #include <stdlib.h>
 
 void test_Position()
@@ -336,8 +337,34 @@ void test_unit()
     // La norma sale chunga, perdemos precision
 }
 
+void test_EqnEquinox()
+{
+    double in;
+    double expected;
+    double actual;
+
+    in = 54977.6676696643;
+    expected = 5.95170051422054e-5;
+    actual = EqnEquinox(in);
+
+    double_test("EqnEquinox() 1", expected, actual);
+
+    in = 55565.9051733796;
+    expected = 8.02104092023363e-5;
+    actual = EqnEquinox(in);
+
+    double_test("EqnEquinox() 2", expected, actual);
+
+    in = 54332.4868655555;
+    expected = 3.23022519949022e-5;
+    actual = EqnEquinox(in);
+
+    double_test("EqnEquinox() 3", expected, actual);
+}
+
 int main()
 {
+    MatlabUtilsTest();
     test_Position();
     test_Mjday();
     test_MeanObliquity();
@@ -348,5 +375,6 @@ int main()
     test_R_y();
     test_R_z();
     test_unit();
-    return MatlabUtilsTest();
+    test_EqnEquinox();
+    return 0;
 }
