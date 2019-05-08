@@ -97,5 +97,5 @@ void anglesdr(double rtasc1, double rtasc2, double rtasc3, double decl1, double 
 
 	f  = 1 - a/magr2*(1-cos(deltae32));
 	g  = t3 - sqrt((a*a*a)/GM_Earth)*(deltae32-sin(deltae32));
-	v2 = (r3 - f*r2)/g;
+	v2 = vectorProductDouble(sumVector(r3, vectorProductDouble(r2, -1.0*f)),(1.0/g));
 }
