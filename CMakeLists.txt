@@ -18,6 +18,10 @@ set(COMMON_SOURCES
     "Position.c"
     "Mjday.h"
     "Mjday.c"
+    "MeanObliquity.c"
+    "MeanObliquity.h"
+    "NutAngles.h"
+    "NutAngles.c"
 )
 set(TEST_SOURCES
     ${COMMON_SOURCES}

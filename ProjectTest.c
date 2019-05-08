@@ -2,6 +2,8 @@
 #include "MatlabUtilsTest.h"
 #include "Position.h"
 #include "Mjday.h"
+#include "MeanObliquity.h"
+#include "NutAngles.h"
 #include <stdlib.h>
 
 void test_Position()
@@ -70,9 +72,72 @@ void test_Mjday()
     actual = Mjday(year, month, day, hour, min, sec);
     double_test("Mjday() 3", expected, actual);
 }
+
+void test_MeanObliquity()
+{
+    double Mjd_TT;
+    double expected;
+    double actual;
+
+    Mjd_TT = 54977.667669664253;
+    expected = 0.409071470559;
+    actual = MeanObliquity(Mjd_TT);
+
+    double_test("MeanObliquity() 1", expected, actual);
+
+    Mjd_TT = 55565.542970879585;
+    expected = 0.409067817510;
+    actual = MeanObliquity(Mjd_TT);
+
+    double_test("MeanObliquity() 2", expected, actual);
+
+    Mjd_TT = 53989.199181215423;
+    expected = 0.409077612887;
+    actual = MeanObliquity(Mjd_TT);
+
+    double_test("MeanObliquity() 3", expected, actual);
+}
+
+void test_NutAngles()
+{
+    double Mjd_TT;
+    double exp_dpsi, exp_deps;
+    double dpsi = 0;
+    double deps = 0;
+
+    Mjd_TT = 54977.667669664253;
+    exp_dpsi = 0.000064869339;
+    exp_deps = 0.000022305134;
+
+    NutAngles(Mjd_TT, &dpsi, &deps);
+
+    double_test("NutAngles() 1, dpsi", exp_dpsi, dpsi);
+    double_test("NutAngles() 1, deps", exp_deps, deps);
+
+    Mjd_TT = 55565.542970879585;
+    exp_dpsi = 0.000087228574;
+    exp_deps = -0.000000813487;
+
+    NutAngles(Mjd_TT, &dpsi, &deps);
+
+    double_test("NutAngles() 2, dpsi", exp_dpsi, dpsi);
+    double_test("NutAngles() 2, deps", exp_deps, deps);
+
+    Mjd_TT = 53989.199181215423;
+    exp_dpsi = 0.000007098336;
+    exp_deps = 0.000046734356;
+
+    NutAngles(Mjd_TT, &dpsi, &deps);
+
+    double_test("NutAngles() 2, dpsi", exp_dpsi, dpsi);
+    double_test("NutAngles() 2, deps", exp_deps, deps);
+
+}
 int main()
 {
     test_Position();
     test_Mjday();
+    test_MeanObliquity();
+    test_NutAngles();
     return MatlabUtilsTest();
 }

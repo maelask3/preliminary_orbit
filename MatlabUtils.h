@@ -7,6 +7,7 @@
 #define MATLABUTILS_H
 #include <stdlib.h>
 #include <stdbool.h>
+#include <math.h>
 
 double norm(double *v);
 double dot(double *v1, double *v2);
@@ -16,6 +17,7 @@ double det(double **m);
 double det2x2(double **m);
 int roots(double *coef, double **sols_reales);
 double fix(double in);
+double mod(double a, double m);
 double *cross(double *v1, double *v2);
 double **productMatrix(double **m1, double **m2);
 double **sumMatrix(double **m1, double **m2);

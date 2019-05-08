@@ -128,6 +128,17 @@ double fix(double in)
 }
 
 /**
+ * @brief Devuelve el módulo de la división entre a y m
+ * @param a Dividendo
+ * @param m Divisor
+ * @return Devuelve el módulo b tal que b = a - m*floor(a/m)
+ */
+double mod(double a, double m)
+{
+    return a - m*floor(a/m);
+}
+
+/**
  * @brief Calcula el producto cruzado de dos vectores de tamaño 3 .
  * @param v1 es un vector de doubles de tamaño 3 .
  * @param v2 es un vector de doubles de tamaño 3 .

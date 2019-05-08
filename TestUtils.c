@@ -43,9 +43,16 @@ void double_test(char *test_name, double expected, double actual)
 {
     printf("================================================================================\n");
     printf("Now running test %s:\n",test_name);
-    printf("Actual = %lf\n", actual);
-    assert(fabs(expected - actual) < DELTA);
-    printf("Expected = %lf\n", expected);
+    FILE *os;
+    double diff = fabs(expected - actual);
+    if(diff > DELTA)
+        os = stderr;
+    else
+        os = stdout;
+    fprintf(os, "Actual = %lf\n", actual);
+    fprintf(os, "Expected = %lf\n", expected);
+    fprintf(os,"Divergence = %lf\n",diff);
+    assert(diff < DELTA);
     printf("PASS\n");
 }
 
