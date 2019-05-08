@@ -3,8 +3,8 @@
  * @author Davide Pérez y Millán Santamaría
  * @brief Definiciones de las funciones de MatlabUtils
  */
-#ifndef __MATLABUTILS_H
-#define __MATLABUTILS_H
+#ifndef MATLABUTILS_H
+#define MATLABUTILS_H
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -20,4 +20,4 @@ double **productMatrix(double **m1, double **m2);
 double **sumMatrix(double **m1, double **m2);
 double **transposeMatrix(double **m);
 
-#endif // __MATLABUTILS_H_
+#endif // MATLABUTILS_H
