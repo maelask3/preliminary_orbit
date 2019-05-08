@@ -4,6 +4,11 @@
 #include "Mjday.h"
 #include "MeanObliquity.h"
 #include "NutAngles.h"
+#include "timediff.h"
+#include "Frac.h"
+#include "R_x.h"
+#include "R_y.h"
+#include "R_z.h"
 #include <stdlib.h>
 
 void test_Position()
@@ -131,13 +136,193 @@ void test_NutAngles()
 
     double_test("NutAngles() 2, dpsi", exp_dpsi, dpsi);
     double_test("NutAngles() 2, deps", exp_deps, deps);
+}
+
+void test_timediff()
+{
+    double UT1_UTC = 0.258022690875596;
+    double TAI_UTC = 34;
+
+    double UT1_TAI_e = 0.;
+    double UTC_GPS_e = 0.;
+    double UT1_GPS_e = 0.;
+    double TT_UTC_e = 0.;
+    double GPS_UTC_e = 0.;
+
+    double UT1_TAI = 0.;
+    double UTC_GPS = 0.;
+    double UT1_GPS = 0.;
+    double TT_UTC = 0.;
+    double GPS_UTC = 0.;
+
+    UT1_UTC = 0.258022690875596;
+    TAI_UTC = 34;
+
+    UT1_TAI_e = -33.7419773091244;
+    UTC_GPS_e = -15;
+    UT1_GPS_e = -14.7419773091244;
+    TT_UTC_e = 66.184;
+    GPS_UTC_e = 15;
+
+    timediff(UT1_UTC, TAI_UTC, &UT1_TAI, &UTC_GPS, &UT1_GPS, &TT_UTC, &GPS_UTC);
+    double_test("timediff(), UT1_TAI", UT1_TAI_e, UT1_TAI);
+    double_test("timediff(), UTC_GPS", UTC_GPS_e, UTC_GPS);
+    double_test("timediff(), UT1_GPS", UT1_GPS_e, UT1_GPS);
+    double_test("timediff(), TT_UTC", TT_UTC_e, TT_UTC);
+    double_test("timediff(), GPS_UTC", GPS_UTC_e, GPS_UTC);
 
 }
+
+void test_Frac()
+{
+    double in;
+    double expected;
+    double actual;
+
+    in = 10.3456636914056;
+    expected = 0.3456636914056;
+    actual = Frac(in);
+    double_test("Frac() 1", expected, actual);
+
+    in = 10.352627149095715;
+    expected = 0.352627149095715;
+    actual = Frac(in);
+    double_test("Frac() 2", expected, actual);
+}
+
+void test_R_x()
+{
+    double in;
+    double **expected = malloc(3 * sizeof(double*));
+    double **actual;
+
+    in = -0.409093775692299;
+    expected[0] = (double*)(double[3]) {1., 0., 0.};
+    expected[1] = (double*)(double[3]) {0., 0.917481675640187, -0.397778047237997};
+    expected[2] = (double*)(double[3]) {0., 0.397778047237997, 0.917481675640187};
+
+    actual = R_x(in);
+
+    matrix_test("R_x() 1", expected, actual, 3, 3);
+
+    free(actual);
+
+    in = 0.409071470558628;
+    expected[0] = (double*)(double[3]) {1., 0., 0.};
+    expected[1] = (double*)(double[3]) {0., 0.917490547904469, 0.397757582587632};
+    expected[2] = (double*)(double[3]) {0., -0.397757582587632, 0.917490547904469};
+
+    actual = R_x(in);
+
+    matrix_test("R_x() 2", expected, actual, 3, 3);
+
+    free(actual);
+
+    in = -2.56777193042581e-6;
+    expected[0] = (double*)(double[3]) {1., 0., 0.};
+    expected[1] = (double*)(double[3]) {0., 0.999999999996703, -2.56777193042298e-6};
+    expected[2] = (double*)(double[3]) {0., 2.56777193042298e-6, 0.999999999996703};
+
+    actual = R_x(in);
+
+    matrix_test("R_x() 3", expected, actual, 3, 3);
+
+    free(actual);
+    free(expected);
+}
+
+void test_R_y()
+{
+    double in;
+    double **expected = malloc(3 * sizeof(double*));
+    double **actual;
+
+    in = 0.000913347353936069;
+    expected[0] = (double*)(double[3]) {0.999999582898335, 0., -0.000913347226949831};
+    expected[1] = (double*)(double[3]) {0., 1., 0.};
+    expected[2] = (double*)(double[3]) {0.000913347226949831, 0. , 0.999999582898335};
+
+    actual = R_y(in);
+
+    matrix_test("R_y() 1", expected, actual, 3, 3);
+
+    free(actual);
+
+    in = -7.57892008067929e-8;
+    expected[0] = (double*)(double[3]) {0.999999999999997, 0., 7.57892008067929e-8};
+    expected[1] = (double*)(double[3]) {0., 1., 0.};
+    expected[2] = (double*)(double[3]) {-7.57892008067929e-8, 0., 0.999999999999997};
+
+    actual = R_y(in);
+
+    matrix_test("R_y() 2", expected, actual, 3, 3);
+
+    free(actual);
+
+    in = 0.000913349201373003;
+    expected[0] = (double*)(double[3]) {0.999999582896647, 0., -0.000913349074385995};
+    expected[1] = (double*)(double[3]) {0., 1., 0.};
+    expected[2] = (double*)(double[3]) {0.000913349074385995, 0., 0.999999582896647};
+
+    actual = R_y(in);
+
+    matrix_test("R_y() 3", expected, actual, 3, 3);
+
+    free(actual);
+    free(expected);
+}
+
+void test_R_z()
+{
+    double in;
+    double **expected = malloc(3 * sizeof(double*));
+    double **actual;
+
+    in = -0.001050992069582;
+    expected[0] = (double*)(double[3]) {0.999999447707886, -0.00105099187608332, 0.};
+    expected[1] = (double*)(double[3]) {0.00105099187608332, 0.999999447707886, 0.};
+    expected[2] = (double*)(double[3]) {0., 0., 1.};
+
+    actual = R_z(in);
+
+    matrix_test("R_z() 1", expected, actual, 3, 3);
+
+    free(actual);
+
+    in = 2.17192854407046;
+    expected[0] = (double*)(double[3]) {-0.565576570524664, 0.824695788077977, 0.};
+    expected[1] = (double*)(double[3]) {-0.824695788077977, -0.565576570524664, 0.};
+    expected[2] = (double*)(double[3]) {0., 0., 1.};
+
+    actual = R_z(in);
+
+    matrix_test("R_z() 2", expected, actual, 3, 3);
+
+    free(actual);
+
+    in = 2.50337730618796;
+    expected[0] = (double*)(double[3]) {-0.803160266383483, 0.595763028814992, 0.};
+    expected[1] = (double*)(double[3]) {-0.595763028814992, -0.803160266383483, 0.};
+    expected[2] = (double*)(double[3]) {0., 0., 1.};
+
+    actual = R_z(in);
+
+    matrix_test("R_z() 3", expected, actual, 3, 3);
+
+    free(actual);
+    free(expected);
+}
+
 int main()
 {
     test_Position();
     test_Mjday();
     test_MeanObliquity();
     test_NutAngles();
+    test_timediff();
+    test_Frac();
+    test_R_x();
+    test_R_y();
+    test_R_z();
     return MatlabUtilsTest();
 }

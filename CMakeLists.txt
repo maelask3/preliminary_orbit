@@ -22,6 +22,16 @@ set(COMMON_SOURCES
     "MeanObliquity.h"
     "NutAngles.h"
     "NutAngles.c"
+    "timediff.h"
+    "timediff.c"
+    "Frac.h"
+    "Frac.c"
+    "R_x.h"
+    "R_x.c"
+    "R_y.h"
+    "R_y.c"
+    "R_z.h"
+    "R_z.c"
 )
 set(TEST_SOURCES
     ${COMMON_SOURCES}
