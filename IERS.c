@@ -38,6 +38,12 @@ void IERS(double **eop, int eop_length, double Mjd_UTC, char interp, double *UT1
         *y_pole /= Arcs;
         *ddpsi /= Arcs;
         *ddeps /= Arcs;
+
+        if(preeop)
+            free(preeop);
+        if(nexteop)
+            free(nexteop);
+
     } else if(interp == 'n') {
 
         double mj = floor(Mjd_UTC);
@@ -58,5 +64,8 @@ void IERS(double **eop, int eop_length, double Mjd_UTC, char interp, double *UT1
         *y_pole = cureop[5]/Arcs;
         *ddpsi = cureop[8]/Arcs;
         *ddeps = cureop[9]/Arcs;
+
+        if(cureop)
+            free(cureop);
     }
 }
