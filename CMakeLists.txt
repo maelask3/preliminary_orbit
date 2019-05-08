@@ -38,6 +38,8 @@ set(COMMON_SOURCES
     "IERS.c"
     "EqnEquinox.h"
     "EqnEquinox.c"
+    "gmst.h"
+    "gmst.c"
 )
 set(TEST_SOURCES
     ${COMMON_SOURCES}

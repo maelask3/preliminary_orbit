@@ -11,6 +11,7 @@
 #include "R_z.h"
 #include "unit.h"
 #include "EqnEquinox.h"
+#include "gmst.h"
 #include <stdlib.h>
 
 void test_Position()
@@ -362,6 +363,31 @@ void test_EqnEquinox()
     double_test("EqnEquinox() 3", expected, actual);
 }
 
+void test_gmst()
+{
+    double in;
+    double expected;
+    double actual;
+
+    in = 54977.6669066321;
+    expected = 2.17186902706532;
+    actual = gmst(in);
+
+    double_test_delta("gmst() 1", expected, actual, 1e-10);
+
+    in = 53989.1984286448;
+    expected = 1.07347347929379;
+    actual = gmst(in);
+
+    double_test_delta("gmst() 2", expected, actual, 1e-9);
+
+    in = 55565.9044057253;
+    expected = 1.21707647675569;
+    actual = gmst(in);
+
+    double_test_delta("gmst() 3", expected, actual, 1e-10);
+}
+
 int main()
 {
     MatlabUtilsTest();
@@ -376,5 +402,6 @@ int main()
     test_R_z();
     test_unit();
     test_EqnEquinox();
+    test_gmst();
     return 0;
 }

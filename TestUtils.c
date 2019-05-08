@@ -39,21 +39,26 @@ void matrix_test(char *test_name, double **expected, double **actual, int rows, 
     printf("PASS\n");
 }
 
-void double_test(char *test_name, double expected, double actual)
+void double_test_delta(char *test_name, double expected, double actual, double delta)
 {
     printf("================================================================================\n");
     printf("Now running test %s:\n",test_name);
     FILE *os;
     double diff = fabs(expected - actual);
-    if(diff > DELTA)
+    if(diff > delta)
         os = stderr;
     else
         os = stdout;
     fprintf(os, "Actual = %lf\n", actual);
     fprintf(os, "Expected = %lf\n", expected);
     fprintf(os,"Divergence = %lf\n",diff);
-    assert(diff < DELTA);
+    assert(diff < delta);
     printf("PASS\n");
+}
+
+void double_test(char *test_name, double expected, double actual)
+{
+    double_test_delta(test_name, expected, actual, DELTA);
 }
 
 void array_test_delta(char *test_name, double *expected, double *actual, int sz, double delta)
