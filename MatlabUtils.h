@@ -1,4 +1,4 @@
-/* 
+/** 
  * @file MatlabUtils.h
  * @author Davide Pérez y Millán Santamaría
  * @brief Definiciones de las funciones de MatlabUtils
