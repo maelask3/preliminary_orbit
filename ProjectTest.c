@@ -18,6 +18,7 @@
 #include "newtonnu.h"
 #include "rv2coe.h"
 #include "gibbs.h"
+#include "hgibbs.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -468,6 +469,7 @@ void test_PrecMatrix()
 
     free(actual);
 
+
     Mjd_1 = 51544.5;
     Mjd_2 = 55565.9051733796;
     expected[0] = (double*)(double[3]) {0.999996396736129, -0.00246210631618179, -0.00106983514929105};
@@ -659,6 +661,50 @@ void test_gibbs()
     free(v2_a);
 }
 
+void test_hgibbs()
+{
+    double *r1;
+    double *r2;
+    double *r3;
+    double MJD1;
+    double MJD2;
+    double MJD3;
+
+    double *v2_e;
+    double **v2_a = malloc(sizeof(double*));
+    double theta_e;
+    double theta_a = 0.;
+    double theta1_e;
+    double theta1_a = 0.;
+    double copa_e;
+    double copa_a = 0.;
+    char *error_e = "          ok";
+    char **error_a = malloc(sizeof(char*));
+
+    r1 = (double*)(double[3]) {20387627.0717525, 1865163.69633389, -109943.688555792};
+    r2 = (double*)(double[3]) {20435422.3521528, 1070699.44671798, 1012905.49143388};
+    r3 = (double*)(double[3]) {20398157.066627, 271778.615869933, 2131538.39542067};
+    MJD1 = 55565.9044073611;
+    MJD2 = 55565.9078795835;
+    MJD3 = 55565.9113518056;
+
+    v2_e = (double*)(double[3]) {17.4309174158407, -2657.49386520115, 3738.39266893676};
+    theta_e = 0.0672088229314452;
+    theta1_e = 0.0670842334897569;
+    copa_e = 3.7999117741272e-15;
+
+    hgibbs(r1, r2, r3, MJD1, MJD2, MJD3, v2_a, &theta_a, &theta1_a, &copa_a, error_a);
+    array_test_delta("hgibbs() 1, v2", v2_e, *v2_a, 3, 1e-5);
+    double_test_delta("hgibbs() 1, theta", theta_e, theta_a, 1e-5);
+    double_test_delta("hgibbs() 1, theta_1", theta1_e, theta1_a, 1e-5);
+    double_test_delta("hgibbs() 1, copa", copa_e, copa_a, 1e-5);
+    printf("hgibbs() 1, error: %s\n", *error_a);
+
+    free(error_a);
+    free(v2_a);
+}
+
+
 int main()
 {
     MatlabUtilsTest();
@@ -683,5 +729,6 @@ int main()
     test_newtonnu();
     test_rv2coe();
     test_gibbs();
+    test_hgibbs();
     return 0;
 }

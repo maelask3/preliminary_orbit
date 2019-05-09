@@ -62,6 +62,8 @@ set(COMMON_SOURCES
     "rv2coe.c"
     "gibbs.h"
     "gibbs.c"
+    "hgibbs.h"
+    "hgibbs.c"
 )
 set(TEST_SOURCES
     ${COMMON_SOURCES}
