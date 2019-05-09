@@ -225,11 +225,43 @@ void test_timediff()
     GPS_UTC_e = 15;
 
     timediff(UT1_UTC, TAI_UTC, &UT1_TAI, &UTC_GPS, &UT1_GPS, &TT_UTC, &GPS_UTC);
-    double_test("timediff(), UT1_TAI", UT1_TAI_e, UT1_TAI);
-    double_test("timediff(), UTC_GPS", UTC_GPS_e, UTC_GPS);
-    double_test("timediff(), UT1_GPS", UT1_GPS_e, UT1_GPS);
-    double_test("timediff(), TT_UTC", TT_UTC_e, TT_UTC);
-    double_test("timediff(), GPS_UTC", GPS_UTC_e, GPS_UTC);
+    double_test("timediff() 1, UT1_TAI", UT1_TAI_e, UT1_TAI);
+    double_test("timediff() 1, UTC_GPS", UTC_GPS_e, UTC_GPS);
+    double_test("timediff() 1, UT1_GPS", UT1_GPS_e, UT1_GPS);
+    double_test("timediff() 1, TT_UTC", TT_UTC_e, TT_UTC);
+    double_test("timediff() 1, GPS_UTC", GPS_UTC_e, GPS_UTC);
+
+    UT1_UTC = 0.161894409590604;
+    TAI_UTC = 33;
+
+    UT1_TAI_e = -32.8381055904094;
+    UTC_GPS_e = -14;
+    UT1_GPS_e = -13.8381055904094;
+    TT_UTC_e = 65.184;
+    GPS_UTC_e = 14;
+
+    timediff(UT1_UTC, TAI_UTC, &UT1_TAI, &UTC_GPS, &UT1_GPS, &TT_UTC, &GPS_UTC);
+    double_test("timediff() 2, UT1_TAI", UT1_TAI_e, UT1_TAI);
+    double_test("timediff() 2, UTC_GPS", UTC_GPS_e, UTC_GPS);
+    double_test("timediff() 2, UT1_GPS", UT1_GPS_e, UT1_GPS);
+    double_test("timediff() 2, TT_UTC", TT_UTC_e, TT_UTC);
+    double_test("timediff() 2, GPS_UTC", GPS_UTC_e, GPS_UTC);
+
+    UT1_UTC = -0.141329177689613;
+    TAI_UTC = 34;
+
+    UT1_TAI_e = -34.1413291776896;
+    UTC_GPS_e = -15;
+    UT1_GPS_e = -15.1413291776896;
+    TT_UTC_e = 66.184;
+    GPS_UTC_e = 15;
+
+    timediff(UT1_UTC, TAI_UTC, &UT1_TAI, &UTC_GPS, &UT1_GPS, &TT_UTC, &GPS_UTC);
+    double_test("timediff() 3, UT1_TAI", UT1_TAI_e, UT1_TAI);
+    double_test("timediff() 3, UTC_GPS", UTC_GPS_e, UTC_GPS);
+    double_test("timediff() 3, UT1_GPS", UT1_GPS_e, UT1_GPS);
+    double_test("timediff() 3, TT_UTC", TT_UTC_e, TT_UTC);
+    double_test("timediff() 3, GPS_UTC", GPS_UTC_e, GPS_UTC);
 
 }
 
@@ -670,6 +702,90 @@ void test_rv2coe()
     double_test_delta("rv2coe() 1, arglat", arglat_e, arglat_a, 1e-7);
     double_test_delta("rv2coe() 1, truelon", truelon_e, truelon_a, 1e-7);
     double_test_delta("rv2coe() 1, lonper", lonper_e, lonper_a, 1e-7);
+
+    r = (double*)(double[3]) {20435422.3521528, 1070699.44671798, 1012905.49143388};
+    v = (double*)(double[3]) {17.1964697822141, -2657.51027611546, 3738.38685080841};
+
+    p_e = 22151801.03597;
+    a_e = 22303727.6412011;
+    ecc_e = 0.0825331061735532;
+    incl_e = 2.18724254265762;
+    omega_e = 0.0874259916432499;
+    argp_e = 6.16261219029842;
+    nu_e = 0.181200311058077;
+    m_e = 0.153174331359043;
+    arglat_e = 999999.1;
+    truelon_e = 999999.1;
+    lonper_e = 999999.1;
+
+    rv2coe(r, v, &p_a, &a_a, &ecc_a, &incl_a, &omega_a, &argp_a, &nu_a, &m_a, &arglat_a, &truelon_a, &lonper_a);
+    double_test_delta("rv2coe() 1, p", p_e, p_a, 1e-7);
+    double_test_delta("rv2coe() 1, a", a_e, a_a, 1e-7);
+    double_test_delta("rv2coe() 1, ecc", ecc_e, ecc_a, 1e-7);
+    double_test_delta("rv2coe() 1, incl", incl_e, incl_a, 1e-7);
+    double_test_delta("rv2coe() 1, omega", omega_e, omega_a, 1e-7);
+    double_test_delta("rv2coe() 1, argp", argp_e, argp_a, 1e-7);
+    double_test_delta("rv2coe() 1, nu", nu_e, nu_a, 1e-7);
+    double_test_delta("rv2coe() 1, m", m_e, m_a, 1e-7);
+    double_test_delta("rv2coe() 1, arglat", arglat_e, arglat_a, 1e-7);
+    double_test_delta("rv2coe() 1, truelon", truelon_e, truelon_a, 1e-7);
+    double_test_delta("rv2coe() 1, lonper", lonper_e, lonper_a, 1e-7);
+
+    r = (double*)(double[3]) {20456329.59102, 1074191.36683764, 1009857.02167871};
+    v = (double*)(double[3]) {17.65947569117, -2661.67627260563, 3743.57355524522};
+
+    p_e = 22261413.248;
+    a_e = 22429994.9312672;
+    ecc_e = 0.0866943121616373;
+    incl_e = 2.18733488568995;
+    omega_e = 0.0874080715365788;
+    argp_e = 6.17226628944973;
+    nu_e = 0.171305852271464;
+    m_e = 0.143542791750356;
+    arglat_e = 999999.1;
+    truelon_e = 999999.1;
+    lonper_e = 999999.1;
+
+    rv2coe(r, v, &p_a, &a_a, &ecc_a, &incl_a, &omega_a, &argp_a, &nu_a, &m_a, &arglat_a, &truelon_a, &lonper_a);
+    double_test_delta("rv2coe() 2, p", p_e, p_a, 1e-7);
+    double_test_delta("rv2coe() 2, a", a_e, a_a, 1e-7);
+    double_test_delta("rv2coe() 2, ecc", ecc_e, ecc_a, 1e-7);
+    double_test_delta("rv2coe() 2, incl", incl_e, incl_a, 1e-7);
+    double_test_delta("rv2coe() 2, omega", omega_e, omega_a, 1e-7);
+    double_test_delta("rv2coe() 2, argp", argp_e, argp_a, 1e-7);
+    double_test_delta("rv2coe() 2, nu", nu_e, nu_a, 1e-7);
+    double_test_delta("rv2coe() 2, m", m_e, m_a, 1e-7);
+    double_test_delta("rv2coe() 2, arglat", arglat_e, arglat_a, 1e-7);
+    double_test_delta("rv2coe() 2, truelon", truelon_e, truelon_a, 1e-7);
+    double_test_delta("rv2coe() 2, lonper", lonper_e, lonper_a, 1e-7);
+
+    r = (double*)(double[3]) {20418280.3742337, 1067836.39923634, 1015404.95114553};
+    v = (double*)(double[3]) {16.8797950242033, -2654.08002932642, 3734.12004615362};
+
+    p_e = 22062031.7358902;
+    a_e = 22201041.6868138;
+    ecc_e = 0.0791291077778817;
+    incl_e = 2.18716682303263;
+    omega_e = 0.0874406813869286;
+    argp_e = 6.15374268500789;
+    nu_e = 0.190267237462258;
+    m_e = 0.161997870558239;
+    arglat_e = 999999.1;
+    truelon_e = 999999.1;
+    lonper_e = 999999.1;
+
+    rv2coe(r, v, &p_a, &a_a, &ecc_a, &incl_a, &omega_a, &argp_a, &nu_a, &m_a, &arglat_a, &truelon_a, &lonper_a);
+    double_test_delta("rv2coe() 3, p", p_e, p_a, 1e-7);
+    double_test_delta("rv2coe() 3, a", a_e, a_a, 1e-7);
+    double_test_delta("rv2coe() 3, ecc", ecc_e, ecc_a, 1e-7);
+    double_test_delta("rv2coe() 3, incl", incl_e, incl_a, 1e-7);
+    double_test_delta("rv2coe() 3, omega", omega_e, omega_a, 1e-7);
+    double_test_delta("rv2coe() 3, argp", argp_e, argp_a, 1e-7);
+    double_test_delta("rv2coe() 3, nu", nu_e, nu_a, 1e-7);
+    double_test_delta("rv2coe() 3, m", m_e, m_a, 1e-7);
+    double_test_delta("rv2coe() 3, arglat", arglat_e, arglat_a, 1e-7);
+    double_test_delta("rv2coe() 3, truelon", truelon_e, truelon_a, 1e-7);
+    double_test_delta("rv2coe() 3, lonper", lonper_e, lonper_a, 1e-7);
 }
 
 void test_gibbs()
@@ -686,7 +802,6 @@ void test_gibbs()
     double theta1_a = 0.;
     double copa_e;
     double copa_a = 0.;
-    char *error_e = "          ok";
     char **error_a = malloc(sizeof(char*));
 
     r1 = (double*)(double[3]) {20387627.0717525, 1865163.69633389, -109943.688555792};
@@ -701,9 +816,41 @@ void test_gibbs()
     gibbs(r1, r2, r3, v2_a, &theta_a, &theta1_a, &copa_a, error_a);
     array_test_delta("gibbs() 1, v2", v2_e, *v2_a, 3, 1e-8);
     double_test("gibbs() 1, theta", theta_e, theta_a);
-    double_test("gibbs() 1, theta_1", theta1_e, theta1_a);
+    double_test("gibbs() 1, theta1", theta1_e, theta1_a);
     double_test("gibbs() 1, copa", copa_e, copa_a);
     printf("gibbs() 1, error: %s\n", *error_a);
+
+    r1 = (double*)(double[3]) {20408482.6529299, 1869905.83442963, -114536.670898212};
+    r2 = (double*)(double[3]) {20456329.59102, 1074191.36683764, 1009857.02167871};
+    r3 = (double*)(double[3]) {20418881.0278246, 273996.478037988, 2130041.98754454};
+
+    v2_e = (double*)(double[3]) {17.186561952237, -2657.52837349388, 3737.68478731819};
+    theta_e = 0.0672367668897752;
+    theta1_e = 0.0671148119703395;
+    copa_e = 4.05101299727484e-15;
+
+    gibbs(r1, r2, r3, v2_a, &theta_a, &theta1_a, &copa_a, error_a);
+    array_test_delta("gibbs() 2, v2", v2_e, *v2_a, 3, 1e-8);
+    double_test("gibbs() 2, theta", theta_e, theta_a);
+    double_test("gibbs() 2, theta1", theta1_e, theta1_a);
+    double_test("gibbs() 2, copa", copa_e, copa_a);
+    printf("gibbs() 2, error: %s\n", *error_a);
+
+    r1 = (double*)(double[3]) {20370508.3427359, 1861271.24297428, -106173.66558547};
+    r2 = (double*)(double[3]) {20418280.3742337, 1067836.39923634, 1015404.95114553};
+    r3 = (double*)(double[3]) {20381175.2942464, 269961.239831152, 2132764.5923672};
+
+    v2_e = (double*)(double[3]) {17.7055295650734, -2661.30974050285, 3744.38790483433};
+    theta_e = 0.0671856257189811;
+    theta1_e = 0.0670590138174247;
+    copa_e = 3.71360928119735e-15;
+
+    gibbs(r1, r2, r3, v2_a, &theta_a, &theta1_a, &copa_a, error_a);
+    array_test_delta("gibbs() 3, v2", v2_e, *v2_a, 3, 1e-8);
+    double_test("gibbs() 3, theta", theta_e, theta_a);
+    double_test("gibbs() 3, theta1", theta1_e, theta1_a);
+    double_test("gibbs() 3, copa", copa_e, copa_a);
+    printf("gibbs() 3, error: %s\n", *error_a);
 
     free(error_a);
     free(v2_a);
@@ -726,7 +873,6 @@ void test_hgibbs()
     double theta1_a = 0.;
     double copa_e;
     double copa_a = 0.;
-    char *error_e = "          ok";
     char **error_a = malloc(sizeof(char*));
 
     r1 = (double*)(double[3]) {20387627.0717525, 1865163.69633389, -109943.688555792};
@@ -747,6 +893,44 @@ void test_hgibbs()
     double_test_delta("hgibbs() 1, theta_1", theta1_e, theta1_a, 1e-5);
     double_test_delta("hgibbs() 1, copa", copa_e, copa_a, 1e-5);
     printf("hgibbs() 1, error: %s\n", *error_a);
+
+    r1 = (double*)(double[3]) {20370508.3427359, 1861271.24297428, -106173.66558547};
+    r2 = (double*)(double[3]) {20418280.3742337, 1067836.39923634, 1015404.95114553};
+    r3 = (double*)(double[3]) {20381175.2942464, 269961.239831152, 2132764.5923672};
+    MJD1 = 55565.9044073611;
+    MJD2 = 55565.9078795835;
+    MJD3 = 55565.9113518056;
+
+    v2_e = (double*)(double[3]) {17.6568312982272, -2654.03774223717, 3734.15636872436};
+    theta_e = 0.0671856257189811;
+    theta1_e = 0.0670590138174247;
+    copa_e = 3.71360928119735e-15;
+
+    hgibbs(r1, r2, r3, MJD1, MJD2, MJD3, v2_a, &theta_a, &theta1_a, &copa_a, error_a);
+    array_test_delta("hgibbs() 2, v2", v2_e, *v2_a, 3, 1e-5);
+    double_test_delta("hgibbs() 2, theta", theta_e, theta_a, 1e-5);
+    double_test_delta("hgibbs() 2, theta_1", theta1_e, theta1_a, 1e-5);
+    double_test_delta("hgibbs() 2, copa", copa_e, copa_a, 1e-5);
+    printf("hgibbs() 2, error: %s\n", *error_a);
+
+    r1 = (double*)(double[3]) {20408482.6529299, 1869905.83442963, -114536.670898212};
+    r2 = (double*)(double[3]) {20456329.59102, 1074191.36683764, 1009857.02167871};
+    r3 = (double*)(double[3]) {20418881.027846, 273996.478037988, 2130041.98754454};
+    MJD1 = 55565.9044073611;
+    MJD2 = 55565.9078795835;
+    MJD3 = 55565.9113518056;
+
+    v2_e = (double*)(double[3]) {17.214317816215, -2661.69814354476, 3743.54946393659};
+    theta_e = 0.0672367668897752;
+    theta1_e = 0.0671148119703395;
+    copa_e = 4.05101299727484e-15;
+
+    hgibbs(r1, r2, r3, MJD1, MJD2, MJD3, v2_a, &theta_a, &theta1_a, &copa_a, error_a);
+    array_test_delta("hgibbs() 3, v2", v2_e, *v2_a, 3, 1e-5);
+    double_test_delta("hgibbs() 3, theta", theta_e, theta_a, 1e-5);
+    double_test_delta("hgibbs() 3, theta_1", theta1_e, theta1_a, 1e-5);
+    double_test_delta("hgibbs() 3, copa", copa_e, copa_a, 1e-5);
+    printf("hgibbs() 3, error: %s\n", *error_a);
 
     free(error_a);
     free(v2_a);
