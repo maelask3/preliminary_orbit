@@ -68,7 +68,7 @@ set(TEST_SOURCES
 set(CMAKE_C_OUTPUT_EXTENSION_REPLACE ON)
 
 if(coverage)
-    add_compile_options(-Wall -Wextra -Werror -pedantic -g -fprofile-arcs -ftest-coverage)
+    add_compile_options(-Wall -Wextra -pedantic -g -fprofile-arcs -ftest-coverage)
     set(OBJECT_DIR ${CMAKE_BINARY_DIR}/CMakeFiles/${PROJECT_NAME}_test.dir)
     add_custom_target(coverage
         COMMAND gcov -o ${OBJECT_DIR} ${TEST_SOURCES})
@@ -76,7 +76,7 @@ if(coverage)
         ${N_LIBS}
         gcov)
 elseif(NOT coverage)
-    add_compile_options(-Wall -Wextra -Werror -pedantic)
+    add_compile_options(-Wall -Wextra -pedantic)
 endif()
 
 #add_executable(${PROJECT_NAME} ${COMMON_SOURCES})
