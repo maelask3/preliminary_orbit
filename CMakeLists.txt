@@ -52,6 +52,8 @@ set(COMMON_SOURCES
     "gast.c"
     "GHAMatrix.h"
     "GHAMatrix.c"
+    "PrecMatrix.h"
+    "PrecMatrix.c"
 )
 set(TEST_SOURCES
     ${COMMON_SOURCES}

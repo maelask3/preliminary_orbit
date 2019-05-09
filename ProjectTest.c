@@ -13,6 +13,7 @@
 #include "EqnEquinox.h"
 #include "gmst.h"
 #include "NutMatrix.h"
+#include "PrecMatrix.h"
 #include <stdlib.h>
 
 void test_Position()
@@ -430,6 +431,51 @@ void test_NutMatrix()
     free(expected);
 }
 
+void test_PrecMatrix()
+{
+    double Mjd_1;
+    double Mjd_2;
+    double **expected = malloc(3 * sizeof(double*));
+    double **actual;
+
+    Mjd_1 = 51544.5;
+    Mjd_2 = 54977.66766966443;
+    expected[0] = (double*)(double[3]) {0.999997373802329, -0.00210194819368335, -0.00091334672251536};
+    expected[1] = (double*)(double[3]) {0.00210194819366918, 0.999997790903995, -9.59920515567498e-7};
+    expected[2] = (double*)(double[3]) {0.000913346722547957, -9.59889498958352e-7,0.999999582898335};
+
+    actual = PrecMatrix(Mjd_1, Mjd_2);
+
+    matrix_test_delta("PrecMatrix() 1", expected, actual, 3, 3, 1e-11);
+
+    free(actual);
+
+    Mjd_1 = 51544.5;
+    Mjd_2 = 53989.1991812154;
+    expected[0] = (double*)(double[3]) {0.999998668371322, -0.00149674925171971, -0.000650382395108268};
+    expected[1] = (double*)(double[3]) {0.00149674925171607, 0.999998879870093, -4.86735605256216e-7};
+    expected[2] = (double*)(double[3]) {0.000650382395116649, -4.86724406102476e-7, 0.999999788501229};
+
+    actual = PrecMatrix(Mjd_1, Mjd_2);
+
+    matrix_test("PrecMatrix() 2", expected, actual, 3, 3);
+
+    free(actual);
+
+    Mjd_1 = 51544.5;
+    Mjd_2 = 55565.9051733796;
+    expected[0] = (double*)(double[3]) {0.999996396736129, -0.00246210631618179, -0.00106983514929105};
+    expected[1] = (double*)(double[3]) {0.00246210631615512, 0.999996969010783, -1.3170512357239e-6};
+    expected[2] = (double*)(double[3]) {0.00106983514935241, -1.31700138827348e-6, 0.999999427725346};
+
+    actual = PrecMatrix(Mjd_1, Mjd_2);
+
+    matrix_test_delta("PrecMatrix() 3", expected, actual, 3, 3, 1e-11);
+
+    free(actual);
+    free(expected);
+}
+
 int main()
 {
     MatlabUtilsTest();
@@ -446,5 +492,9 @@ int main()
     test_EqnEquinox();
     test_gmst();
     test_NutMatrix();
+    //test_IERS();
+    //test_gast();
+    //test_GHAMatrix();
+    test_PrecMatrix();
     return 0;
 }

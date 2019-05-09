@@ -28,18 +28,18 @@ void anglesdr(double rtasc1, double rtasc2, double rtasc3, double decl1, double 
 
 	double magrsite1 = norm(rsite1);
 	double magrsite2 = norm(rsite2);
-	double magrsite3 = norm(rsite3);
+    //double magrsite3 = norm(rsite3); //error por variable no utilizada
 
 	double cc1 = 2*dot(los1,rsite1);
 	double cc2 = 2*dot(los2,rsite2);
 
 	int ll=0;
 	
-	double f1, f2, q1, magr1, magr2, a, deltae32, f, g, magr1o, deltar1, magr2o, deltar2, f1delr2, f2delr2, q3, pf1pr2, pf2pr2, delta, pf1pr1, pf2pr1, delta1, delta2;
-	double *r3;
+    double f1, f2, q1, magr1, magr2, a, deltae32, f, g, magr1o=0., deltar1, magr2o, deltar2, f1delr2, f2delr2, q3, pf1pr2, pf2pr2, delta, pf1pr1=0., pf2pr1=0., delta1, delta2;
+    double *r3 = NULL;
 	while(fabs(magr1in-magr1old) > tol && fabs(magr2in-magr2old) > tol && ll<=3){
 		ll = ll+1;
-		double *r3 = (double*) malloc(3*sizeof(double));
+        r3 = (double*) malloc(3*sizeof(double));
 		double *aux = doubler(cc1,cc2,magrsite1,magrsite2,magr1in,magr2in,los1,los2,los3,rsite1,rsite2,rsite3,t1,t3,direct, r2, r3);
 		f1 = aux[0];
 		f2 = aux[1];

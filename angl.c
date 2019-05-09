@@ -15,7 +15,8 @@ double angl(double *vec1, double *vec2){
 	double magv2 = norm(vec2);
 	
 	double theta;
-	if(magv1*magv2 > small^2){
+    if(magv1*magv2 > (small*small))
+    {
 		double temp = dot(vec1, vec2)/(magv1*magv2);
 		if(fabs(temp) > 1){
 			temp = sign(temp);
@@ -24,4 +25,6 @@ double angl(double *vec1, double *vec2){
 	}else{
 		theta = undefined;
 	}
+
+    return theta;
 }
