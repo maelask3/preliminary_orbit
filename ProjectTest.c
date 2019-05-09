@@ -19,6 +19,7 @@
 #include "rv2coe.h"
 #include "gibbs.h"
 #include "hgibbs.h"
+#include "IERS.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -702,6 +703,64 @@ void test_hgibbs()
 
     free(error_a);
     free(v2_a);
+}
+
+void test_IERS()
+{
+    FILE *fp = fopen("/home/ad.mthree.es/meoberto/POrbitD/eop19620101.txt","r");
+    double **eopdata = malloc(20026 * sizeof(double*));
+    char line[103];
+    double *alias;
+    int a = 0, b = 0, c = 0, d = 0, final = 0;
+    float e = 0.f, f =0.f, g= 0.f, h =0.f, m=0.f, j = 0.f, k = 0.f, l = 0.f;
+    for(int i=0; i<20026 && !feof(fp); i++)
+    {
+        eopdata[i] = malloc(13 * sizeof(double));
+        fgets(line, 255, fp);
+        sscanf(line, "%d %d %d %d %f %f %f %f %f %f %f %f %d ", &a,  &b,  &c,  &d,  &e, &f,
+                 &g,  &h,  &m,  &j,  &k,  &l,  &final);
+
+        eopdata[i][0] = a;
+        eopdata[i][1] = b;
+        eopdata[i][2] = c;
+        eopdata[i][3] = d;
+        eopdata[i][4] = (double) e;
+        eopdata[i][5] = (double) f;
+        eopdata[i][6] = (double) g;
+        eopdata[i][7] = (double) h;
+        eopdata[i][8] = (double) m;
+        eopdata[i][9] = (double) j;
+        eopdata[i][10] = (double) k;
+        eopdata[i][11] = (double) l;
+        eopdata[i][12] = final;
+    }
+
+    double Mjd_UTC;
+    char interp;
+
+    double UT1_UTC_e;
+    double UT1_UTC_a = 0.;
+    double TAI_UTC_e;
+    double TAI_UTC_a = 0.;
+    double x_pole_e;
+    double x_pole_a = 0.;
+    double y_pole_e;
+    double y_pole_a = 0.;
+    double ddpsi_e;
+    double ddpsi_a = 0.;
+    double ddeps_e;
+    double ddeps_a = 0.;
+
+    Mjd_UTC = 54977.6669036457;
+    interp = 'l';
+
+    IERS(eopdata, 20026, Mjd_UTC, interp, &UT1_UTC_a, &TAI_UTC_a, &x_pole_a, &y_pole_a, &ddpsi_a, &ddeps_a);
+
+    fclose(fp);
+
+    for(int i=0; i<20026; i++)
+        free(eopdata[i]);
+    free(eopdata);
 }
 
 
