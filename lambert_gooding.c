@@ -16,25 +16,30 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_
 
 	if ( r1mag==0.0 || r2mag==0.0 || mu<=0.0 || tof<=0.0 )
 	{
-		fprintf('Error in solve_lambert_gooding: invalid input\n');
+		printf("Error in solve_lambert_gooding: invalid input\n");
     		return;
 	}
 	
-	bool solution_exists = false;
-	double dr       = r1mag - r2mag;
-	double r1r2     = r1mag*r2mag;
-	double r1hat    = r1/r1mag;
-	double r2hat    = r2/r2mag;
-	double r1xr2    = cross(r1,r2);
+	bool solution_exists[10];
+	solution_exists[0] = false;
+	double dr = r1mag - r2mag;
+	double r1r2 = r1mag*r2mag;
+	double *r1hat = vectorProductDouble(r1, (1.0/r1mag));
+	double *r2hat = vectorProductDouble(r2,(1.0/r2mag));
+	double *r1xr2 = cross(r1,r2);
 
 	if(r1xr2[0]!=0.0 && r1xr2[1]!=0.0 && r1xr2[2]!=0.0){
-		r1xr2={0.0,0.0,1.0};
+		r1xr2[0] = 0.0;
+		r1xr2[1] = 0.0;
+		r1xr2[2] = 1.0;
 	}
 	double *r1xr2_hat = unit(r1xr2);
 
         double pa = acos(fmax(-1.0,fmin(1.0,dot(r1hat,r2hat))));
 
 	int n_solutions;
+	double all_vt1[3][10], all_vt2[3][10];
+	
         for(int i = 0; i<multi_revs; i++)
         {
                 int num_revs = i;
@@ -43,7 +48,7 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_
                 if(long_way)
                 {
                         ta = num_revs*2.0*pi + (2.0*pi-pa);
-                        *rho   = vectorProductDouble(r1xr2_hat, -1.0);
+                        rho   = vectorProductDouble(r1xr2_hat, -1.0);
                 }else{
                         ta = num_revs*2.0*pi + pa;
                         rho = r1xr2_hat;
@@ -52,13 +57,14 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_
                 double *etai = cross(rho,r1hat);
                 double *etaf = cross(rho,r2hat);
 
-                double vri[2], vti[2], vrf[2], vrt[2];
-                int n = vlamb(mu,r1mag,r2mag,ta,tof, vri, vti, vrf, vrt);
+                double vri[2], vti[2], vrf[2], vtf[2];
+                int n = vlamb(mu,r1mag,r2mag,ta,tof,vri,vti,vrf,vtf);
 		
 		double vt1[3][2], vt2[3][2];
+		double *aux;
                 switch(n){
                         case 1 :
-				double *aux = sumVector(vectorProductDouble(r1hat, vri[0]), vectorProductDouble(etai, vti[0]));
+				aux = sumVector(vectorProductDouble(r1hat, vri[0]), vectorProductDouble(etai, vti[0]));
 				vt1[0][0] = aux[0];
 				vt1[1][0] = aux[1];
 				vt1[2][0] = aux[2];
@@ -68,7 +74,7 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_
                                 vt2[2][0] = aux[2];
                                 break;
                         case 2 :
-				double *aux = sumVector(vectorProductDouble(r1hat, vri[0]), vectorProductDouble(etai, vti[0]));
+				aux = sumVector(vectorProductDouble(r1hat, vri[0]), vectorProductDouble(etai, vti[0]));
                                 vt1[0][0] = aux[0];
                                 vt1[1][0] = aux[1];
                                 vt1[2][0] = aux[2];
@@ -86,8 +92,7 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_
                                 vt2[2][1] = aux[2];
                                 break;
                 }
-		double all_vt1[3][10], all_vt2[3][10];
-		bool solution_exists[10];
+		
 		if(i == 0 && n==1)
 		{
 			all_vt1[0][0] = vt1[0][0];
@@ -136,30 +141,27 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_
 		}
 		n_solutions = i;
 	}
-	double *v1, *v2;
-	v1 = zeros(3, n_solutions);
-	v2 = zeros(3, n_solutions);
 
 	int k = 0;
-	for(int i = 0; i<n_solutions, i++)
+	for(int i = 0; i<n_solutions; i++)
 	{
-		if(solution_exists(i))
+		if(solution_exists[i])
 		{
 			k = k+1;
-			v1[0][k] = all_vt1[0][i];
-                        v1[1][k] = all_vt1[1][i];
-                        v1[2][k] = all_vt1[2][i];
+			v1[0] = all_vt1[0][i];
+                        v1[1] = all_vt1[1][i];
+                        v1[2] = all_vt1[2][i];
 
-                        v2[0][k] = all_vt2[0][i];
-                        v2[1][k] = all_vt2[1][i];
-                        v2[2][k] = all_vt2[2][i];
+                        v2[0] = all_vt2[0][i];
+                        v2[1] = all_vt2[1][i];
+                        v2[2] = all_vt2[2][i];
 		}
 	}
 }
 
 
 
-double vlamb(double gm, double r1, double r2, double th, double tdelt, double *vri, double *vti, double *vrf, double *vrt);
+/*double vlamb(double gm, double r1, double r2, double th, double tdelt, double *vri, double *vti, double *vrf, double *vrt);*/
 
 double *tlamb(double m, double q, double qsqfm1, double x, double n)
 {
@@ -322,9 +324,9 @@ double *tlamb(double m, double q, double qsqfm1, double x, double n)
 }
 /*
 double *xlamb(double m, double q, double qsqfm1, double tin);
-
+*/
 double d8rt(double x)
 {
 	double d8rt = sqrt(sqrt(sqrt(x)));
 	return d8rt;
-}*/
+}
