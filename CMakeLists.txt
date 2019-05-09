@@ -56,6 +56,8 @@ set(COMMON_SOURCES
     "PrecMatrix.c"
     "PoleMatrix.h"
     "PoleMatrix.c"
+    "newtonnu.h"
+    "newtonnu.c"
 )
 set(TEST_SOURCES
     ${COMMON_SOURCES}

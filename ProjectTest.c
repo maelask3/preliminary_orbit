@@ -15,6 +15,7 @@
 #include "NutMatrix.h"
 #include "PrecMatrix.h"
 #include "PoleMatrix.h"
+#include "newtonnu.h"
 #include <stdlib.h>
 
 void test_Position()
@@ -522,6 +523,43 @@ void test_PoleMatrix()
     free(expected);
 }
 
+void test_newtonnu()
+{
+    double ecc;
+    double nu;
+    double e0_e;
+    double e0_a = 0.;
+    double m_e;
+    double m_a =0.;
+
+    ecc = 0.0825331061735532;
+    nu = 0.181200311058077;
+    e0_e = 0.166883937745775;
+    m_e = 0.153174331359043;
+
+    newtonnu(ecc, nu, &e0_a, &m_a);
+    double_test("newtonnu() 1, e0", e0_e, e0_a);
+    double_test("newtonnu() 1, m", m_e, m_a);
+
+    ecc = 0.0866943121616373;
+    nu = 0.171305852271464;
+    e0_e = 0.157107124096794;
+    m_e = 0.143542791750356;
+
+    newtonnu(ecc, nu, &e0_a, &m_a);
+    double_test("newtonnu() 2, e0", e0_e, e0_a);
+    double_test("newtonnu() 2, m", m_e, m_a);
+
+    ecc = 0.0791291077778817;
+    nu = 0.190267237462258;
+    e0_e = 0.175840369293131;
+    m_e = 0.161997870558239;
+
+    newtonnu(ecc, nu, &e0_a, &m_a);
+    double_test("newtonnu() 3, e0", e0_e, e0_a);
+    double_test("newtonnu() 3, m", m_e, m_a);
+}
+
 int main()
 {
     MatlabUtilsTest();
@@ -543,5 +581,6 @@ int main()
     //test_GHAMatrix();
     test_PrecMatrix();
     test_PoleMatrix();
+    test_newtonnu();
     return 0;
 }
