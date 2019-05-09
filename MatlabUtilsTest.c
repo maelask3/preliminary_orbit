@@ -108,8 +108,8 @@ void test_cross()
     double *vwcap = cross(v, w);
     double vwca[3];
     memcpy(vwca, vwcap, sizeof(double[3]));
-    free(vwcap);
     array_test("cross()", vwce, vwca, 3);
+    free(vwcap);
 }
 
 void test_producto()

@@ -146,9 +146,12 @@ double mod(double a, double m)
  */
 double *cross(double *v1, double *v2)
 {
-    double *res = malloc(3 * sizeof(double));
-	memcpy(res, (double[3]) {v1[1]*v2[2]-v1[2]*v2[1], v1[2]*v2[0]-v1[0]*v2[2], v1[0]*v2[1]-v1[1]*v2[0]}, sizeof(double[3]));
-	return res;
+    double *res = calloc(3, sizeof(double));
+
+    res[0] = v1[1]*v2[2] - v1[2]*v2[1];
+    res[1] = v1[2]*v2[0] - v1[0]*v2[2];
+    res[2] = v1[0]*v2[1] - v1[1]*v2[0];
+    return res;
 }
 
 //O(n^3), fuente: www.kkhaydarov.com/matrux-multiplication-algorithms/, naive matrix

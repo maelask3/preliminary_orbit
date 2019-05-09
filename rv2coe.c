@@ -51,17 +51,22 @@ void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *inc
         double hk = hbar[2]/magh;
         *incl = acos(hk);
 
-        char typeorbit[2] = "ei";
+        char typeorbit[3] = "ei";
 
         if(*ecc < small)
         {
             if((*incl < small) || (fabs(*incl-pi)<small))
-                strcpy(typeorbit, "ce");
-            else
-                strcpy(typeorbit, "ci");
+            {
+                strncpy(typeorbit, "ce", 2);
+                typeorbit[2] = '\0';
+            } else {
+                strncpy(typeorbit, "ci", 2);
+                typeorbit[2] = '\0';
+            }
         } else {
             if((*incl < small) || (fabs(*incl-pi)<small))
-                strcpy(typeorbit, "ee");
+                strncpy(typeorbit, "ee", 2);
+                typeorbit[2] = '\0';
         }
 
         if(magn > small)
@@ -79,9 +84,9 @@ void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *inc
             *omega = undefined;
         }
 
-        if(strcmp(typeorbit, "ei"))
+        if(strcmp(typeorbit, "ei")==0)
         {
-            *argp = angl(ebar, r);
+            *argp = angl(nbar, ebar);
             if(ebar[2] < 0.0)
                 *argp = pi2 - *argp;
         } else {
@@ -97,7 +102,7 @@ void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *inc
             *nu = undefined;
         }
 
-        if(strcmp(typeorbit, "ci"))
+        if(strcmp(typeorbit, "ci")==0)
         {
             *arglat = angl(nbar, r);
             if(r[2] < 0.0)
@@ -108,7 +113,7 @@ void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *inc
             *arglat = undefined;
         }
 
-        if((*ecc > small) && (strcmp(typeorbit, "ee")))
+        if((*ecc > small) && (strcmp(typeorbit, "ee")==0))
         {
             double temp = ebar[0]/(*ecc);
             if(fabs(temp) > 0.0)
@@ -125,7 +130,7 @@ void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *inc
             *lonper = undefined;
         }
 
-        if((magr > small) && (strcmp(typeorbit, "ce")))
+        if((magr > small) && (strcmp(typeorbit, "ce")==0))
         {
             double temp = r[0]/magr;
 
@@ -150,6 +155,9 @@ void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *inc
             double e = 0.;
             newtonnu(*ecc, *nu, &e, m);
         }
+
+        free(nbar);
+        free(ebar);
     } else {
         *p = undefined;
         *a = undefined;
@@ -163,4 +171,6 @@ void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *inc
         *truelon = undefined;
         *lonper = undefined;
     }
+
+    free(hbar);
 }
