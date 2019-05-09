@@ -9,7 +9,6 @@
 
 double gast(double Mjd_UT1)
 {
-    double **eopdata = malloc(20026 * sizeof(double*)); //aqui no se como diablos pasar el eop
     double UT1_UTC = 0.;
     double TAI_UTC = 0.;
     double x_pole = 0.;
@@ -30,8 +29,6 @@ double gast(double Mjd_UT1)
     double Mjd_TT = Mjd_UTC + TT_UTC/86400;
 
     double gstime = mod(gmst(Mjd_UT1) + EqnEquinox(Mjd_TT), pi2);
-
-    free(eopdata);
 
     return gstime;
 }
