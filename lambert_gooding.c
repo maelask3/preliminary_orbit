@@ -7,7 +7,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include "SAT_Const.h"
-/*void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_way, double multi_revs, double *v1, double *v2)
+void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_way, double multi_revs, double *v1, double *v2)
 {
 	double r1mag = norm(r1);
 	double r2mag = norm(r2);
@@ -30,9 +30,9 @@
 	}
 	double *r1xr2_hat = unit(r1xr2);
 
-        double pa = acos(max(-1.0,min(1.0,dot(r1hat,r2hat))));
+        double pa = acos(fmax(-1.0,fmin(1.0,dot(r1hat,r2hat))));
 
-
+	int n_solutions;
         for(int i = 0; i<multi_revs; i++)
         {
                 int num_revs = i;
@@ -52,22 +52,113 @@
 
                 double vri[2], vti[2], vrf[2], vrt[2];
                 int n = vlamb(mu,r1mag,r2mag,ta,tof, vri, vti, vrf, vrt);
-
+		
+		double vt1[3][2], vt2[3][2];
                 switch(n){
                         case 1 :
-
+				double *aux = sumVector(vectorProductDouble(r1hat, vri[0]), vectorProductDouble(etai, vti[0]));
+				vt1[0][0] = aux[0];
+				vt1[1][0] = aux[1];
+				vt1[2][0] = aux[2];
+				aux = sumVector(vectorProductDouble(r2hat, vrf[0]), vectorProductDouble(etaf, vtf[0]));
+				vt2[0][0] = aux[0];
+                                vt2[1][0] = aux[1];
+                                vt2[2][0] = aux[2];
                                 break;
                         case 2 :
-
+				double *aux = sumVector(vectorProductDouble(r1hat, vri[0]), vectorProductDouble(etai, vti[0]));
+                                vt1[0][0] = aux[0];
+                                vt1[1][0] = aux[1];
+                                vt1[2][0] = aux[2];
+                                aux = sumVector(vectorProductDouble(r2hat, vrf[0]), vectorProductDouble(etaf, vtf[0]));
+                                vt2[0][0] = aux[0];
+                                vt2[1][0] = aux[1];
+                                vt2[2][0] = aux[2];
+				aux = sumVector(vectorProductDouble(r1hat, vri[1]), vectorProductDouble(etai, vti[1]));
+                                vt1[0][1] = aux[0];
+                                vt1[1][1] = aux[1];
+                                vt1[2][1] = aux[2];
+                                aux = sumVector(vectorProductDouble(r2hat, vrf[1]), vectorProductDouble(etaf, vtf[1]));
+                                vt2[0][1] = aux[0];
+                                vt2[1][1] = aux[1];
+                                vt2[2][1] = aux[2];
                                 break;
                 }
-                /////////////////No entiendo que se hace
-                }
+		double all_vt1[3][10], all_vt2[3][10];
+		bool solution_exists[10];
+		if(i == 0 && n==1)
+		{
+			all_vt1[0][0] = vt1[0][0];
+			all_vt1[1][0] = vt1[1][0];
+			all_vt1[2][0] = vt1[2][0];
+
+			all_vt2[0][0] = vt2[0][0];
+                        all_vt2[1][0] = vt2[1][0];
+                        all_vt2[2][0] = vt2[2][0];
+
+                	solution_exists[0] = true;
+                }else{
+			switch(n){
+				case 1 :
+					all_vt1[0][2*i-1] = vt1[0][0];
+                        		all_vt1[1][2*i-1] = vt1[1][0];
+                        		all_vt1[2][2*i-1] = vt1[2][0];
+
+                        		all_vt2[0][2*i-1] = vt2[0][0];
+                        		all_vt2[1][2*i-1] = vt2[1][0];
+                        		all_vt2[2][2*i-1] = vt2[2][0];
+
+                        		solution_exists[2*i-1] = true;///Igual esta mal el -1
+					break;
+				case 2:
+					all_vt1[0][2*i-1] = vt1[0][0];
+                                        all_vt1[1][2*i-1] = vt1[1][0];
+                                        all_vt1[2][2*i-1] = vt1[2][0];
+
+                                        all_vt2[0][2*i-1] = vt2[0][0];
+                                        all_vt2[1][2*i-1] = vt2[1][0];
+                                        all_vt2[2][2*i-1] = vt2[2][0];
+
+                                        solution_exists[2*i-1] = true;
+
+					all_vt1[0][2*i] = vt1[0][1];
+                                        all_vt1[1][2*i] = vt1[1][1];
+                                        all_vt1[2][2*i] = vt1[2][1];
+
+                                        all_vt2[0][2*i] = vt2[0][1];
+                                        all_vt2[1][2*i] = vt2[1][1];
+                                        all_vt2[2][2*i] = vt2[2][1];
+
+                                        solution_exists[2*i] = true;
+			}
+		}
+		n_solutions = i;
+	}
+	double *v1, *v2;
+	v1 = zeros(3, n_solutions);
+	v2 = zeros(3, n_solutions);
+
+	int k = 0;
+	for(int i = 0; i<n_solutions, i++)
+	{
+		if(solution_exists(i))
+		{
+			k = k+1;
+			v1[0][k] = all_vt1[0][i];
+                        v1[1][k] = all_vt1[1][i];
+                        v1[2][k] = all_vt1[2][i];
+
+                        v2[0][k] = all_vt2[0][i];
+                        v2[1][k] = all_vt2[1][i];
+                        v2[2][k] = all_vt2[2][i];
+		}
+	}
+}
 
 
 
 double vlamb(double gm, double r1, double r2, double th, double tdelt, double *vri, double *vti, double *vrf, double *vrt);
-*/
+
 double *tlamb(double m, double q, double qsqfm1, double x, double n)
 {
 	double sw = 0.4;
