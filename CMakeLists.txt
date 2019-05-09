@@ -60,6 +60,8 @@ set(COMMON_SOURCES
     "newtonnu.c"
     "rv2coe.h"
     "rv2coe.c"
+    "gibbs.h"
+    "gibbs.c"
 )
 set(TEST_SOURCES
     ${COMMON_SOURCES}

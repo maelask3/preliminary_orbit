@@ -143,4 +143,6 @@ void NutAngles(double Mjd_TT, double *dpsi, double *deps)
 
     *dpsi = dpsi_aux;
     *deps = deps_aux;
+
+    free(C);
 }

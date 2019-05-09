@@ -17,7 +17,9 @@
 #include "PoleMatrix.h"
 #include "newtonnu.h"
 #include "rv2coe.h"
+#include "gibbs.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 void test_Position()
 {
@@ -206,7 +208,8 @@ void test_R_x()
 
     in = -0.409093775692299;
     expected[0] = (double*)(double[3]) {1., 0., 0.};
-    expected[1] = (double*)(double[3]) {0., 0.917481675640187, -0.397778047237997};
+    expected[1] = (double*)(double[3])
+    {0., 0.917481675640187, -0.397778047237997};
     expected[2] = (double*)(double[3]) {0., 0.397778047237997, 0.917481675640187};
 
     actual = R_x(in);
@@ -561,6 +564,7 @@ void test_newtonnu()
     double_test("newtonnu() 3, m", m_e, m_a);
 }
 
+
 void test_rv2coe()
 {
     double *r;
@@ -618,6 +622,43 @@ void test_rv2coe()
     double_test_delta("rv2coe() 1, lonper", lonper_e, lonper_a, 1e-7);
 }
 
+void test_gibbs()
+{
+    double *r1;
+    double *r2;
+    double *r3;
+
+    double *v2_e;
+    double **v2_a = malloc(sizeof(double*));
+    double theta_e;
+    double theta_a = 0.;
+    double theta1_e;
+    double theta1_a = 0.;
+    double copa_e;
+    double copa_a = 0.;
+    char *error_e = "          ok";
+    char **error_a = malloc(sizeof(char*));
+
+    r1 = (double*)(double[3]) {20387627.0717525, 1865163.69633389, -109943.688555792};
+    r2 = (double*)(double[3]) {20435422.3521528, 1070699.44671798, 1012905.49143388};
+    r3 = (double*)(double[3]) {20398157.066627, 271778.615869933, 2131538.39542067};
+
+    v2_e = (double*)(double[3]) {17.4448460122937, -2659.68695026789, 3741.47770474848};
+    theta_e = 0.0672088229314452;
+    theta1_e = 0.0670842334897569;
+    copa_e = 3.7999117741272e-15;
+
+    gibbs(r1, r2, r3, v2_a, &theta_a, &theta1_a, &copa_a, error_a);
+    array_test_delta("gibbs() 1, v2", v2_e, *v2_a, 3, 1e-8);
+    double_test("gibbs() 1, theta", theta_e, theta_a);
+    double_test("gibbs() 1, theta_1", theta1_e, theta1_a);
+    double_test("gibbs() 1, copa", copa_e, copa_a);
+    printf("gibbs() 1, error: %s\n", *error_a);
+
+    free(error_a);
+    free(v2_a);
+}
+
 int main()
 {
     MatlabUtilsTest();
@@ -641,5 +682,6 @@ int main()
     test_PoleMatrix();
     test_newtonnu();
     test_rv2coe();
+    test_gibbs();
     return 0;
 }
