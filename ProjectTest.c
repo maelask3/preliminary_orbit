@@ -710,7 +710,6 @@ void test_IERS()
     FILE *fp = fopen("/home/ad.mthree.es/meoberto/POrbitD/eop19620101.txt","r");
     double **eopdata = malloc(20026 * sizeof(double*));
     char line[103];
-    double *alias;
     int a = 0, b = 0, c = 0, d = 0, final = 0;
     float e = 0.f, f =0.f, g= 0.f, h =0.f, m=0.f, j = 0.f, k = 0.f, l = 0.f;
     for(int i=0; i<20026 && !feof(fp); i++)
