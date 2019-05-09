@@ -620,7 +620,7 @@ void test_rv2coe()
 
 int main()
 {
-    /*MatlabUtilsTest();
+    MatlabUtilsTest();
     test_Position();
     test_Mjday();
     test_MeanObliquity();
@@ -639,7 +639,7 @@ int main()
     //test_GHAMatrix();
     test_PrecMatrix();
     test_PoleMatrix();
-    test_newtonnu();*/
-    test_rv2coe(); //norma chunga
+    test_newtonnu();
+    test_rv2coe();
     return 0;
 }
