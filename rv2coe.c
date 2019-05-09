@@ -1,0 +1,166 @@
+#include "rv2coe.h"
+#include "newtonnu.h"
+#include "MatlabUtils.h"
+#include "SAT_Const.h"
+#include "angl.h"
+#include <stdlib.h>
+#include <string.h>
+
+void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *incl, double *omega, double *argp, double *nu, double *m, double *arglat, double *truelon, double *lonper)
+{
+    double mu = 398600.4418e9;
+    double small = 1e-10;
+    double undefined = 999999.1;
+
+    double magr = norm(r);
+    double magv = norm(v);
+
+    double *hbar = cross(r, v);
+    double magh = norm(hbar);
+
+    if(magh > small)
+    {
+        double *nbar = calloc(3, sizeof(double));
+        double *ebar = calloc(3, sizeof(double));
+
+        nbar[0] = -hbar[1];
+        nbar[1] = hbar[0];
+
+        double magn = norm(nbar);
+        double c1 = magv*magv - mu/magr;
+
+        double rdotv = dot(r, v);
+
+        for(int i=0;i<3;i++)
+        {
+            ebar[i] = (c1*r[i] - rdotv*v[i])/mu;
+        }
+
+        *ecc = norm(ebar);
+
+        double sme = (magv*magv*0.5) - (mu/magr);
+        if(fabs(sme) > small)
+        {
+            *a = (-mu)/(2.0*sme);
+        } else {
+            *a = INFINITY;
+        }
+
+        *p = magh*magh/mu;
+
+        double hk = hbar[2]/magh;
+        *incl = acos(hk);
+
+        char typeorbit[2] = "ei";
+
+        if(*ecc < small)
+        {
+            if((*incl < small) || (fabs(*incl-pi)<small))
+                strcpy(typeorbit, "ce");
+            else
+                strcpy(typeorbit, "ci");
+        } else {
+            if((*incl < small) || (fabs(*incl-pi)<small))
+                strcpy(typeorbit, "ee");
+        }
+
+        if(magn > small)
+        {
+            double temp = nbar[0]/magn;
+
+            if(fabs(temp) > 1.0)
+                temp = sign(temp);
+
+            *omega = acos(temp);
+
+            if(nbar[1] < 0.0)
+                *omega = pi2 - *omega;
+        } else {
+            *omega = undefined;
+        }
+
+        if(strcmp(typeorbit, "ei"))
+        {
+            *argp = angl(ebar, r);
+            if(ebar[2] < 0.0)
+                *argp = pi2 - *argp;
+        } else {
+            *argp = undefined;
+        }
+
+        if(typeorbit[0] == 'e')
+        {
+            *nu = angl(ebar, r);
+            if(rdotv < 0.0)
+                *nu = pi2 - *nu;
+        } else {
+            *nu = undefined;
+        }
+
+        if(strcmp(typeorbit, "ci"))
+        {
+            *arglat = angl(nbar, r);
+            if(r[2] < 0.0)
+                *arglat = pi2 - *arglat;
+
+            *m = *arglat;
+        } else {
+            *arglat = undefined;
+        }
+
+        if((*ecc > small) && (strcmp(typeorbit, "ee")))
+        {
+            double temp = ebar[0]/(*ecc);
+            if(fabs(temp) > 0.0)
+                temp = sign(temp);
+
+            *lonper = acos(temp);
+
+            if(ebar[1] < 0.0)
+                *lonper = pi2 - *lonper;
+
+            if(*incl > halfpi)
+                *lonper = pi2 - *lonper;
+        } else {
+            *lonper = undefined;
+        }
+
+        if((magr > small) && (strcmp(typeorbit, "ce")))
+        {
+            double temp = r[0]/magr;
+
+            if(fabs(temp) > 1.0)
+                temp = sign(temp);
+
+            *truelon = acos(temp);
+
+            if(r[1] < 0.0)
+                *truelon = pi2 - *truelon;
+
+            if(*incl > halfpi)
+                *truelon = pi2 - *truelon;
+
+            *m = *truelon;
+        } else {
+            *truelon = undefined;
+        }
+
+        if(typeorbit[0] == 'e')
+        {
+            double e = 0.;
+            newtonnu(*ecc, *nu, &e, m);
+        }
+    } else {
+        *p = undefined;
+        *a = undefined;
+        *ecc = undefined;
+        *incl = undefined;
+        *omega = undefined;
+        *argp = undefined;
+        *nu = undefined;
+        *m = undefined;
+        *arglat = undefined;
+        *truelon = undefined;
+        *lonper = undefined;
+    }
+}

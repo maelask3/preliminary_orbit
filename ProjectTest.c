@@ -16,6 +16,7 @@
 #include "PrecMatrix.h"
 #include "PoleMatrix.h"
 #include "newtonnu.h"
+#include "rv2coe.h"
 #include <stdlib.h>
 
 void test_Position()
@@ -560,6 +561,63 @@ void test_newtonnu()
     double_test("newtonnu() 3, m", m_e, m_a);
 }
 
+void test_rv2coe()
+{
+    double *r;
+    double *v;
+
+    double p_e;
+    double p_a = 0.;
+    double a_e;
+    double a_a = 0.;
+    double ecc_e;
+    double ecc_a = 0.;
+    double incl_e;
+    double incl_a = 0.;
+    double omega_e;
+    double omega_a = 0.;
+    double argp_e;
+    double argp_a = 0.;
+    double nu_e;
+    double nu_a = 0.;
+    double m_e;
+    double m_a = 0.;
+    double arglat_e;
+    double arglat_a = 0.;
+    double truelon_e;
+    double truelon_a = 0.;
+    double lonper_e;
+    double lonper_a = 0.;
+
+    r = (double*)(double[3]) {20435422.3521528, 1070699.44671798, 1012905.49143388};
+    v = (double*)(double[3]) {17.1965697822141, -2567.51027611546, 3738.38685080841};
+
+    p_e = 22151801.03597;
+    a_e = 22303727.6412011;
+    ecc_e = 0.825331061735532;
+    incl_e = 2.1872454265762;
+    omega_e = 0.0874259916432499;
+    argp_e = 6.16261219029842;
+    nu_e = 0.181200311058077;
+    m_e = 0.153174331359043;
+    arglat_e = 999999.1;
+    truelon_e = 999999.1;
+    lonper_e = 999999.1;
+
+    rv2coe(r, v, &p_a, &a_a, &ecc_a, &incl_a, &omega_a, &argp_a, &nu_a, &m_a, &arglat_a, &truelon_a, &lonper_a);
+    double_test("rv2coe() 1, p", p_e, p_a);
+    double_test("rv2coe() 1, a", a_e, a_a);
+    double_test("rv2coe() 1, ecc", ecc_e, ecc_a);
+    double_test("rv2coe() 1, incl", incl_e, incl_a);
+    double_test("rv2coe() 1, omega", omega_e, omega_a);
+    double_test("rv2coe() 1, argp", argp_e, argp_a);
+    double_test("rv2coe() 1, nu", nu_e, nu_a);
+    double_test("rv2coe() 1, m", m_e, m_a);
+    double_test("rv2coe() 1, arglat", arglat_e, arglat_a);
+    double_test("rv2coe() 1, truelon", truelon_e, truelon_a);
+    double_test("rv2coe() 1, lonper", lonper_e, lonper_a);
+}
+
 int main()
 {
     MatlabUtilsTest();
@@ -582,5 +640,6 @@ int main()
     test_PrecMatrix();
     test_PoleMatrix();
     test_newtonnu();
+    //test_rv2coe(); //norma chunga
     return 0;
 }
