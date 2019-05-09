@@ -65,8 +65,10 @@ void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *inc
             }
         } else {
             if((*incl < small) || (fabs(*incl-pi)<small))
+            {
                 strncpy(typeorbit, "ee", 2);
                 typeorbit[2] = '\0';
+            }
         }
 
         if(magn > small)
