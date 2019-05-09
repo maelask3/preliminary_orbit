@@ -50,6 +50,8 @@ set(COMMON_SOURCES
     "doubler.c"
     "gast.h"
     "gast.c"
+    "GHAMatrix.h"
+    "GHAMatrix.c"
 )
 set(TEST_SOURCES
     ${COMMON_SOURCES}
