@@ -703,34 +703,6 @@ void test_rv2coe()
     double_test_delta("rv2coe() 1, truelon", truelon_e, truelon_a, 1e-7);
     double_test_delta("rv2coe() 1, lonper", lonper_e, lonper_a, 1e-7);
 
-    r = (double*)(double[3]) {20435422.3521528, 1070699.44671798, 1012905.49143388};
-    v = (double*)(double[3]) {17.1964697822141, -2657.51027611546, 3738.38685080841};
-
-    p_e = 22151801.03597;
-    a_e = 22303727.6412011;
-    ecc_e = 0.0825331061735532;
-    incl_e = 2.18724254265762;
-    omega_e = 0.0874259916432499;
-    argp_e = 6.16261219029842;
-    nu_e = 0.181200311058077;
-    m_e = 0.153174331359043;
-    arglat_e = 999999.1;
-    truelon_e = 999999.1;
-    lonper_e = 999999.1;
-
-    rv2coe(r, v, &p_a, &a_a, &ecc_a, &incl_a, &omega_a, &argp_a, &nu_a, &m_a, &arglat_a, &truelon_a, &lonper_a);
-    double_test_delta("rv2coe() 1, p", p_e, p_a, 1e-7);
-    double_test_delta("rv2coe() 1, a", a_e, a_a, 1e-7);
-    double_test_delta("rv2coe() 1, ecc", ecc_e, ecc_a, 1e-7);
-    double_test_delta("rv2coe() 1, incl", incl_e, incl_a, 1e-7);
-    double_test_delta("rv2coe() 1, omega", omega_e, omega_a, 1e-7);
-    double_test_delta("rv2coe() 1, argp", argp_e, argp_a, 1e-7);
-    double_test_delta("rv2coe() 1, nu", nu_e, nu_a, 1e-7);
-    double_test_delta("rv2coe() 1, m", m_e, m_a, 1e-7);
-    double_test_delta("rv2coe() 1, arglat", arglat_e, arglat_a, 1e-7);
-    double_test_delta("rv2coe() 1, truelon", truelon_e, truelon_a, 1e-7);
-    double_test_delta("rv2coe() 1, lonper", lonper_e, lonper_a, 1e-7);
-
     r = (double*)(double[3]) {20456329.59102, 1074191.36683764, 1009857.02167871};
     v = (double*)(double[3]) {17.65947569117, -2661.67627260563, 3743.57355524522};
 
