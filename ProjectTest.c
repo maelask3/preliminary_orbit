@@ -29,7 +29,7 @@ double **eopdata = NULL;
 
 void Setup()
 {
-    FILE *fp = fopen("/home/AD.MTHREE.ES/meoberto/preliminary_orbit/eop19620101.txt","r");
+    FILE *fp = fopen("eop19620101.txt","r");
     if(!fp)
     {
         fprintf(stderr, "ERROR: No se ha podido abrir eop19620101.txt\n");
