@@ -707,7 +707,12 @@ void test_hgibbs()
 
 void test_IERS()
 {
-    FILE *fp = fopen("/home/ad.mthree.es/meoberto/POrbitD/eop19620101.txt","r");
+    FILE *fp = fopen("/home/AD.MTHREE.ES/meoberto/preliminary_orbit/eop19620101.txt","r");
+    if(!fp)
+    {
+        fprintf(stderr, "ERROR: No se ha podido abrir eop19620101.txt\n");
+        exit(1);
+    }
     double **eopdata = malloc(20026 * sizeof(double*));
     char line[103];
     int a = 0, b = 0, c = 0, d = 0, final = 0;
@@ -734,38 +739,52 @@ void test_IERS()
         eopdata[i][12] = final;
     }
 
-    double Mjd_UTC;
-    char interp;
+    fclose(fp);
 
-    double UT1_UTC_e;
+    double Mjd_UTC = 55565.9044073611;
+    char interp = 'l';
+
+    double UT1_UTC_e = -0.141329177689613;
     double UT1_UTC_a = 0.;
-    double TAI_UTC_e;
+    double TAI_UTC_e = 34;
     double TAI_UTC_a = 0.;
-    double x_pole_e;
+    double x_pole_e = 5.72229229392844e-7;
     double x_pole_a = 0.;
-    double y_pole_e;
+    double y_pole_e = 9.71655423937364e-7;
     double y_pole_a = 0.;
-    double ddpsi_e;
+    double ddpsi_e = -3.22818789921021e-7;
     double ddpsi_a = 0.;
-    double ddeps_e;
+    double ddeps_e = -3.03101990895201e-8;
     double ddeps_a = 0.;
 
-    Mjd_UTC = 54977.6669036457;
+    Mjd_UTC = 55565.9044073611;
     interp = 'l';
+
+    UT1_UTC_e = -0.141329177689613;
+    TAI_UTC_e = 34.;
+    x_pole_e = 5.72229229392844e-7;
+    y_pole_e = 9.71655423937364e-7;
+    ddpsi_e = -3.22818789921021e-7;
+    ddeps_e = -3.03101990895201e-8;
 
     IERS(eopdata, 20026, Mjd_UTC, interp, &UT1_UTC_a, &TAI_UTC_a, &x_pole_a, &y_pole_a, &ddpsi_a, &ddeps_a);
 
-    fclose(fp);
+    double_test_delta("IERS() 1, UT1_UTC", UT1_UTC_e, UT1_UTC_a, 1e-8);
+    double_test_delta("IERS() 1, TAI_UTC", TAI_UTC_e, TAI_UTC_a, 1e-8);
+    double_test_delta("IERS() 1, x_pole", x_pole_e, x_pole_a, 1e-8);
+    double_test_delta("IERS() 1, y_pole", y_pole_e, y_pole_a, 1e-8);
+    double_test_delta("IERS() 1, ddpsi", ddpsi_e, ddpsi_a, 1e-8);
+    double_test_delta("IERS() 1, ddeps", ddeps_e, ddeps_a, 1e-8);
 
     for(int i=0; i<20026; i++)
-        free(eopdata[i]);
+            free(eopdata[i]);
     free(eopdata);
 }
 
 
 int main()
 {
-    MatlabUtilsTest();
+    /*MatlabUtilsTest();
     test_Position();
     test_Mjday();
     test_MeanObliquity();
@@ -778,15 +797,15 @@ int main()
     test_unit();
     test_EqnEquinox();
     test_gmst();
-    test_NutMatrix();
-    //test_IERS();
+    test_NutMatrix(); */
+    test_IERS();
     //test_gast();
     //test_GHAMatrix();
-    test_PrecMatrix();
+    /*test_PrecMatrix();
     test_PoleMatrix();
     test_newtonnu();
     test_rv2coe();
     test_gibbs();
-    test_hgibbs();
+    test_hgibbs();*/
     return 0;
 }

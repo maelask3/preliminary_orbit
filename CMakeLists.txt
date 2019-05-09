@@ -6,7 +6,8 @@ set(CMAKE_C_STANDARD 99)
 set(p_version 0.2.1)
 
 set(N_LIBS
-    m)
+    m
+    mcheck)
 
 set(COMMON_SOURCES
     "MatlabUtils.c"

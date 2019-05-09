@@ -7,16 +7,14 @@ void IERS(double **eop, int eop_length, double Mjd_UTC, char interp, double *UT1
 {
     if(interp == 'l')
     {
-        double *preeop = calloc(13, sizeof(double));
-        double *nexteop = calloc(13, sizeof(double));
+        double *preeop = NULL;
+        double *nexteop = NULL;
         double mj = floor(Mjd_UTC);
 
         for(int i=0; i<eop_length; i++)
         {
             if(fabs(eop[i][3] - mj) < DELTA)
             {
-                free(preeop);
-                free(nexteop);
                 preeop = eop[i];
                 nexteop = eop[i+1];
                 break;
@@ -25,6 +23,9 @@ void IERS(double **eop, int eop_length, double Mjd_UTC, char interp, double *UT1
 
         double mfme = 1440*(Mjd_UTC-floor(Mjd_UTC));
         double fixf = mfme/1440;
+
+        if(!preeop || !nexteop)
+            return;
 
         *UT1_UTC = preeop[6]+(nexteop[6]-preeop[6])*fixf;
         *TAI_UTC = preeop[12];
@@ -38,24 +39,21 @@ void IERS(double **eop, int eop_length, double Mjd_UTC, char interp, double *UT1
         *ddpsi /= Arcs;
         *ddeps /= Arcs;
 
-        if(preeop)
-            free(preeop);
-        if(nexteop)
-            free(nexteop);
-
     } else if(interp == 'n') {
 
         double mj = floor(Mjd_UTC);
-        double *cureop = calloc(13, sizeof(double));
+        double *cureop = NULL;
         for(int i=0; i<eop_length; i++)
         {
             if(fabs(eop[i][3] - mj) < DELTA)
             {
-                free(cureop);
                 cureop = eop[i];
                 break;
             }
         }
+
+        if(!cureop)
+            return;
 
         *UT1_UTC = cureop[6];
         *TAI_UTC = cureop[12];
@@ -63,8 +61,5 @@ void IERS(double **eop, int eop_length, double Mjd_UTC, char interp, double *UT1
         *y_pole = cureop[5]/Arcs;
         *ddpsi = cureop[8]/Arcs;
         *ddeps = cureop[9]/Arcs;
-
-        if(cureop)
-            free(cureop);
     }
 }
