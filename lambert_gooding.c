@@ -7,6 +7,8 @@
 #include <math.h>
 #include <stdbool.h>
 #include "SAT_Const.h"
+#include "MatlabUtils.h"
+#include "unit.h"
 void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_way, double multi_revs, double *v1, double *v2)
 {
 	double r1mag = norm(r1);
