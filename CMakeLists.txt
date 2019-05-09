@@ -42,6 +42,14 @@ set(COMMON_SOURCES
     "gmst.c"
     "NutMatrix.h"
     "NutMatrix.c"
+    "angl.h"
+    "angl.c"
+    "anglesdr.h"
+    "anglesdr.c"
+    "doubler.h"
+    "doubler.c"
+    "gast.h"
+    "gast.c"
 )
 set(TEST_SOURCES
     ${COMMON_SOURCES}
