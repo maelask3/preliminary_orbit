@@ -35,10 +35,12 @@ void matrix_test_delta(char *test_name, double **expected, double **actual, int 
     for(int i=0; i<rows; i++)
         for(int j=0; j<cols; j++)
         {
-            diff = fabs(expected[i][j] - actual[i][j]);
+            double expected_v = expected[i][j];
+            double actual_v = actual[i][j];
+            diff = fabs(expected_v - actual_v);
             if(diff > delta)
                 fprintf(stderr, "Divergence = %lf\n", diff);
-            assert(fabs(expected[i][j] - actual[i][j]) < delta);
+            assert(fabs(expected_v - actual_v) < delta);
         }
     printf("Expected = \n");
     matrix_pretty_print(expected, rows, cols);

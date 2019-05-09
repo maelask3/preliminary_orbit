@@ -14,6 +14,7 @@
 #include "gmst.h"
 #include "NutMatrix.h"
 #include "PrecMatrix.h"
+#include "PoleMatrix.h"
 #include <stdlib.h>
 
 void test_Position()
@@ -476,6 +477,51 @@ void test_PrecMatrix()
     free(expected);
 }
 
+void test_PoleMatrix()
+{
+    double xp;
+    double yp;
+    double **expected = malloc(3 * sizeof(double*));
+    double **actual;
+
+    xp = 7.5789200806793e-8;
+    yp = 2.56777193042581e-6;
+    expected[0] = (double*)(double[3]) {0.999999999999997, 1.94609382460874e-13, 7.57892008065431e-08};
+    expected[1] = (double*)(double[3]) {0., 0.999999999996703, -2.56777193042298e-6};
+    expected[2] = (double*)(double[3]) {-7.57892008067929e-8, 2.56777193042298e-6, 0.9999999999967};
+
+    actual = PoleMatrix(xp, yp);
+
+    matrix_test("PoleMatrix() 1", expected, actual, 3, 3);
+
+    free(actual);
+
+    xp = 3.41489253490265e-7;
+    yp = 1.23201492955798e-6;
+    expected[0] = (double*)(double[3]) {0.999999999999942, 4.20719858583501e-13, 3.41489253489999e-7};
+    expected[1] = (double*)(double[3]) {0., 0.999999999999241, -1.23201492955767e-6};
+    expected[2] = (double*)(double[3]) {-3.41489253490258e-7, 1.23201492955759e-6, 0.999999999999183};
+
+    actual = PoleMatrix(xp, yp);
+
+    matrix_test("PoleMatrix() 2", expected, actual, 3, 3);
+
+    free(actual);
+
+    xp = 5.72229229392844e-7;
+    yp = 9.71655423937364e-7;
+    expected[0] = (double*)(double[3]) {0.999999999999836, 5.56009634474937e-13, 5.72229229392543e-7};
+    expected[1] = (double*)(double[3]) {0., 0.999999999999528, -9.71655423937211e-7};
+    expected[2] = (double*)(double[3]) {-5.72229229392813e-7, 9.71655423937052e-7, 0.999999999999364};
+
+    actual = PoleMatrix(xp, yp);
+
+    matrix_test("PoleMatrix() 3", expected, actual, 3, 3);
+
+    free(actual);
+    free(expected);
+}
+
 int main()
 {
     MatlabUtilsTest();
@@ -496,5 +542,6 @@ int main()
     //test_gast();
     //test_GHAMatrix();
     test_PrecMatrix();
+    test_PoleMatrix();
     return 0;
 }
