@@ -1,7 +1,25 @@
+/**
+ * @file IERS.c
+ * @authors Davide Pérez y Millán Santamaría
+ */
 #include "IERS.h"
 #include "SAT_Const.h"
 #include <math.h>
 #include <stdlib.h>
+
+/**
+ * @brief IERS: Gestión del tiempo IERS y datos del movimiento polar
+ * @param eop Array con los Parámetros de Orientación Terrestre (IERS EOP)
+ * @param eop_length Longitud del array eop
+ * @param Mjd_UTC Fecha juliana en UTC
+ * @param interp Interpolación a utilizar (l = lineal, n = ninguna)
+ * @param UT1_UTC (Salida) Diferencia de tiempo entre UT1 y UTC (s)
+ * @param TAI_UTC (Salida) Diferencia de tiempo entre TAI y UTC (s)
+ * @param x_pole (Salida) Coordenada polar
+ * @param y_pole (Salida) Coordenada polar
+ * @param ddpsi
+ * @param ddeps
+ */
 
 void IERS(double **eop, int eop_length, double Mjd_UTC, char interp, double *UT1_UTC, double *TAI_UTC, double *x_pole, double *y_pole, double *ddpsi, double *ddeps)
 {

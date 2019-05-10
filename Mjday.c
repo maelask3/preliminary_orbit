@@ -1,9 +1,23 @@
+/**
+ * @file Mjday.c
+ * @authors Davide Pérez y Millán Santamaría
+ */
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "Mjday.h"
 #include "MatlabUtils.h"
 
+/**
+ * @brief Fecha juliana modificada a partir de fecha y hora de calendario
+ * @param year Año
+ * @param month Mes
+ * @param day Día
+ * @param hour Hora
+ * @param min Minuto
+ * @param sec Segundo
+ * @return Fecha juliana modificada
+ */
 double Mjday(int year, int month, int day, int hour, int min, double sec)
 {
     double y = year;

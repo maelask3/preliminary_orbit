@@ -1,6 +1,6 @@
 /**
  * @file angl.h
- * @Author Davide Pérez y Millán Santamaría
+ * @authors Davide Pérez y Millán Santamaría
  * @brief Es el fichero de cabeceras de angl.c
  */
 

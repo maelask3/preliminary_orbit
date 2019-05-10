@@ -1,3 +1,7 @@
+/**
+ * @file gast.c
+ * @authors Davide Pérez y Millán Santamaría
+ */
 #include "gast.h"
 #include "SAT_Const.h"
 #include "IERS.h"
@@ -7,6 +11,11 @@
 #include "MatlabUtils.h"
 #include <stdlib.h>
 
+/**
+ * @brief GAST: Tiempo Sideral Aparente de Greenwich
+ * @param Mjd_UT1 Fecha juliana modificada UT1
+ * @return GAST en (rad)
+ */
 double gast(double Mjd_UT1)
 {
     double UT1_UTC = 0.;

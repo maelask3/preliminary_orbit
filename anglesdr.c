@@ -1,12 +1,28 @@
 /**
- * @file MatlabUtils.c
- * @Autor Davide Pérez y Millán Santamaría
- * @brief Es una libreria de funciones presentes en Matlab y no en C.
+ * @file anglesdr.c
+ * @authors Davide Pérez y Millán Santamaría
  */
 #include "doubler.h"
 #include <stdio.h>
 #include <math.h>
 
+/**
+ * @brief Resuelve el problema de la determinación de órbitas utilizando tres observaciones ópticas
+ * @param rtasc1 Ascensión derecha en t1 (rad)
+ * @param rtasc2 Ascensión derecha en t2 (rad)
+ * @param rtasc3 Ascensión derecha en t3 (rad)
+ * @param decl1 declinación en t1 (rad)
+ * @param decl2 declinación en t2 (rad)
+ * @param decl3 declinación en t3 (rad)
+ * @param Mjd1 Fecha juliana modificada de t1
+ * @param Mjd2 Fecha juliana modificada de t2
+ * @param Mjd3 Fecha juliana modificada de t3
+ * @param rsite1 Vector de posición ijk de site1 (m)
+ * @param rsite2 Vector de posición ijk de site2 (m)
+ * @param rsite3 Vector de posición ijk de site3 (m)
+ * @param r2 Vector de posición ijk en t2 (m)
+ * @param v2 Vector de velocidad ijk en t2 (m/s)
+ */
 void anglesdr(double rtasc1, double rtasc2, double rtasc3, double decl1, double decl2, double decl3, double Mjd1, double Mjd2, double Mjd3, double *rsite1, double *rsite2, double *rsite3, double *r2, double *v2){
 	
 	double magr1in = 2.01*R_Earth;

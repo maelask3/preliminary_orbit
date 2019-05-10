@@ -1,6 +1,17 @@
+/**
+ * @file unit.c
+ * @authors Davide Pérez y Millán Santamaría
+ */
 #include "unit.h"
 #include "MatlabUtils.h"
 
+/**
+ * @brief Calcula un vector unitario dado el vector original. Si el vector introducido es nulo, el vector será inicializado a 0.
+ * @param vec Vector
+ * @return Vector unitario
+ *
+ * @note Esta función devuelve un puntero a memoria asignada.
+ */
 double *unit(double *vec)
 {
     double small = 0.000001;

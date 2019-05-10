@@ -50,6 +50,8 @@ double sign(double n)
  * @param rows es un int sin signo que refiere al número de filas.
  * @param cols es u int sin signo que refiere al número de columnas.
  * @return Devuelve una matriz de ceros de tamano rows x cols.
+ *
+ * @note Esta función devuelve un puntero a memoria asignada.
  */
 double **zeros(unsigned int rows, unsigned int cols)
 {
@@ -143,6 +145,8 @@ double mod(double a, double m)
  * @param v1 es un vector de doubles de tamaño 3 .
  * @param v2 es un vector de doubles de tamaño 3 .
  * @return Devuelve el producto cruzado de v1 y v2.
+ *
+ * @note Esta función devuelve un puntero a memoria asignada.
  */
 double *cross(double *v1, double *v2)
 {
@@ -160,6 +164,8 @@ double *cross(double *v1, double *v2)
  * @param m1 es una matriz de doubles de tamaño 3x3.
  * @param m2 es una matriz de doubles de tamaño 3x3.
  * @return Devuelve el producto de m1 y m2, una matrix 3x3 de doubles.
+ *
+ * @note Esta función devuelve un puntero a memoria asignada.
  */
 double **productMatrix(double **m1, double **m2){
 	double **product = zeros(3, 3);
@@ -183,6 +189,8 @@ double **productMatrix(double **m1, double **m2){
  * @param m1 es una matriz de doubles de tamaño 3x3.
  * @param m2 es una matriz de doubles de tamaño 3x3.
  * @return Devuelve la suma de m1 y m2, una matrix 3x3 de doubles.
+ *
+ * @note Esta función devuelve un puntero a memoria asignada.
  */
 double **sumMatrix(double **m1, double **m2){
 	double **sum = zeros(3, 3);
@@ -198,6 +206,8 @@ double **sumMatrix(double **m1, double **m2){
  * @brief Calcula la matriz transpuesta de una matriz de tamaño 3x3.
  * @param m es una matriz de doubles de tamaño 3x3.
  * @return Devuelve la matriz transpuesta de m.
+ *
+ * @note Esta función devuelve un puntero a memoria asignada.
  */
 double **transposeMatrix(double **m){
 	double **transpose = zeros(3, 3);
@@ -214,6 +224,8 @@ double **transposeMatrix(double **m){
  * @param v es un vector de tamaño 3
  * @param d es un double
  * @return Devuelve el producto del vector por el double.
+ *
+ * @note Esta función devuelve un puntero a memoria asignada.
  */
 
 double *vectorProductDouble(double *v, double d)
@@ -232,6 +244,8 @@ double *vectorProductDouble(double *v, double d)
  * @param v1 es un vector de tamaño 3
  * @param v1 es un vector de tamaño 3
  * @return Devuelve la suma de los dos vectores.
+ *
+ * @note Esta función devuelve un puntero a memoria asignada.
  */
 
 double *sumVector(double *v1, double *v2)

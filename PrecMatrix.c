@@ -1,9 +1,21 @@
+/**
+ * @file PrecMatrix.c
+ * @authors Davide Pérez y Millán Santamaría
+ */
 #include "PrecMatrix.h"
 #include "SAT_Const.h"
 #include "R_z.h"
 #include "R_y.h"
 #include "MatlabUtils.h"
 
+/**
+ * @brief Matriz de transformación de la precesión de coordenadas ecuatoriales
+ * @param Mjd_1 Época dada (Fecha juliana modificada, tiempo terrestre)
+ * @param Mjd_2 Época a la que precesionar
+ * @return Matriz de transformación de la precesión
+ *
+ * @note Esta función devuelve un puntero a memoria asignada.
+ */
 double **PrecMatrix(double Mjd_1, double Mjd_2)
 {
     double T = (Mjd_1 - MJD_J2000)/36525;
@@ -15,7 +27,15 @@ double **PrecMatrix(double Mjd_1, double Mjd_2)
 
     double theta = ((2004.3109-(0.85530+0.000217*T)*T)-((0.42665+0.000217*T)+0.041833*dT)*dT)*dT/Arcs;
 
-    double **PrecMat = productMatrix(R_z(-z),productMatrix(R_y(theta),R_z(-zeta)));
+    double **rzzeta = R_z(-zeta);
+    double **rytheta = R_y(theta);
+    double **rhs = productMatrix(rytheta, rzzeta);
+    free(rzzeta);
+    free(rytheta);
+    double **rzz = R_z(-z);
+
+    double **PrecMat = productMatrix(rzz, rhs);
+    free(rzz);
 
     return PrecMat;
 }

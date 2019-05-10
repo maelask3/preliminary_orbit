@@ -1,12 +1,18 @@
 /**
  * @file angl.c
- * @Autor Davide Pérez y Millán Santamaría
+ * @author Davide Pérez y Millán Santamaría
  */
 
 #include "MatlabUtils.h"
 #include <stdio.h>
 #include <math.h>
 
+/**
+ * @brief Calcula el ángulo entre dos vectores
+ * @param vec1 vector 1
+ * @param vec2 vector 2
+ * @return Devuelve el ángulo entre vec1 y vec2
+ */
 double angl(double *vec1, double *vec2){
 	double small = 0.00000001;
 	double undefined = 999999.1;

@@ -1,7 +1,17 @@
+/**
+ * @file gmst.c
+ * @authors Davide Pérez y Millán Santamaría
+ */
 #include "gmst.h"
 #include "Frac.h"
 #include "SAT_Const.h"
 #include <math.h>
+
+/**
+ * @brief GMST: Tiempo sideral medio de Greenwich
+ * @param Mjd_UT1 Fecha juliana modificada UT1
+ * @return GMST en (rad)
+ */
 double gmst(double Mjd_UT1)
 {
     double Secs = 86400;

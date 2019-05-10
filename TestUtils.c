@@ -1,3 +1,8 @@
+/**
+ * @file TestUtils.c
+ * @authors Davide Pérez y Millán Santamaría
+ * @brief Contiene funciones auxiliares para la realización de test unitarios
+ */
 #include "TestUtils.h"
 #include <stdio.h>
 #include <assert.h>

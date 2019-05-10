@@ -1,7 +1,6 @@
 /**
  * @file doubler.h
- * @Autor Davide Pérez y Millán Santamaría
- * @brief Es el fichero de cabeceras de doubler.c
+ * @author Davide Pérez y Millán Santamaría
  */
 #ifndef __DOUBLER_H
 #define __DOUBLER_H

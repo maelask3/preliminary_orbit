@@ -1,9 +1,24 @@
+/**
+ * @file gibbs.c
+ * @authors Davide Pérez y Millán Santamaría
+ */
 #include "gibbs.h"
 #include "MatlabUtils.h"
 #include "SAT_Const.h"
 #include "unit.h"
 #include "angl.h"
 #include <math.h>
+/**
+ * @brief Realiza el método de gibbs de determinación de órbitas. Este método determina la velocidad en el punto medio de 3 vectores de posición dados.
+ * @param r1 Vector de posición ijk No.1 (m)
+ * @param r2 Vector de posición ijk No.1 (m)
+ * @param r3 Vector de posición ijk No.1 (m)
+ * @param v2 (Salida) Vector de velocidad ijk para r2 (m/s)
+ * @param theta (Salida) Ángulo entre vectores (rad)
+ * @param theta1 (Salida)
+ * @param copa (Salida)
+ * @param error (Salida) Cadena indicando el éxito de la operación ("ok",...)
+ */
 void gibbs(double *r1, double *r2, double *r3, double **v2, double *theta, double *theta1, double *copa, char **error)
 {
     double small = 0.00000001;

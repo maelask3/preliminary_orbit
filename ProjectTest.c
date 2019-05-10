@@ -1,3 +1,8 @@
+/**
+ * @file ProjectTest.c
+ * @authors Davide Pérez y Millán Santamaría
+ * @brief Contiene test unitarios sobre el proyecto
+ */
 #include "TestUtils.h"
 #include "MatlabUtilsTest.h"
 #include "Position.h"
@@ -29,7 +34,7 @@ double **eopdata = NULL;
 
 void Setup()
 {
-    FILE *fp = fopen("eop19620101.txt","r");
+    FILE *fp = fopen("/home/AD.MTHREE.ES/meoberto/preliminary_orbit/eop19620101.txt","r");
     if(!fp)
     {
         fprintf(stderr, "ERROR: No se ha podido abrir eop19620101.txt\n");

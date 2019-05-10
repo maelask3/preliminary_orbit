@@ -1,3 +1,8 @@
+/**
+ * @file TestUtils.h
+ * @authors Davide Pérez y Millán Santamaría
+ * @brief Definiciones de funciones auxiliares para test unitarios
+ */
 #ifndef TESTUTILS_H
 #define TESTUTILS_H
 #define DELTA 1e-12

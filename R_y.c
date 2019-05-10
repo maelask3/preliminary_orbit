@@ -1,6 +1,18 @@
+/**
+ * @file R_y.c
+ * @authors Davide Pérez y Millán Santamaría
+ */
 #include "MatlabUtils.h"
 #include "R_y.h"
 #include <math.h>
+
+/**
+ * @brief Matriz de rotación (Y)
+ * @param angle Ángulo de rotación (rad)
+ * @return Matriz de rotación
+ *
+ * @note Esta función devuelve un puntero a memoria asignada.
+ */
 double **R_y(double angle)
 {
     double C = cos(angle);

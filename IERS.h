@@ -1,3 +1,8 @@
+/**
+ * @file IERS.h
+ * @authors Davide Pérez y Millán Santamaría
+ * @brief Contiene las definiciones de la función IERS y la variable global eopdata
+ */
 #ifndef IERS_H
 #define IERS_H
 extern double **eopdata;

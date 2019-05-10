@@ -1,7 +1,7 @@
 /**
  * @file anglesdr.h
- * @Author Davide Pérez y Millán Santamaría
- * @brief Es el fichero de cabeceras de anglesdr.c
+ * @author Davide Pérez y Millán Santamaría
+ * @brief Definición de anglesdr()
  */
 
 #ifndef __ANGLESDR_H

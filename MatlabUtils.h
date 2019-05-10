@@ -1,7 +1,7 @@
 /**
- * @file MatlabUrils.h
- * @author Davide Pérez y Millán Santamaría
- * @brief Es el fichero de cabeceras de MAtlabUtils.c
+ * @file MatlabUtils.h
+ * @authors Davide Pérez y Millán Santamaría
+ * @brief Definiciones de las funciones de MatlabUtils.c
  */
 #ifndef MATLABUTILS_H
 #define MATLABUTILS_H

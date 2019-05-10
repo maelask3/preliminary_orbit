@@ -1,3 +1,7 @@
+/**
+ * @file rv2coe.c
+ * @authors Davide Pérez y Millán Santamaría
+ */
 #include "rv2coe.h"
 #include "newtonnu.h"
 #include "MatlabUtils.h"
@@ -5,6 +9,23 @@
 #include "angl.h"
 #include <stdlib.h>
 #include <string.h>
+
+/**
+ * @brief Encuentra los elementos orbitales clásicos dada la posición ecuatorial geocéntrica y vectores de velocidad
+ * @param r Vector de posición ijk (m)
+ * @param v Vector de velocidad ijk (m/s)
+ * @param p (Salida) Semilatus rectum (m)
+ * @param a (Salida) Semieje mayor (m)
+ * @param ecc (Salida) Excentricidad
+ * @param incl (Salida) Inclinación (0 a pi rad)
+ * @param omega (Salida) Longitud del nodo ascendiente (0 a 2pi rad)
+ * @param argp (Salida) Argumento del perigeo (0 a 2pi rad)
+ * @param nu (Salida) Anomalía real (0 a 2pi rad)
+ * @param m (Salida) Anomalía mediana (0 a 2pi rad)
+ * @param arglat (Salida) Argumento de la latitud (ci) (0 a 2pi rad)
+ * @param truelon (Salida) Longitud real (ce) (0 a 2pi rad)
+ * @param lonper (Salida) Longitud del periastro (ee) (0 a 2pi rad)
+ */
 
 void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *incl, double *omega, double *argp, double *nu, double *m, double *arglat, double *truelon, double *lonper)
 {

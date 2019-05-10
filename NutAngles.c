@@ -1,9 +1,19 @@
+/**
+ * @file NutAngles.c
+ * @authors Davide Pérez y Millán Santamaría
+ */
 #include "NutAngles.h"
 #include "SAT_Const.h"
 #include "MatlabUtils.h"
 #include <stdlib.h>
 #include <math.h>
 
+/**
+ * @brief Nutación en longitud y oblicuidad
+ * @param Mjd_TT Fecha juliana modificada (Tiempo terrestre)
+ * @param dpsi (Salida) Ángulo de nutación
+ * @param deps (Salida) Ángulo de nutación
+ */
 void NutAngles(double Mjd_TT, double *dpsi, double *deps)
 {
     double T = (Mjd_TT-(MJD_J2000))/36525;
