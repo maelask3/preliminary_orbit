@@ -9,6 +9,7 @@
 #include "SAT_Const.h"
 #include "MatlabUtils.h"
 #include "unit.h"
+#include "lambert_gooding.h"
 void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_way, double multi_revs, double *v1, double *v2)
 {
 	double r1mag = norm(r1);
@@ -161,7 +162,72 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_
 
 
 
-/*double vlamb(double gm, double r1, double r2, double th, double tdelt, double *vri, double *vti, double *vrf, double *vrt);*/
+double vlamb(double gm, double r1, double r2, double th, double tdelt, double *vri, double *vti, double *vrf, double *vtf){
+	double thr2 = th;
+	int m = 0;
+	while(thr2 > 2*pi)
+	{
+		thr2 = thr2 - 2*pi;
+		m = m + 1;
+	}
+	thr2 = thr2/2;
+
+	double r1mag = r1;
+	double r2mag = r2;
+	double dr = r1mag-r2mag;
+	dr = r1mag-r2mag;
+	double r1r2 = r1mag*r2mag;
+	double r1r2th = 4.0*r1r2*sin(thr2)*sin(thr2);
+	double csq = dr*dr + r1r2th;
+	double c = sqrt(csq);
+	double s = (r1 + r2 + c)/2.0;
+	double gms = sqrt(gm*s/2.0);
+	double qsqfm1 = c/s;
+	double q = sqrt(r1r2)*cos(thr2)/s;
+
+	double rho, sig, n;
+	if(c != 0.0)
+	{
+		rho = dr/c;
+		sig = r1r2th/csq;
+	}else{
+		rho = 0.0;
+		sig = 1.0;
+	}
+
+	double t = 4.0*gms*tdelt/(s*s);
+	
+	double *aux = xlamb(m,q,qsqfm1,t);
+	n = aux[0];
+	double x1 = aux[1];
+	double x2 = aux[2];
+	double x;
+	for(int i = 0; i<n; i++)
+	{
+		if(i==1)
+		{
+			x = x1;
+		}else{
+			x = x2;
+		}
+		aux = tlamb(m,q,qsqfm1,x,-1);
+		double unused = aux[0];
+		double qzminx = aux[1];
+		double qzplx = aux[2];
+		double zplqx = aux[3];
+		double vt2 = gms*zplqx*sqrt(sig);
+		double vr1 = gms*(qzminx - qzplx*rho)/r1;
+		double vt1 = vt2/r1;
+		double vr2 = -gms*(qzminx + qzplx*rho)/r2;
+		vt2 = vt2/r2;
+		vri[i] = vr1;
+		vti[i] = vt1;
+		vrf[i] = vr2;
+		vtf[i] = vt2;
+	}
+	return n;
+}
+		
 
 double *tlamb(double m, double q, double qsqfm1, double x, double n)
 {
@@ -321,10 +387,18 @@ double *tlamb(double m, double q, double qsqfm1, double x, double n)
 			}
 			t = t/xsq;
 		}
+	double *dev = (double*) malloc(4*sizeof(double));
+	dev[0] = t;
+	dev[1] = dt;
+	dev[2] = d2t;
+	dev[3] = d3t;
+	return dev;
 }
-/*
-double *xlamb(double m, double q, double qsqfm1, double tin);
-*/
+
+double *xlamb(double m, double q, double qsqfm1, double tin){
+
+}
+
 double d8rt(double x)
 {
 	double d8rt = sqrt(sqrt(sqrt(x)));
