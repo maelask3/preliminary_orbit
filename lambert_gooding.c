@@ -225,6 +225,7 @@ double vlamb(double gm, double r1, double r2, double th, double tdelt, double *v
 		vrf[i] = vr2;
 		vtf[i] = vt2;
 	}
+	free(aux);
 	return n;
 }
 		
@@ -396,7 +397,195 @@ double *tlamb(double m, double q, double qsqfm1, double x, double n)
 }
 
 double *xlamb(double m, double q, double qsqfm1, double tin){
+	
+	double tol = 3e-7;
+	double c0  = 1.7;
+	double c1  = 0.5;
+	double c2  = 0.03;
+	double c3  = 0.15;
+	double c41 = 1.0;
+	double c42 = 0.24;
 
+	double thr2 = atan2(qsqfm1, 2.0*q)/pi;
+	
+	double xpl = 0.0;
+	double x = 0.0;
+
+	double n, t0, dt, d2t, d3t, tdiff, w, xm, tmin, xmold, xtest, tdiffm, d2t2, tdiff0, ij, t;
+	double *aux, *dev;
+	dev = (double*) malloc(3*sizeof(double));
+	int i;
+	if(m == 0.0)
+	{
+		n = 1.0;
+		aux = tlamb(m,q,qsqfm1,0.0,0.0);
+		t0 = aux[0];
+		dt = aux[1];
+		d2t = aux[2];
+		d3t = aux[4];
+
+		tdiff = tin -t0;
+		if(tdiff<=0.0)
+		{
+			x = t0*tdiff/(-4.0*tin);
+		}else{
+			x = -tdiff/(tdiff + 4.0);
+			w = x + c0*sqrt(2.0*(1.0 - thr2));
+			if(w<0.0)
+			{
+				x = x - sqrt(d8rt(-w))*(x + sqrt(tdiff/(tdiff + 1.5*t0)));
+			}
+			w = 4.0/(4.0 + tdiff);
+			x = x*(1.0 + x*(c1*w - c2*x*sqrt(w)));
+		}
+	}else{
+		xm = 1.0/(1.5*(m + 0.5)*pi);
+		if(thr2<0.5)
+		{
+			xm = d8rt(2.0*thr2)*xm;
+		}
+		if(thr2>0.5)
+		{
+			xm = (2.0 - d8rt(2.0 - 2.0*thr2))*xm;
+		}
+
+		do
+		{
+			aux = tlamb(m,q,qsqfm1,xm,3);
+                	tmin = aux[0];
+                	dt = aux[1];
+                	d2t = aux[2];
+                	d3t = aux[4];
+			if(d2t != 0.0)
+			{
+				xmold = xm;
+				xm = xm - dt*d2t/(d2t*d2t - dt*d3t/2.0);
+				xtest = abs(xmold/xm - 1.0);
+			}
+			i++;
+		}while(i<12 && d2t!=0.0 && xtest>tol);
+
+		if(i>12)
+		{
+			dev[0] = -1.0;
+			dev[1] = x;
+			dev[2] = xpl;
+			return dev;
+		}
+		tdiffm = tin - tmin;
+		if(tdiffm<0.0)
+                {
+                        dev[0] = 0.0;
+                        dev[1] = x;
+                        dev[2] = xpl;
+                        return dev;
+                }else if(tdiffm==0.0){
+			x = xm;
+			dev[0] = 1.0;
+                        dev[1] = x;
+                        dev[2] = xpl;
+                        return dev;
+		}else{
+			n = 3.0;
+			if(d2t==0.0)
+			{
+				d2t = 6.0*m*pi;
+			}
+			x = sqrt(tdiffm/(d2t/2.0 + tdiffm/((1.0 - xm)*(1.0 - xm))));
+			w = xm + x;
+			w = w*4.0/(4.0 + tdiffm) + (1.0 - w)*(1.0 - w);
+			x = x*(1.0 - (1.0 + m + c41*(thr2 - 0.5))/(1.0 + c3*m)*x*(c1*w + c2*x*sqrt(w))) + xm;
+			d2t2 = d2t/2.0;
+			if(x>=1.0)
+			{
+				n = 1.0;
+				aux = tlamb(m,q,qsqfm1,0.0,0.0);
+                        	t0 = aux[0];
+                        	dt = aux[1];
+                        	d2t = aux[2];
+                        	d3t = aux[4];
+				tdiff0 = t0 - tmin;
+				tdiff = tin - t0;
+				if(tdiff<=0.0)
+				{
+					x = xm - sqrt(tdiffm/(d2t2 - tdiffm*(d2t2/tdiff0 - 1.0/(xm*xm))));
+				}else{
+					x = -tdiff/(tdiff + 4.0);
+					ij = 200.0;
+					w = x + c0*sqrt(2.0*(1.0 - thr2));
+					if(w<0.0)
+					{
+						x = x - sqrt(d8rt(-w))*(x + sqrt(tdiff/(tdiff+1.5*t0)));
+					}
+					w = 4.0/(4.0 + tdiff);
+					x = x*(1.0 + (1.0 + m + c42*(thr2 - 0.5))/(1.0 + c3*m)*x*(c1*w - c2*x*sqrt(w)));
+					if(x<=-1.0)
+					{
+						n = n-1.0;
+						if(n==1.0)
+						{
+							x = xpl;
+						}
+					}
+				}
+			}
+		}
+	}
+	for(i=0; i<3; i++)
+	{
+		aux = tlamb(m,q,qsqfm1,x,2.0);
+                t = aux[0];
+                dt = aux[1];
+                d2t = aux[2];
+             	d3t = aux[4];
+		t = tin-t;
+		if(dt!=0.0)
+		{
+			x = x + t*dt/(dt*dt + t*d2t/2.0);
+		}
+	}
+	if(n!=3)
+	{
+		dev[0] = n;
+                dev[1] = x;
+                dev[2] = xpl;
+                return dev;
+	}
+	n = 2.0;
+	xpl = x;
+	aux = tlamb(m,q,qsqfm1,0.0,0);
+        t0 = aux[0];
+        dt = aux[1];
+        d2t = aux[2];
+        d3t = aux[4];
+	tdiff0 = t0 - tmin;
+	tdiff = tin - t0;
+	if(tdiff<=0.0)
+	{
+		x = xm - sqrt(tdiffm/(d2t2 - tdiffm*(d2t2/tdiff0 - 1.0/(xm*xm))));
+	}else{
+		x = -tdiff/(tdiff + 4.0);
+		ij = 200.0;
+		w = x + c0*sqrt(2.0*(1.0 - thr2));
+		if(w<0.0)
+		{
+			x = x - sqrt(d8rt(-w))*(x + sqrt(tdiff/(tdiff+1.5*t0)));
+		}
+		w = 4.0/(4.0 + tdiff);
+		x = x*(1.0 + (1.0 + m + c42*(thr2 - 0.5))/(1.0 + c3*m)*x*(c1*w - c2*x*sqrt(w)));
+		if(x<=-1.0)
+		{
+			n = n-1;
+			if(n==1)
+			{
+				x = xpl;
+			}
+		}
+	}
+	dev[0] = n;
+	dev[1] = x;
+        dev[2] = xpl;
+        return dev;
 }
 
 double d8rt(double x)
