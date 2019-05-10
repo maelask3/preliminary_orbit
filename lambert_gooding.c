@@ -585,6 +585,7 @@ double *xlamb(double m, double q, double qsqfm1, double tin){
 	dev[0] = n;
 	dev[1] = x;
         dev[2] = xpl;
+	free(aux);
         return dev;
 }
 
