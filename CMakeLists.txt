@@ -65,6 +65,8 @@ set(COMMON_SOURCES
     "gibbs.c"
     "hgibbs.h"
     "hgibbs.c"
+    "lambert_gooding.h"
+    "lambert_gooding.c"
 )
 set(TEST_SOURCES
     ${COMMON_SOURCES}

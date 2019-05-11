@@ -29,7 +29,7 @@
 #include "GHAMatrix.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+#include "lambert_gooding.h"
 double **eopdata = NULL;
 
 void Setup()
@@ -1085,5 +1085,80 @@ int main()
     test_gibbs();
     test_hgibbs();
     WindDown();
+
+    //Test lambert_gooding
+/*
+	double v1[3], v2[3];
+	double r1[] = {40706177.3896682, 9894896.081818309, -235154.0576340267};
+	double r2[] = {40481024.54943731, 10782719.6281578, -234124.5674719382};
+	double tof = 300.0000223517418;
+	double mu = 398600441800000.0;
+	double long_way = 0.0;
+	double multi_revs = 1.0;
+
+	double sol_v1[] = {-717.4652239083363, 2967.699531994756, 3.240668317805917};
+	double sol_v2[] = {-783.4918306318922, 2950.883185650744, 3.622315600677195};
+
+	lambert_gooding(r1, r2, tof, mu, long_way, multi_revs, v1, v2);
+
+	printf("Actual  -------------------  Esperado \n");
+	for(int i = 0; i<3; i++)
+	{
+		printf("%lf  ---------v1----------  %lf \n", v1[i], sol_v1[i]);
+		printf("%lf  ---------v2----------  %lf \n", v2[i], sol_v2[i]);
+	}*/
+	//Test vlamb
+	/*double gm = 398600441800000.0;
+	double r1 = 41892208.62618656;
+	double r2 = 41893140.31514826;
+	double th = 0.02186412186035686;
+	double tdelt = 300.0000223517418;
+	double vri[2], vti[2], vrf[2], vtf[2];
+
+	double sol_n = 1.0;
+	double sol_vri[] = {3.796642495817074, 0.0};
+	double sol_vti[] = {3053.19389282054, 0.0};
+	double sol_vrf[] = {2.414379595078204, 0.0};
+	double sol_vtf[] = {3053.125990843594, 0.0};
+
+	double n = vlamb(gm, r1, r2, th, tdelt, vri, vti, vrf, vtf);
+
+	printf("Actual  -------------------  Esperado \n");
+	printf("%lf  ---------n----------  %lf \n", n, sol_n);
+    	printf("%lf  ---------vri----------  %lf \n", vri[0], sol_vri[0]);
+    	printf("%lf  ---------vti----------  %lf \n", vti[0], sol_vti[0]);
+    	printf("%lf  ---------vrf----------  %lf \n", vrf[0], sol_vrf[0]);
+    	printf("%lf  ---------vtf----------  %lf \n", vtf[0], sol_vtf[0]);*/
+
+    //Test tlamb
+/*
+	double m = 0.0;
+    	double q = 0.9891272559119239;
+    	double qsqfm1 = 0.02162727161214778;
+    	double x = 0.0;
+    	double n = 0.0;
+
+    	double sol[] = {0.5861212399757942, 0.0, 0.0, 0.0};
+
+    	double *aux = tlamb(m, q, qsqfm1, x, n);
+
+    	printf("Actual  -------------------  Esperado \n");
+    	printf("%lf  ---------t----------  %lf \n", aux[0], sol[0]);
+    	printf("%lf  ---------dt----------  %lf \n", aux[1], sol[1]);
+    	printf("%lf  ---------d2t----------  %lf \n", aux[2], sol[2]);
+    	printf("%lf  ---------d2t----------  %lf \n", aux[3], sol[3]);*/
+    //Test xlamb
+/*    	double m = 0.0;
+	double q = 0.9891272559119239;
+	double qsqfm1 = 0.02162727161214778;
+	double tin = 0.06146745322679799;
+
+	double sol[] = {1.0, 0.6959029065435739, 0.0};
+	double *aux = xlamb(m, q, qsqfm1, tin);
+	printf("Actual  -------------------  Esperado \n");
+        printf("%lf  ---------n----------  %lf \n", aux[0], sol[0]);
+        printf("%lf  ---------x----------  %lf \n", aux[1], sol[1]);
+        printf("%lf  ---------xpl----------  %lf \n", aux[2], sol[2]);
+*/
     return 0;
 }
