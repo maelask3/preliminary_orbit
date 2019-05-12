@@ -31,6 +31,7 @@
 #include <stdio.h>
 #include "lambert_gooding.h"
 #include "doubler.h"
+#include "anglesg.h"
 double **eopdata = NULL;
 
 void Setup()
@@ -1089,7 +1090,7 @@ int main()
 
     //Test lambert_gooding
 
-	double v1[3], v2[3];
+	/*double v1[3], v2[3];
 	double r1[] = {40706177.3896682, 9894896.081818309, -235154.0576340267};
 	double r2[] = {40481024.54943731, 10782719.6281578, -234124.5674719382};
 	double tof = 300.0000223517418;
@@ -1107,7 +1108,7 @@ int main()
 	{
 		printf("%lf  ---------v1----------  %lf \n", v1[i], sol_v1[i]);
 		printf("%lf  ---------v2----------  %lf \n", v2[i], sol_v2[i]);
-	}
+	}*/
 	//Test vlamb
 	/*double gm = 398600441800000.0;
 	double r1 = 41892208.62618656;
@@ -1197,5 +1198,30 @@ int main()
     {
         printf("%lf  ---------------------  %lf \n", aux[i], sol[i]);
     }*/
+	//Test anglesg
+	double Alpha1 = 0.2235784225097256;
+	double Alpha2 = 0.1654921196741023;
+	double Alpha3 = 0.1066134373580736;
+	double Delta1 = -0.2115339053417127;
+	double Delta2 = -0.1428377459832159;
+	double Delta3 = -0.07167369106239914;
+	double JD1 = 55565.90440736106;
+	double JD2 = 55565.90787958354;
+	double JD3 = 55565.91135180555;
+	double RS1[] = {5270137.350067007, -1572248.25164427, 3219350.410842039};
+	double RS2[] = {5303269.313360662, -1456667.748237766, 3219314.054634872};
+	double RS3[] = {5333865.069033056, -1340390.167468833, 3219280.501208378};
+	double R2[3], V2[3];
+	
+	double R2_sol[] = {20486511.51189425, 1079232.341278148, 1005456.217080705};
+	double V2_sol[] = {16.87979502268987, -2654.080029326738, 3734.120046153917};
+	
+	anglesg(Alpha1, Alpha2, Alpha3, Delta1, Delta2, Delta3, JD1, JD2, JD3, RS1, RS2, RS3, R2, V2);
+	
+	for(int i=0; i<3; i++)
+	{
+		printf("%lf  ---------r2----------  %lf \n", R2[i], R2_sol[i]);
+        printf("%lf  ---------v2----------  %lf \n", V2[i], V2_sol[i]);
+    }
     return 0;
 }
