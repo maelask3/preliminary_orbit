@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "lambert_gooding.h"
+#include "doubler.h"
 double **eopdata = NULL;
 
 void Setup()
@@ -1087,7 +1088,7 @@ int main()
     WindDown();
 
     //Test lambert_gooding
-/*
+
 	double v1[3], v2[3];
 	double r1[] = {40706177.3896682, 9894896.081818309, -235154.0576340267};
 	double r2[] = {40481024.54943731, 10782719.6281578, -234124.5674719382};
@@ -1106,7 +1107,7 @@ int main()
 	{
 		printf("%lf  ---------v1----------  %lf \n", v1[i], sol_v1[i]);
 		printf("%lf  ---------v2----------  %lf \n", v2[i], sol_v2[i]);
-	}*/
+	}
 	//Test vlamb
 	/*double gm = 398600441800000.0;
 	double r1 = 41892208.62618656;
@@ -1161,8 +1162,8 @@ int main()
         printf("%lf  ---------xpl----------  %lf \n", aux[2], sol[2]);
 */
     //Test doubler
-/*
-	double cc1 = 7515275.95733093;
+
+	/*double cc1 = 7515275.95733093;
     double cc2 = 7515565.474004442;
     double magrsite1 = 6372639.11744252;
     double magrsite2 = 6372639.11744252;
