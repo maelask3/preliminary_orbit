@@ -227,7 +227,6 @@ double vlamb(double gm, double r1, double r2, double th, double tdelt, double *v
             x = x2;
         }
         aux = tlamb(m,q,qsqfm1,x,-1);
-        double unused = aux[0];
         double qzminx = aux[1];
         double qzplx = aux[2];
         double zplqx = aux[3];
@@ -496,6 +495,7 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
             w = 4.0/(4.0 + tdiff);
             x = x*(1.0 + x*(c1*w - c2*x*sqrt(w)));
         }
+        free(aux);
     }
     else
     {
@@ -525,6 +525,8 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
             i++;
         }
         while(i<12 && d2t!=0.0 && xtest>tol);
+
+        free(aux);
 
         if(i>12)
         {
@@ -595,6 +597,7 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
                         }
                     }
                 }
+                free(aux);
             }
         }
     }
@@ -611,6 +614,7 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
             x = x + t*dt/(dt*dt + t*d2t/2.0);
         }
     }
+    free(aux);
     if((fabs(n - 3)>1e-12))
     {
         dev[0] = n;
