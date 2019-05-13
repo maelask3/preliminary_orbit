@@ -64,7 +64,7 @@ void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *inc
         {
             *a = (-mu)/(2.0*sme);
         } else {
-            *a = INFINITY;
+            *a = HUGE_VAL;
         }
 
         *p = magh*magh/mu;

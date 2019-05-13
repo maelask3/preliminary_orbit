@@ -67,7 +67,7 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 	double a3u = -(Tau1*((Tau3-Tau1)*(Tau3-Tau1) - Tau1*Tau1 ))/(6.0*(Tau3 - Tau1));
 
 	double D1 = LIR[1][0]*a1 - LIR[1][1] + LIR[1][2]*a3;
-	double D2 = LIR[1][0]*a1u + LIR[1][2]*a3u;
+    double D2 = LIR[1][0]*a1u + LIR[1][2]*a3u; // esta wea se va por 13
 
 	double L2DotRS= dot(L2,RS2);
 	double magRS2 = norm(RS2);
@@ -75,7 +75,7 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 	double *Poly = (double*)(double[16]) {1.0, 0.0, -(D1*D1 + 2.0*D1*L2DotRS + magRS2*magRS2), 0.0, 0.0, -2.0*Mu*(L2DotRS*D2 + D1*D2), 0.0, 0.0, -Mu*Mu*D2*D2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
     double *rootarr = calloc(16, sizeof(double));
-	int len_rootarr = roots(Poly, &rootarr);
+    int len_rootarr = roots(Poly, &rootarr); // se va 10^-6
 
 	double BigR2 = 0.0;
 
@@ -118,7 +118,8 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 		double copa = 0.0;
 		char **error = malloc(sizeof(char*));
 		gibbs(R1, R2, R3, v2, &theta, &theta1, &copa, error);
-        if(strcmp(*error,"          ok")!=0 && (copa < 1.0/Rad_))
+        // esto es un bug que tiene Meysam en su propio código.
+        if(strcmp(*error,"ok")!=0 && (copa < 1.0/Rad_))
 		{
 			hgibbs(R1,R2,R3,JD1,JD2,JD3, v2, &theta, &theta1, &copa, error);
 		}
