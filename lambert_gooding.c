@@ -461,10 +461,10 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
     double xpl = 0.0;
     double x = 0.0;
 
-    double n, t0, dt, d2t, d3t, tdiff, w, xm, tmin, xmold, xtest, tdiffm, d2t2, tdiff0, ij, t;
+    double n, t0, dt, d2t, d3t, tdiff, w, xm, tmin=0., xmold, xtest, tdiffm, d2t2, tdiff0, ij, t;
     double *aux, *dev;
     dev = (double*) malloc(3*sizeof(double));
-    int i;
+    int i=0;
     if(m == 0.0)
     {
         n = 1.0;
@@ -472,7 +472,7 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
         t0 = aux[0];
         dt = aux[1];
         d2t = aux[2];
-        d3t = aux[4];
+        d3t = aux[3];
 
         tdiff = tin -t0;
         if(tdiff<=0.0)
@@ -509,12 +509,12 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
             tmin = aux[0];
             dt = aux[1];
             d2t = aux[2];
-            d3t = aux[4];
+            d3t = aux[3];
             if(d2t != 0.0)
             {
                 xmold = xm;
                 xm = xm - dt*d2t/(d2t*d2t - dt*d3t/2.0);
-                xtest = abs(xmold/xm - 1.0);
+                xtest = fabs(xmold/xm - 1.0);
             }
             i++;
         }
