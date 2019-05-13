@@ -22,7 +22,8 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_
     }
 
     bool solution_exists[10];
-    solution_exists[0] = false;
+    for(int i=0; i<10; i++)
+        solution_exists[i] = false;
     double dr = r1mag - r2mag;
     double r1r2 = r1mag*r2mag;
     double *r1hat = vectorProductDouble(r1, (1.0/r1mag));
@@ -61,7 +62,7 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_
         double *etai = cross(rho,r1hat);
         double *etaf = cross(rho,r2hat);
 
-        double vri[2], vti[2], vrf[2], vtf[2];
+        double vri[2] = {0., 0.}, vti[2]= {0., 0.}, vrf[2]= {0., 0.}, vtf[2]= {0., 0.};
         int n = vlamb(mu,r1mag,r2mag,ta,tof,vri,vti,vrf,vtf);
 
         double vt1[3][2], vt2[3][2];

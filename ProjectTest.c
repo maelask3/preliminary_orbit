@@ -50,6 +50,7 @@ void Setup()
     if(filesize == -1)
     {
         fprintf(stderr, "ERROR: Archivo inválido.\n");
+        fclose(fp);
         exit(2);
     }
 
