@@ -74,7 +74,7 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 
 	double *Poly = (double*)(double[16]) {1.0, 0.0, -(D1*D1 + 2.0*D1*L2DotRS + magRS2*magRS2), 0.0, 0.0, -2.0*Mu*(L2DotRS*D2 + D1*D2), 0.0, 0.0, -Mu*Mu*D2*D2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
-	double *rootarr = calloc(15, sizeof(double));
+    double *rootarr = calloc(16, sizeof(double));
 	int len_rootarr = roots(Poly, &rootarr);
 
 	double BigR2 = 0.0;
@@ -118,7 +118,7 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 		double copa = 0.0;
 		char **error = malloc(sizeof(char*));
 		gibbs(R1, R2, R3, v2, &theta, &theta1, &copa, error);
-		if(!strcmp(*error,"ok") && (copa < 1.0/Rad_))
+        if(strcmp(*error,"          ok")!=0 && (copa < 1.0/Rad_))
 		{
 			hgibbs(R1,R2,R3,JD1,JD2,JD3, v2, &theta, &theta1, &copa, error);
 		}

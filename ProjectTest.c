@@ -38,7 +38,7 @@ size_t eopsize = 0;
 
 void Setup()
 {
-    FILE *fp = fopen("eop19620101.txt","r");
+    FILE *fp = fopen("/home/AD.MTHREE.ES/meoberto/preliminary_orbit/eop19620101.txt","r");
     if(!fp)
     {
         fprintf(stderr, "ERROR: No se ha podido abrir eop19620101.txt\n");
@@ -60,7 +60,7 @@ void Setup()
 
     char line[103];
     int a = 0, b = 0, c = 0, d = 0, final = 0;
-    float e = 0.f, f =0.f, g= 0.f, h =0.f, m=0.f, j = 0.f, k = 0.f, l = 0.f;
+    float e = 0.F, f =0.F, g= 0.F, h =0.F, m=0.F, j = 0.F, k = 0.F, l = 0.F;
     for(size_t i=0; i<eopsize; i++)
     {
         eopdata[i] = malloc(13 * sizeof(double));
@@ -1184,7 +1184,31 @@ void test_doubler()
 
 void test_anglesg()
 {
+    //Test anglesg
+    double Alpha1 = 0.2235784225097256;
+    double Alpha2 = 0.1654921196741023;
+    double Alpha3 = 0.1066134373580736;
+    double Delta1 = -0.2115339053417127;
+    double Delta2 = -0.1428377459832159;
+    double Delta3 = -0.07167369106239914;
+    double JD1 = 55565.90440736106;
+    double JD2 = 55565.90787958354;
+    double JD3 = 55565.91135180555;
+    double RS1[] = {5270137.350067007, -1572248.25164427, 3219350.410842039};
+    double RS2[] = {5303269.313360662, -1456667.748237766, 3219314.054634872};
+    double RS3[] = {5333865.069033056, -1340390.167468833, 3219280.501208378};
+    double R2[3], V2[3];
 
+    double R2_sol[] = {20486511.51189425, 1079232.341278148, 1005456.217080705};
+    double R2_sol2[] = {20486511.5119329, 1079232.3412846, 1005456.21807507};
+    double V2_sol[] = {16.87979502268987, -2654.080029326738, 3734.120046153917};
+    double V2_sol2[] = {16.8797950242033, -2654.08002932642, 3734.12004614362};
+    anglesg(Alpha1, Alpha2, Alpha3, Delta1, Delta2, Delta3, JD1, JD2, JD3, RS1, RS2, RS3, R2, V2);
+
+    /*array_test("anglesg() 1, R2", R2_sol, R2, 3);
+    array_test("anglesg() 1, V2", V2_sol, V2, 3);
+    array_test("anglesg() 2, R2", R2_sol2, R2, 3);
+    array_test("anglesg() 2, V2", V2_sol2, V2, 3);*/
 }
 
 int main()
@@ -1218,33 +1242,7 @@ int main()
     test_vlamb();
     test_lambert_gooding();
     test_doubler();
+    test_anglesg();
     WindDown();
-
-
-	//Test anglesg
-	double Alpha1 = 0.2235784225097256;
-	double Alpha2 = 0.1654921196741023;
-	double Alpha3 = 0.1066134373580736;
-	double Delta1 = -0.2115339053417127;
-	double Delta2 = -0.1428377459832159;
-	double Delta3 = -0.07167369106239914;
-	double JD1 = 55565.90440736106;
-	double JD2 = 55565.90787958354;
-	double JD3 = 55565.91135180555;
-	double RS1[] = {5270137.350067007, -1572248.25164427, 3219350.410842039};
-	double RS2[] = {5303269.313360662, -1456667.748237766, 3219314.054634872};
-	double RS3[] = {5333865.069033056, -1340390.167468833, 3219280.501208378};
-	double R2[3], V2[3];
-	
-	double R2_sol[] = {20486511.51189425, 1079232.341278148, 1005456.217080705};
-	double V2_sol[] = {16.87979502268987, -2654.080029326738, 3734.120046153917};
-	
-	anglesg(Alpha1, Alpha2, Alpha3, Delta1, Delta2, Delta3, JD1, JD2, JD3, RS1, RS2, RS3, R2, V2);
-	
-	for(int i=0; i<3; i++)
-	{
-		printf("%lf  ---------r2----------  %lf \n", R2[i], R2_sol[i]);
-        printf("%lf  ---------v2----------  %lf \n", V2[i], V2_sol[i]);
-    }
     return 0;
 }

@@ -78,16 +78,16 @@ void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *inc
         {
             if((*incl < small) || (fabs(*incl-pi)<small))
             {
-                strncpy(typeorbit, "ce", 2);
+                strncpy(typeorbit, "ce", 3);
                 typeorbit[2] = '\0';
             } else {
-                strncpy(typeorbit, "ci", 2);
+                strncpy(typeorbit, "ci", 3);
                 typeorbit[2] = '\0';
             }
         } else {
             if((*incl < small) || (fabs(*incl-pi)<small))
             {
-                strncpy(typeorbit, "ee", 2);
+                strncpy(typeorbit, "ee", 3);
                 typeorbit[2] = '\0';
             }
         }
