@@ -10,7 +10,7 @@
 #include "MatlabUtils.h"
 #include "unit.h"
 #include "lambert_gooding.h"
-void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_way, double multi_revs, double *v1, double *v2)
+void lambert_gooding(double *r1, double *r2, double tof, double mu, bool long_way, double multi_revs, double *v1, double *v2)
 {
     double r1mag = norm(r1);
     double r2mag = norm(r2);
@@ -251,10 +251,10 @@ double *tlamb(double m, double q, double qsqfm1, double x, double n)
     double sw = 0.4;
     double t = 0.0;
 
-    bool lm1 = (n==-1);
+    bool lm1 = fabs(n - (-1)) < 1e-12;
     bool l1 = (n>=1);
     bool l2 = (n>=2);
-    bool l3 = (n==3);
+    bool l3 = fabs(n - (3)) < 1e-12;
     double qsq = q*q;
     double xsq = x*x;
     double u = (1.0 - x)*(1.0 + x);

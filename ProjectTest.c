@@ -38,7 +38,7 @@ size_t eopsize = 0;
 
 void Setup()
 {
-    FILE *fp = fopen("eop19620101.txt","r");
+    FILE *fp = fopen("/home/ad.mthree.es/meoberto/POrbitD/eop19620101.txt","r");
     if(!fp)
     {
         fprintf(stderr, "ERROR: No se ha podido abrir eop19620101.txt\n");
@@ -1139,7 +1139,7 @@ void test_lambert_gooding()
     double r2[] = {40481024.54943731, 10782719.6281578, -234124.5674719382};
     double tof = 300.0000223517418;
     double mu = 398600441800000.0;
-    double long_way = 0.0;
+    bool long_way = false;
     double multi_revs = 1.0;
 
     double sol_v1[] = {-717.4652239083363, 2967.699531994756, 3.240668317805917};
