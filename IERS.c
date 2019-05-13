@@ -21,7 +21,7 @@
  * @param ddeps
  */
 
-void IERS(double **eop, int eop_length, double Mjd_UTC, char interp, double *UT1_UTC, double *TAI_UTC, double *x_pole, double *y_pole, double *ddpsi, double *ddeps)
+void IERS(double **eop, size_t eop_length, double Mjd_UTC, char interp, double *UT1_UTC, double *TAI_UTC, double *x_pole, double *y_pole, double *ddpsi, double *ddeps)
 {
     if(interp == 'l')
     {
@@ -29,7 +29,7 @@ void IERS(double **eop, int eop_length, double Mjd_UTC, char interp, double *UT1
         double *nexteop = NULL;
         double mj = floor(Mjd_UTC);
 
-        for(int i=0; i<eop_length; i++)
+        for(size_t i=0; i<eop_length; i++)
         {
             if(fabs(eop[i][3] - mj) < DELTA)
             {
@@ -61,7 +61,7 @@ void IERS(double **eop, int eop_length, double Mjd_UTC, char interp, double *UT1
 
         double mj = floor(Mjd_UTC);
         double *cureop = NULL;
-        for(int i=0; i<eop_length; i++)
+        for(size_t i=0; i<eop_length; i++)
         {
             if(fabs(eop[i][3] - mj) < DELTA)
             {
