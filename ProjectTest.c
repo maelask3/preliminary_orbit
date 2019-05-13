@@ -1115,7 +1115,7 @@ void test_vlamb()
     double r2 = 41893140.31514826;
     double th = 0.02186412186035686;
     double tdelt = 300.0000223517418;
-    double vri[2], vti[2], vrf[2], vtf[2];
+    double vri[2] = {0., 0.}, vti[2] = {0., 0.}, vrf[2] = {0., 0.}, vtf[2] = {0., 0.};
 
     double sol_n = 1.0;
     double sol_vri[] = {3.796642495817074, 0.0};

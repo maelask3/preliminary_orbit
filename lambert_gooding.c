@@ -62,11 +62,7 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, bool long_wa
         double *etai = cross(rho,r1hat);
         double *etaf = cross(rho,r2hat);
 
-        //double vri[2] = {0., 0.}, vti[2]= {0., 0.}, vrf[2]= {0., 0.}, vtf[2]= {0., 0.};
-        double *vri = calloc(2, sizeof(double));
-        double *vti = calloc(2, sizeof(double));
-        double *vrf = calloc(2, sizeof(double));
-        double *vtf = calloc(2, sizeof(double));
+        double vri[2] = {0., 0.}, vti[2]= {0., 0.}, vrf[2]= {0., 0.}, vtf[2]= {0., 0.};
         int n = vlamb(mu,r1mag,r2mag,ta,tof,vri,vti,vrf,vtf);
 
         double vt1[3][2], vt2[3][2];
@@ -155,12 +151,6 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, bool long_wa
                 n_solutions ++;
             }
         }
-
-        free(vri);
-        free(vrf);
-        free(vti);
-        free(vtf);
-
     }
 
     int k = 0;
@@ -252,12 +242,6 @@ double vlamb(double gm, double r1, double r2, double th, double tdelt, double *v
         vtf[i] = vt2;
         free(aux);
     }
-    /* esto que he hecho es muy malo */
-    //vri[1] = 0.;
-    //vti[1] = 0.;
-    //vrf[1] = 0.;
-    //vtf[1] = 0.;
-    /* hay que buscar una solucion alternativa */
     return n;
 }
 
