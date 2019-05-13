@@ -241,6 +241,12 @@ double vlamb(double gm, double r1, double r2, double th, double tdelt, double *v
         vrf[i] = vr2;
         vtf[i] = vt2;
     }
+    /* esto que he hecho es muy malo */
+    vri[1] = 0.;
+    vti[1] = 0.;
+    vrf[1] = 0.;
+    vtf[1] = 0.;
+    /* hay que buscar una solucion alternativa */
     free(aux);
     return n;
 }
@@ -422,7 +428,7 @@ double *tlamb(double m, double q, double qsqfm1, double x, double n)
                 d3t = d3t + tqterm*u3i*(p - 1.0)*(p - 2.0);
             }
         }
-        while(i<n || t!=told);
+        while(i<n || (fabs(t -told) > 1e-12));
         if(l3)
         {
             d3t = 8.0*x*(1.5*d2t - xsq*d3t);
@@ -461,7 +467,7 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
     double xpl = 0.0;
     double x = 0.0;
 
-    double n, t0, dt, d2t, d3t, tdiff, w, xm, tmin=0., xmold, xtest=0., tdiffm, d2t2=0., tdiff0, ij, t;
+    double n, t0, dt, d2t, d3t, tdiff, w, xm = 0., tmin=0., xmold, xtest=0., tdiffm, d2t2=0., tdiff0, ij, t;
     double *aux, *dev;
     dev = (double*) malloc(3*sizeof(double));
     int i=0;
@@ -639,7 +645,7 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
         if(x<=-1.0)
         {
             n = n-1;
-            if(n==1)
+            if(fabs(n-1) < 1e-12)
             {
                 x = xpl;
             }
