@@ -266,7 +266,7 @@ double *tlamb(double m, double q, double qsqfm1, double x, double n)
         d2t=0.0;
         d3t=0.0;
     }
-    double y, z, qx, aa, bb, a, b, g, f, fg1, term, fg1sq, towi1, told, qz,qz2, u0i, u1i,u2i,u3i, twoi1, tq, tqsum, ttmold, p, tterm, tqterm;
+    double y=0., z=0., qx=0., aa=0., bb=0., a=0., b=0., g=0., f=0., fg1=0., term=0., fg1sq=0., towi1=0., told=0., qz=0.,qz2=0., u0i=0., u1i=0.,u2i=0.,u3i=0., twoi1=0., tq=0., tqsum=0., ttmold=0., p=0., v=0., tterm=0., tqterm=0.;
     if(lm1 || m>0.0 || x<0.0 || fabs(u)>sw)
     {
         y = sqrt(fabs(u));
@@ -282,7 +282,7 @@ double *tlamb(double m, double q, double qsqfm1, double x, double n)
             aa = qsqfm1/a;
             bb = qsqfm1*(qsq*u -xsq)/b;
         }
-        if(qx==0.0 && lm1 ||qx>0.0)
+        if((qx==0.0 && lm1) ||qx>0.0)
         {
             aa = z + qx;
             bb = q*z +x;
@@ -328,7 +328,7 @@ double *tlamb(double m, double q, double qsqfm1, double x, double n)
                         told = t;
                         t = t + term/twoi1;
                     }
-                    while(t!=told);
+                    while(fabs(t-told) > 1e-12);
                 }
             }
             t = 2.0*(t/y + b)/u;
