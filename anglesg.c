@@ -164,6 +164,7 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 		RhoMat[2] = LIR[2][0]*CMat[0]+LIR[2][1]*CMat[1]+LIR[2][2]*CMat[2];
 
 		double Rhoold2 = -RhoMat[1];
+		//El error esta en que no se asignan bien Rhoold2 y Rho2 al terminar la iteracion y volver a probarlos son el mismo numero
 	}
 	for(int i=0; i<3; i++)
 	{
