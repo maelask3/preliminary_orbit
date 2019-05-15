@@ -10,7 +10,7 @@
 #include "MatlabUtils.h"
 
 /**
- * @brief Transformación de ecuador y equinoccio medianos a reales
+ * @brief Transformación de ecuador y equinoccio medios a reales
  * @param Mjd_TT Fecha juliana modificada (Tiempo terrestre)
  * @return Matriz de nutación
  *

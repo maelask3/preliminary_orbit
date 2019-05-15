@@ -8,13 +8,13 @@
 
 /**
  * @brief Resuelve la ecuación de Kepler cuando la anomalía verdadera es conocida.
- * La anomalía mediana, excéntrica, parabólica o hiperbólica también es calculada.
+ * La anomalía media, excéntrica, parabólica o hiperbólica también es calculada.
  * El límite parabólico en 168 es arbitrario. La anomalía hiperbólica también está limitada.
  * Se utiliza el seno hiperbólico porque no tiene doble valor.
  * @param ecc Excentricidad (>=0)
  * @param nu Anomalía verdadera (-2pi a 2pi radianes)
  * @param e0 (Salida) Anomalía excéntrica (0 a 2pi radianes), 153.02 grados
- * @param m (Salida) Anomalía mediana (0 a 2pi radianes) 151.7425 grados
+ * @param m (Salida) Anomalía media (0 a 2pi radianes) 151.7425 grados
  */
 void newtonnu(double ecc, double nu, double *e0, double *m)
 {

@@ -21,7 +21,7 @@
  * @param omega (Salida) Longitud del nodo ascendiente (0 a 2pi rad)
  * @param argp (Salida) Argumento del perigeo (0 a 2pi rad)
  * @param nu (Salida) Anomalía real (0 a 2pi rad)
- * @param m (Salida) Anomalía mediana (0 a 2pi rad)
+ * @param m (Salida) Anomalía media (0 a 2pi rad)
  * @param arglat (Salida) Argumento de la latitud (ci) (0 a 2pi rad)
  * @param truelon (Salida) Longitud real (ce) (0 a 2pi rad)
  * @param lonper (Salida) Longitud del periastro (ee) (0 a 2pi rad)
