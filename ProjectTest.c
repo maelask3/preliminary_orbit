@@ -38,7 +38,7 @@ size_t eopsize = 0;
 
 void Setup()
 {
-    FILE *fp = fopen("eop19620101.txt","r");
+    FILE *fp = fopen("/home/ad.mthree.es/meoberto/POrbitD/eop19620101.txt","r");
     if(!fp)
     {
         fprintf(stderr, "ERROR: No se ha podido abrir eop19620101.txt\n");
@@ -1200,15 +1200,11 @@ void test_anglesg()
     double R2[3], V2[3];
 
     double R2_sol[] = {20486511.51189425, 1079232.341278148, 1005456.217080705};
-    double R2_sol2[] = {20486511.5119329, 1079232.3412846, 1005456.21807507};
     double V2_sol[] = {16.87979502268987, -2654.080029326738, 3734.120046153917};
-    double V2_sol2[] = {16.8797950242033, -2654.08002932642, 3734.12004614362};
     anglesg(Alpha1, Alpha2, Alpha3, Delta1, Delta2, Delta3, JD1, JD2, JD3, RS1, RS2, RS3, R2, V2);
 
-    array_test("anglesg() 1, R2", R2_sol, R2, 3);
-    array_test("anglesg() 1, V2", V2_sol, V2, 3);
-    array_test("anglesg() 2, R2", R2_sol2, R2, 3);
-    array_test("anglesg() 2, V2", V2_sol2, V2, 3);
+    array_test_delta("anglesg() 1, R2", R2_sol, R2, 3, 1e-4);
+    array_test_delta("anglesg() 1, V2", V2_sol, V2, 3, 1e-4);
 }
 
 int main()
@@ -1242,7 +1238,7 @@ int main()
     test_vlamb();
     test_lambert_gooding();
     test_doubler();
-    //test_anglesg();
+    test_anglesg();
     WindDown();
     return 0;
 }

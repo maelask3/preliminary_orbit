@@ -129,7 +129,7 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 		double v1[3] = {0.0, 0.0, 0.0};
 		lambert_gooding(R1,R2,(JD2-JD1)*86400,Mu,0,1, v1, V2);
 		double p, a, ecc, incl, omega, argp, Nu, m, u, l, ArgPer;
-		rv2coe(R2, V2, &p, &a, &ecc, &incl, &omega, &argp, &Nu, &m, &u, &l, &ArgPer);
+        rv2coe(R2, V2, &p, &a, &ecc, &incl, &omega, &argp, &Nu, &m, &u, &l, &ArgPer); // a mucho, argp un poquito
 		double magR2 = norm(R2);
 
 		double U, RDot, UDot, TauSqr, f1, g1, f3, g3, Theta, Theta1, magR1, magR3;
@@ -156,8 +156,8 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 			f3 = 1.0 - ( (magR3*(1.0 - cos(Theta1))/p ) );
 			g3 = ( magR3*magR2*sin(theta1) )/sqrt(p);
 		}
-		double c1 = g3/(f1*g3 - f3*g1);
-		double c3 = -g1/(f1*g3 - f3*g1);
+        c1 = g3/(f1*g3 - f3*g1);
+        c3 = -g1/(f1*g3 - f3*g1);
 
 		CMat[0] = -c1;
 		CMat[1] = 1.0;
