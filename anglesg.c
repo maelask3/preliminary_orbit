@@ -166,7 +166,7 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 		RhoMat[1] = LIR[1][0]*CMat[0]+LIR[1][1]*CMat[1]+LIR[1][2]*CMat[2];
 		RhoMat[2] = LIR[2][0]*CMat[0]+LIR[2][1]*CMat[1]+LIR[2][2]*CMat[2];
 
-		Rhoold2 = -RhoMat[1];
+        Rhoold2 = -RhoMat[1];
 	}
 	for(int i=0; i<3; i++)
 	{
