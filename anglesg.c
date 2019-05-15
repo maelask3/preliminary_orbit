@@ -127,7 +127,7 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 		double p, a, ecc, incl, omega, argp, Nu, m, u, l, ArgPer;
 		rv2coe(R2, V2, &p, &a, &ecc, &incl, &omega, &argp, &Nu, &m, &u, &l, &ArgPer);
 		double magR2 = norm(R2);
-		
+
 		double U, RDot, UDot, TauSqr, f1, g1, f3, g3, Theta, Theta1, magR1, magR3;
 		if(ll <= 2)
 		{
@@ -152,9 +152,9 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 			f3 = 1.0 - ( (magR3*(1.0 - cos(Theta1))/p ) );
 			g3 = ( magR3*magR2*sin(theta1) )/sqrt(p);
 		}
-		double c1 = g3/(f1*g3 - f3*g1);
-		double c3 = -g1/(f1*g3 - f3*g1);
-		
+        c1 = g3/(f1*g3 - f3*g1);
+        c3 = -g1/(f1*g3 - f3*g1);
+
 		CMat[0] = -c1;
 		CMat[1] = 1.0;
 		CMat[2] = -c3;
@@ -162,8 +162,7 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 		RhoMat[1] = LIR[1][0]*CMat[0]+LIR[1][1]*CMat[1]+LIR[1][2]*CMat[2];
 		RhoMat[2] = LIR[2][0]*CMat[0]+LIR[2][1]*CMat[1]+LIR[2][2]*CMat[2];
 
-		double Rhoold2 = -RhoMat[1];
-		//El error esta en que no se asignan bien Rhoold2 y Rho2 al terminar la iteracion y volver a probarlos son el mismo numero
+        Rhoold2 = -RhoMat[1];
 	}
 	for(int i=0; i<3; i++)
 	{
