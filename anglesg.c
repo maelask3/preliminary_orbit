@@ -17,7 +17,11 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 	double Mu = 398600.4418e9;
 	double Rad_ = 180.0/pi;
 
-	double R1[3], R3[3], L1[3], L2[3], L3[3];
+	double R1[3] = {0.0, 0.0, 0.0};
+	double R3[3] = {0.0, 0.0, 0.0};
+	double L1[3] = {0.0, 0.0, 0.0};
+	double L2[3] = {0.0, 0.0, 0.0};
+	double L3[3] = {0.0, 0.0, 0.0};
 
 	double Tau1 = (JD1-JD2)*86400.0;
 	double Tau3 = (JD3-JD2)*86400.0;
@@ -67,15 +71,15 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 	double a3u = -(Tau1*((Tau3-Tau1)*(Tau3-Tau1) - Tau1*Tau1 ))/(6.0*(Tau3 - Tau1));
 
 	double D1 = LIR[1][0]*a1 - LIR[1][1] + LIR[1][2]*a3;
-    double D2 = LIR[1][0]*a1u + LIR[1][2]*a3u; // esta wea se va por 13
+	double D2 = LIR[1][0]*a1u + LIR[1][2]*a3u;
 
 	double L2DotRS= dot(L2,RS2);
 	double magRS2 = norm(RS2);
 
 	double *Poly = (double*)(double[16]) {1.0, 0.0, -(D1*D1 + 2.0*D1*L2DotRS + magRS2*magRS2), 0.0, 0.0, -2.0*Mu*(L2DotRS*D2 + D1*D2), 0.0, 0.0, -Mu*Mu*D2*D2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
-    double *rootarr = calloc(16, sizeof(double));
-    int len_rootarr = roots(Poly, &rootarr); // se va 10^-6
+	double *rootarr = calloc(15, sizeof(double));
+	int len_rootarr = roots(Poly, &rootarr);
 
 	double BigR2 = 0.0;
 
@@ -118,17 +122,16 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 		double copa = 0.0;
 		char **error = malloc(sizeof(char*));
 		gibbs(R1, R2, R3, v2, &theta, &theta1, &copa, error);
-        // esto es un bug que tiene Meysam en su propio código.
-        if(strcmp(*error,"ok")!=0 && (copa < 1.0/Rad_))
+		if(!strcmp(*error,"          ok") && (copa < 1.0/Rad_))
 		{
 			hgibbs(R1,R2,R3,JD1,JD2,JD3, v2, &theta, &theta1, &copa, error);
 		}
-		double v1[3];
+		double v1[3] = {0.0, 0.0, 0.0};
 		lambert_gooding(R1,R2,(JD2-JD1)*86400,Mu,0,1, v1, V2);
 		double p, a, ecc, incl, omega, argp, Nu, m, u, l, ArgPer;
 		rv2coe(R2, V2, &p, &a, &ecc, &incl, &omega, &argp, &Nu, &m, &u, &l, &ArgPer);
 		double magR2 = norm(R2);
-		
+
 		double U, RDot, UDot, TauSqr, f1, g1, f3, g3, Theta, Theta1, magR1, magR3;
 		if(ll <= 2)
 		{
@@ -155,7 +158,7 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 		}
 		double c1 = g3/(f1*g3 - f3*g1);
 		double c3 = -g1/(f1*g3 - f3*g1);
-		
+
 		CMat[0] = -c1;
 		CMat[1] = 1.0;
 		CMat[2] = -c3;
@@ -163,7 +166,7 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 		RhoMat[1] = LIR[1][0]*CMat[0]+LIR[1][1]*CMat[1]+LIR[1][2]*CMat[2];
 		RhoMat[2] = LIR[2][0]*CMat[0]+LIR[2][1]*CMat[1]+LIR[2][2]*CMat[2];
 
-		double Rhoold2 = -RhoMat[1];
+		Rhoold2 = -RhoMat[1];
 	}
 	for(int i=0; i<3; i++)
 	{
