@@ -21,7 +21,7 @@
  * @param omega (Salida) Longitud del nodo ascendiente (0 a 2pi rad)
  * @param argp (Salida) Argumento del perigeo (0 a 2pi rad)
  * @param nu (Salida) Anomalía real (0 a 2pi rad)
- * @param m (Salida) Anomalía mediana (0 a 2pi rad)
+ * @param m (Salida) Anomalía media (0 a 2pi rad)
  * @param arglat (Salida) Argumento de la latitud (ci) (0 a 2pi rad)
  * @param truelon (Salida) Longitud real (ce) (0 a 2pi rad)
  * @param lonper (Salida) Longitud del periastro (ee) (0 a 2pi rad)
@@ -64,7 +64,7 @@ void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *inc
         {
             *a = (-mu)/(2.0*sme);
         } else {
-            *a = INFINITY;
+            *a = HUGE_VAL;
         }
 
         *p = magh*magh/mu;
@@ -78,16 +78,16 @@ void rv2coe(double *r, double *v, double *p, double *a, double *ecc, double *inc
         {
             if((*incl < small) || (fabs(*incl-pi)<small))
             {
-                strncpy(typeorbit, "ce", 2);
+                strncpy(typeorbit, "ce", 3);
                 typeorbit[2] = '\0';
             } else {
-                strncpy(typeorbit, "ci", 2);
+                strncpy(typeorbit, "ci", 3);
                 typeorbit[2] = '\0';
             }
         } else {
             if((*incl < small) || (fabs(*incl-pi)<small))
             {
-                strncpy(typeorbit, "ee", 2);
+                strncpy(typeorbit, "ee", 3);
                 typeorbit[2] = '\0';
             }
         }

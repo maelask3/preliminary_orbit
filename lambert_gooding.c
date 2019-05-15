@@ -10,7 +10,7 @@
 #include "MatlabUtils.h"
 #include "unit.h"
 #include "lambert_gooding.h"
-void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_way, double multi_revs, double *v1, double *v2)
+void lambert_gooding(double *r1, double *r2, double tof, double mu, bool long_way, double multi_revs, double *v1, double *v2)
 {
     double r1mag = norm(r1);
     double r2mag = norm(r2);
@@ -22,7 +22,8 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_
     }
 
     bool solution_exists[10];
-    solution_exists[0] = false;
+    for(int i=0; i<10; i++)
+        solution_exists[i] = false;
     double dr = r1mag - r2mag;
     double r1r2 = r1mag*r2mag;
     double *r1hat = vectorProductDouble(r1, (1.0/r1mag));
@@ -61,7 +62,7 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_
         double *etai = cross(rho,r1hat);
         double *etaf = cross(rho,r2hat);
 
-        double vri[2], vti[2], vrf[2], vtf[2];
+        double vri[2] = {0., 0.}, vti[2]= {0., 0.}, vrf[2]= {0., 0.}, vtf[2]= {0., 0.};
         int n = vlamb(mu,r1mag,r2mag,ta,tof,vri,vti,vrf,vtf);
 
         double vt1[3][2], vt2[3][2];
@@ -150,7 +151,6 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_
                 n_solutions ++;
             }
         }
-
     }
 
     int k = 0;
@@ -210,11 +210,13 @@ double vlamb(double gm, double r1, double r2, double th, double tdelt, double *v
 
     double t = 4.0*gms*tdelt/(s*s);
 
-    double *aux = xlamb(m,q,qsqfm1,t);
+    double *aux = NULL;
+    aux = xlamb(m,q,qsqfm1,t);
     n = aux[0];
     double x1 = aux[1];
     double x2 = aux[2];
     double x;
+    free(aux);
     for(int i = 0; i<n; i++)
     {
         if(i==0)
@@ -226,7 +228,6 @@ double vlamb(double gm, double r1, double r2, double th, double tdelt, double *v
             x = x2;
         }
         aux = tlamb(m,q,qsqfm1,x,-1);
-        double unused = aux[0];
         double qzminx = aux[1];
         double qzplx = aux[2];
         double zplqx = aux[3];
@@ -239,8 +240,8 @@ double vlamb(double gm, double r1, double r2, double th, double tdelt, double *v
         vti[i] = vt1;
         vrf[i] = vr2;
         vtf[i] = vt2;
+        free(aux);
     }
-    free(aux);
     return n;
 }
 
@@ -250,10 +251,10 @@ double *tlamb(double m, double q, double qsqfm1, double x, double n)
     double sw = 0.4;
     double t = 0.0;
 
-    bool lm1 = (n==-1);
+    bool lm1 = fabs(n - (-1)) < 1e-12;
     bool l1 = (n>=1);
     bool l2 = (n>=2);
-    bool l3 = (n==3);
+    bool l3 = fabs(n - (3)) < 1e-12;
     double qsq = q*q;
     double xsq = x*x;
     double u = (1.0 - x)*(1.0 + x);
@@ -265,7 +266,7 @@ double *tlamb(double m, double q, double qsqfm1, double x, double n)
         d2t=0.0;
         d3t=0.0;
     }
-    double y, z, qx, aa, bb, a, b, g, f, fg1, term, fg1sq, towi1, told, qz,qz2, u0i, u1i,u2i,u3i, twoi1, tq, tqsum, ttmold, p, tterm, tqterm;
+    double y=0., z=0., qx=0., aa=0., bb=0., a=0., b=0., g=0., f=0., fg1=0., term=0., fg1sq=0., towi1=0., told=0., qz=0.,qz2=0., u0i=0., u1i=0.,u2i=0.,u3i=0., twoi1=0., tq=0., tqsum=0., ttmold=0., p=0., v=0., tterm=0., tqterm=0.;
     if(lm1 || m>0.0 || x<0.0 || fabs(u)>sw)
     {
         y = sqrt(fabs(u));
@@ -281,7 +282,7 @@ double *tlamb(double m, double q, double qsqfm1, double x, double n)
             aa = qsqfm1/a;
             bb = qsqfm1*(qsq*u -xsq)/b;
         }
-        if(qx==0.0 && lm1 ||qx>0.0)
+        if((qx==0.0 && lm1) ||qx>0.0)
         {
             aa = z + qx;
             bb = q*z +x;
@@ -327,7 +328,7 @@ double *tlamb(double m, double q, double qsqfm1, double x, double n)
                         told = t;
                         t = t + term/twoi1;
                     }
-                    while(t!=told);
+                    while(fabs(t-told) > 1e-12);
                 }
             }
             t = 2.0*(t/y + b)/u;
@@ -421,7 +422,7 @@ double *tlamb(double m, double q, double qsqfm1, double x, double n)
                 d3t = d3t + tqterm*u3i*(p - 1.0)*(p - 2.0);
             }
         }
-        while(i<n || t!=told);
+        while(i<n || (fabs(t -told) > 1e-12));
         if(l3)
         {
             d3t = 8.0*x*(1.5*d2t - xsq*d3t);
@@ -460,10 +461,10 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
     double xpl = 0.0;
     double x = 0.0;
 
-    double n, t0, dt, d2t, d3t, tdiff, w, xm, tmin, xmold, xtest, tdiffm, d2t2, tdiff0, ij, t;
+    double n, t0, dt, d2t, d3t, tdiff, w, xm = 0., tmin=0., xmold, xtest=0., tdiffm=0., d2t2=0., tdiff0, ij, t;
     double *aux, *dev;
     dev = (double*) malloc(3*sizeof(double));
-    int i;
+    int i=0;
     if(m == 0.0)
     {
         n = 1.0;
@@ -471,7 +472,7 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
         t0 = aux[0];
         dt = aux[1];
         d2t = aux[2];
-        d3t = aux[4];
+        d3t = aux[3];
 
         tdiff = tin -t0;
         if(tdiff<=0.0)
@@ -489,6 +490,7 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
             w = 4.0/(4.0 + tdiff);
             x = x*(1.0 + x*(c1*w - c2*x*sqrt(w)));
         }
+        free(aux);
     }
     else
     {
@@ -508,14 +510,15 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
             tmin = aux[0];
             dt = aux[1];
             d2t = aux[2];
-            d3t = aux[4];
+            d3t = aux[3];
             if(d2t != 0.0)
             {
                 xmold = xm;
                 xm = xm - dt*d2t/(d2t*d2t - dt*d3t/2.0);
-                xtest = abs(xmold/xm - 1.0);
+                xtest = fabs(xmold/xm - 1.0);
             }
             i++;
+            free(aux);
         }
         while(i<12 && d2t!=0.0 && xtest>tol);
 
@@ -561,7 +564,7 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
                 t0 = aux[0];
                 dt = aux[1];
                 d2t = aux[2];
-                d3t = aux[4];
+                d3t = aux[3];
                 tdiff0 = t0 - tmin;
                 tdiff = tin - t0;
                 if(tdiff<=0.0)
@@ -588,6 +591,7 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
                         }
                     }
                 }
+                free(aux);
             }
         }
     }
@@ -597,14 +601,15 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
         t = aux[0];
         dt = aux[1];
         d2t = aux[2];
-        d3t = aux[4];
+        d3t = aux[3];
         t = tin-t;
         if(dt!=0.0)
         {
             x = x + t*dt/(dt*dt + t*d2t/2.0);
         }
+        free(aux);
     }
-    if(n!=3)
+    if((fabs(n - 3)>1e-12))
     {
         dev[0] = n;
         dev[1] = x;
@@ -617,7 +622,7 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
     t0 = aux[0];
     dt = aux[1];
     d2t = aux[2];
-    d3t = aux[4];
+    d3t = aux[3];
     tdiff0 = t0 - tmin;
     tdiff = tin - t0;
     if(tdiff<=0.0)
@@ -638,7 +643,7 @@ double *xlamb(double m, double q, double qsqfm1, double tin)
         if(x<=-1.0)
         {
             n = n-1;
-            if(n==1)
+            if(fabs(n-1) < 1e-12)
             {
                 x = xpl;
             }

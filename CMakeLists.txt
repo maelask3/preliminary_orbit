@@ -45,10 +45,6 @@ set(COMMON_SOURCES
     "NutMatrix.c"
     "angl.h"
     "angl.c"
-    "anglesdr.h"
-    "anglesdr.c"
-    "doubler.h"
-    "doubler.c"
     "gast.h"
     "gast.c"
     "GHAMatrix.h"
@@ -68,13 +64,32 @@ set(COMMON_SOURCES
     "lambert_gooding.h"
     "lambert_gooding.c"
 )
+
+set(DOUBLER_SOURCES
+    ${COMMON_SOURCES}
+    "anglesdr.h"
+    "anglesdr.c"
+    "doubler.h"
+    "doubler.c")
+
+set(GAUSS_SOURCES
+    ${COMMON_SOURCES}
+    "anglesg.h"
+    "anglesg.c")
 set(TEST_SOURCES
     ${COMMON_SOURCES}
+    "anglesdr.h"
+    "anglesdr.c"
+    "doubler.h"
+    "doubler.c"
+    "anglesg.h"
+    "anglesg.c"
     "TestUtils.h"
     "TestUtils.c"
     "MatlabUtilsTest.c"
     "MatlabUtilsTest.h"
-    "ProjectTest.c")
+    "ProjectTest.c"
+    )
 
 set(CMAKE_C_OUTPUT_EXTENSION_REPLACE ON)
 

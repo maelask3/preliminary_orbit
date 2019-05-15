@@ -17,7 +17,11 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 	double Mu = 398600.4418e9;
 	double Rad_ = 180.0/pi;
 
-	double R1[3], R3[3], L1[3], L2[3], L3[3];
+	double R1[3] = {0.0, 0.0, 0.0};
+	double R3[3] = {0.0, 0.0, 0.0};
+	double L1[3] = {0.0, 0.0, 0.0};
+	double L2[3] = {0.0, 0.0, 0.0};
+	double L3[3] = {0.0, 0.0, 0.0};
 
 	double Tau1 = (JD1-JD2)*86400.0;
 	double Tau3 = (JD3-JD2)*86400.0;
@@ -118,14 +122,14 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 		double copa = 0.0;
 		char **error = malloc(sizeof(char*));
 		gibbs(R1, R2, R3, v2, &theta, &theta1, &copa, error);
-		if(!strcmp(*error,"ok") && (copa < 1.0/Rad_))
+		if(!strcmp(*error,"          ok") && (copa < 1.0/Rad_))
 		{
 			hgibbs(R1,R2,R3,JD1,JD2,JD3, v2, &theta, &theta1, &copa, error);
 		}
-		double v1[3];
+		double v1[3] = {0.0, 0.0, 0.0};
 		lambert_gooding(R1,R2,(JD2-JD1)*86400,Mu,0,1, v1, V2);
 		double p, a, ecc, incl, omega, argp, Nu, m, u, l, ArgPer;
-		rv2coe(R2, V2, &p, &a, &ecc, &incl, &omega, &argp, &Nu, &m, &u, &l, &ArgPer);
+        rv2coe(R2, V2, &p, &a, &ecc, &incl, &omega, &argp, &Nu, &m, &u, &l, &ArgPer); // a mucho, argp un poquito
 		double magR2 = norm(R2);
 
 		double U, RDot, UDot, TauSqr, f1, g1, f3, g3, Theta, Theta1, magR1, magR3;

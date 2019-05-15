@@ -31,7 +31,7 @@ double gast(double Mjd_UT1)
     double TT_UTC = 0.;
     double GPS_UTC = 0.;
 
-    IERS(eopdata, 20026, Mjd_UT1, 'l', &UT1_UTC, &TAI_UTC, &x_pole, &y_pole, &ddpsi, &ddeps);
+    IERS(eopdata, eopsize, Mjd_UT1, 'l', &UT1_UTC, &TAI_UTC, &x_pole, &y_pole, &ddpsi, &ddeps);
     timediff(UT1_UTC, TAI_UTC, &UT1_TAI, &UTC_GPS, &UT1_GPS, &TT_UTC, &GPS_UTC);
 
     double Mjd_UTC = Mjd_UT1 - UT1_UTC/86400;

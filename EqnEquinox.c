@@ -14,7 +14,7 @@
  *
  * @note La ecuación de los equinoccios dpsi*cos(eps) es la ascensión
  * derecha del equinoccio medio referida al ecuador y equinoccio verdaderos
- * y es igual a la diferencia entre tiempo sideral aparente y mediano.
+ * y es igual a la diferencia entre tiempo sideral aparente y medio.
  */
 double EqnEquinox(double Mjd_TT)
 {

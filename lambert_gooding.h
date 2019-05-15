@@ -7,9 +7,10 @@
 #ifndef __LAMBERT_GOODING_H
 #define __LAMBERT_GOODING_H
 #include <stdlib.h>
+#include <stdbool.h>
 #include "MatlabUtils.h"
 
-void lambert_gooding(double *r1, double *r2, double tof, double mu, double long_way, double multi_revs, double *v1, double *v2);
+void lambert_gooding(double *r1, double *r2, double tof, double mu, bool long_way, double multi_revs, double *v1, double *v2);
 
 double vlamb(double gm, double r1, double r2, double th, double tdelt, double *vri, double *vti, double *vrf, double *vtf);
 
