@@ -14,5 +14,11 @@ script:
         - cmake -Dcoverage=1 . 
         - build-wrapper-linux-x86-64 --out-dir bw-output make
         - ./test-orbit
+        - ./example1
+          #- ./example2
+        - ./example3
+        - ./example5
+          #- ./example6
+          #- ./example7
         - make coverage
         - sonar-scanner

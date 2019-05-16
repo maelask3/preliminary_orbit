@@ -115,6 +115,14 @@ if(docs)
         COMMAND PROJECT_NUMBER=${p_version} doxygen Doxyfile)
 endif()
 
+configure_file(eop19620101.txt eop19620101.txt COPYONLY)
+configure_file(sat1.txt sat1.txt COPYONLY)
+configure_file(sat2.txt sat2.txt COPYONLY)
+configure_file(sat3.txt sat3.txt COPYONLY)
+configure_file(sat5.txt sat5.txt COPYONLY)
+configure_file(sat6.txt sat6.txt COPYONLY)
+configure_file(sat7.txt sat7.txt COPYONLY)
+
 add_executable(test-orbit ${TEST_SOURCES})
 target_link_libraries(test-orbit ${N_LIBS})
 
@@ -135,3 +143,4 @@ target_link_libraries(example6 ${N_LIBS})
 
 add_executable(example7 ${DOUBLER_SOURCES} "example7.c")
 target_link_libraries(example7 ${N_LIBS})
+
