@@ -101,7 +101,7 @@ if(coverage)
         COMMAND gcov -o ${OBJECT_DIR}/example3.dir ${DOUBLER_SOURCES} "example3.c"
         COMMAND gcov -o ${OBJECT_DIR}/example5.dir ${GAUSS_SOURCES} "example5.c"
         COMMAND gcov -o ${OBJECT_DIR}/example6.dir ${DOUBLER_SOURCES} "example6.c"
-        COMMAND gcov -o ${OBJECT_DIR}/example1.dir ${DOUBLER_SOURCES} "example7.c")
+        COMMAND gcov -o ${OBJECT_DIR}/example7.dir ${DOUBLER_SOURCES} "example7.c")
     set(N_LIBS
         ${N_LIBS}
         gcov)

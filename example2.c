@@ -183,4 +183,8 @@ int main()
     free(r2);
     free(*v2);
     free(v2);
+
+    for(size_t i=0; i<eopsize; i++)
+            free(eopdata[i]);
+    free(eopdata);
 }

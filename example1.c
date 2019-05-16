@@ -242,4 +242,8 @@ int main()
     for(size_t i=0; i<(size_t)fsize; i++)
         free(obs[i]);
     free(obs);
+
+    for(size_t i=0; i<eopsize; i++)
+            free(eopdata[i]);
+    free(eopdata);
 }

@@ -6,6 +6,7 @@
 #include "anglesdr.h"
 #include <math.h>
 #include "lambert_gooding.h"
+#include <stdio.h>
 
 /**
  * @brief Resuelve el problema de la determinación de órbitas utilizando tres observaciones ópticas
@@ -126,6 +127,7 @@ void anglesdr(double rtasc1, double rtasc2, double rtasc3, double decl1, double 
         magr1in += deltar1;
         magr2in += deltar2;
 
+        printf("=== %d ===\nmagr1in = %lf\nmarg2in = %lf\n",ll,magr1in, magr2in);
 	}
 
     aux = doubler(cc1,cc2,magrsite1,magrsite2,magr1in,magr2in,los1,los2,los3,rsite1,rsite2,rsite3,t1,t3,direct, *r2, r3);

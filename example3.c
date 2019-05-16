@@ -222,8 +222,6 @@ int main()
     double *rsite3 = matrixProductVector(Et, Rs);
     free(Et);
 
-    //double r2[] = {0., 0.};
-    //double v2[] = {0., 0.,};
     double **r2 = malloc(sizeof(double*));
     *r2 = calloc(3, sizeof(double));
     double **v2 = malloc(sizeof(double*));
@@ -244,4 +242,8 @@ int main()
     for(size_t i=0; i<(size_t)fsize; i++)
         free(obs[i]);
     free(obs);
+
+    for(size_t i=0; i<eopsize; i++)
+            free(eopdata[i]);
+    free(eopdata);
 }
