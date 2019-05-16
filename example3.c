@@ -96,7 +96,7 @@ int main()
         fclose(fp);
         exit(3);
     }
-    for(long i=0; i<fsize && !feof(fp); i++)
+    for(size_t i=0; i<(size_t) fsize && !feof(fp); i++)
     {
         fgets(line, 128, fp);
         sscanf(line, "%d/%d/%d %d:%d:%f %f %f", &Y, &M, &D, &h, &m, &s, &rtasc, &decl);
