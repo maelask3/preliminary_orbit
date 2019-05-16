@@ -26,17 +26,7 @@ int main()
         	exit(1);
     	}
 
-    	fseek(fp, 0, SEEK_END);
-    	long filesize = ftell(fp);
-    	if(filesize == -1)
-    	{
-        	fprintf(stderr, "ERROR: Archivo inválido.\n");
-        	fclose(fp);
-        	exit(2);
-    	}
-
-    	rewind(fp);
-    	eopsize = (size_t) filesize;
+        eopsize = 20026;
     	eopdata = malloc(eopsize * sizeof(double*));
 
     	char line[128];
@@ -66,7 +56,7 @@ int main()
 
     	fclose(fp);
 	
-    	fp = fopen("sat2.txt","r");
+        fp = fopen("sat2.txt","r");
     	if(!fp)
     	{
         	fprintf(stderr, "ERROR: No se ha podido abrir sat1.txt\n");
@@ -81,9 +71,7 @@ int main()
     	float rtasc = 0.F;
     	float decl = 0.F;
 
-    	fseek(fp, 0, SEEK_END);
-    	long fsize = ftell(fp);
-    	rewind(fp);
+        long fsize = 3;
 
     	double obs[3][3] = {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}};
     	for(long i=0; i<fsize && !feof(fp); i++)

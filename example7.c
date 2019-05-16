@@ -16,25 +16,15 @@ double **eopdata = NULL;
 size_t eopsize = 0;
 int main()
 {
-    FILE *fp = fopen("eop19620101.txt","r");
+    FILE *fp;
+    fp = fopen("eop19620101.txt","r");
     if(!fp)
     {
         fprintf(stderr, "ERROR: No se ha podido abrir eop19620101.txt\n");
         exit(1);
     }
 
-    fseek(fp, 0, SEEK_END);
-    long filesize = ftell(fp);
-
-    if(filesize == -1)
-    {
-        fprintf(stderr, "ERROR: Archivo inválido.\n");
-        fclose(fp);
-        exit(2);
-    }
-
-    rewind(fp);
-    eopsize = (size_t) filesize;
+    eopsize = 20026;
     eopdata = malloc(eopsize * sizeof(double*));
 
     char line[128];
@@ -79,24 +69,16 @@ int main()
     float rtasc = 0.F;
     float decl = 0.F;
 
-    fseek(fp, 0, SEEK_END);
-    long fsize = ftell(fp);
-    if(fsize == -1)
-    {
-        fprintf(stderr, "ERROR: Archivo inválido.\n");
-        fclose(fp);
-        exit(2);
-    }
-    rewind(fp);
+    size_t fsize = 3;
 
-    double **obs = calloc((size_t) fsize, sizeof(double*));
+    double **obs = calloc(fsize, sizeof(double*));
     if(!obs)
     {
         fprintf(stderr, "ERROR: No se ha podido asignar memoria suficiente\n");
         fclose(fp);
         exit(3);
     }
-    for(size_t i=0; i<(size_t) fsize && !feof(fp); i++)
+    for(size_t i=0; i<fsize && !feof(fp); i++)
 
     {
         fgets(line, 128, fp);
@@ -227,6 +209,7 @@ int main()
     *r2 = calloc(3, sizeof(double));
     double **v2 = malloc(sizeof(double*));
     *v2 = calloc(3, sizeof(double));
+
     anglesdr(obs[0][1], obs[1][1], obs[2][1], obs[0][2], obs[1][2], obs[2][2], Mjd1, Mjd2, Mjd3, rsite1, rsite2, rsite3, r2, v2);
 
     printf("Double-R-Iteration method\nY_apr = \n");
@@ -239,7 +222,7 @@ int main()
     free(r2);
     free(*v2);
     free(v2);
-    for(size_t i=0; i<(size_t)fsize; i++)
+    for(size_t i=0; i<fsize; i++)
         free(obs[i]);
     free(obs);
 
