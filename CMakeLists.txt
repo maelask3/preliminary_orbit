@@ -115,8 +115,8 @@ if(docs)
         COMMAND PROJECT_NUMBER=${p_version} doxygen Doxyfile)
 endif()
 
-add_executable(test ${TEST_SOURCES})
-target_link_libraries(test ${N_LIBS})
+add_executable(test-orbit ${TEST_SOURCES})
+target_link_libraries(test-orbit ${N_LIBS})
 
 add_executable(example1 ${DOUBLER_SOURCES} "example1.c")
 target_link_libraries(example1 ${N_LIBS})
