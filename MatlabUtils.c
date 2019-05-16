@@ -258,3 +258,15 @@ double *sumVector(double *v1, double *v2)
 
 	return res;
 }
+
+
+double *matrixProductVector(double **m, double *v)
+{
+	double *dev = (double*) malloc(3*sizeof(double));
+	for(int i=0; i<3; i++)
+	{
+		dev[i] = m[i][0]*v[0]+m[i][1]*v[1]+m[i][2]*v[2];
+	}
+	return dev;
+}
+

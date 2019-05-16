@@ -24,5 +24,6 @@ double **sumMatrix(double **m1, double **m2);
 double **transposeMatrix(double **m);
 double *vectorProductDouble(double *v, double d);
 double *sumVector(double *v1, double *v2);
+double *matrixProductVector(double **m, double *v);
 
 #endif // MATLABUTILS_H
