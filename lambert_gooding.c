@@ -17,7 +17,7 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, bool long_wa
 
     if ( r1mag==0.0 || r2mag==0.0 || mu<=0.0 || tof<=0.0 )
     {
-        printf("Error in solve_lambert_gooding: invalid input\n");
+        fprintf(stderr,"Error in solve_lambert_gooding: invalid input\n");
         return;
     }
 

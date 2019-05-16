@@ -4,7 +4,6 @@
  * @brief Es una libreria de funciones presentes en Matlab y no en C.
  */
 #include "MatlabUtils.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <stdbool.h>
@@ -100,7 +99,7 @@ int roots(double *coef, double **sols_reales)
 	if(solutions < 0)
 		return solutions;
 
-    aux = calloc(solutions, sizeof(double));
+    aux = calloc((size_t)solutions, sizeof(double));
     int j = 0;
     for(int i = 0; i< solutions; i++)
     {
@@ -257,4 +256,19 @@ double *sumVector(double *v1, double *v2)
 	}
 
 	return res;
+}
+
+/**
+ * @brief Calcula el producto de una matriz 3x3 por un vector de R3
+ * @param M matriz
+ * @param v vector
+ * @return Devuelve el vector resultado de M*v
+ */
+double *matrixProductVector(double **M, double *v)
+{
+    double *res = calloc(3, sizeof(double));
+    for(int i=0; i<3; i++)
+        res[i] = M[i][0]*v[0] + M[i][1]*v[1] + M[i][2]*v[2];
+
+    return res;
 }
