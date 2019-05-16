@@ -3,11 +3,15 @@
  * @authors Davide Pérez y Millán Santamaría
  */
 #include "doubler.h"
-#include <stdio.h>
 #include <math.h>
 
 
-
+/**
+ * @brief Rutina que realiza el trabajo de iteración para la rutina de ángulos doble-R
+ * @param r2 (Salida) vector
+ * @param r3 (Salida) vector
+ * @return vector de 7 componentes: {f1, f2, q1, magr1, magr2, a, deltae32}
+ */
 double *doubler(double cc1, double cc2, double magrsite1, double magrsite2, double magr1in, double magr2in, double *los1, double *los2, double *los3, double *rsite1, double *rsite2, double *rsite3, double t1, double t3, char direct, double *r2, double *r3){
 	double mu = 398600.4418e9;
 
@@ -125,7 +129,7 @@ double *doubler(double cc1, double cc2, double magrsite1, double magrsite2, doub
 	double q1 = sqrt(f1*f1+f2*f2);
 
 	double *sol;
-	sol = (double*) malloc(7*sizeof(double));
+    sol = calloc(7, sizeof(double));
 	sol[0] = f1;
 	sol[1] = f2;
 	sol[2] = q1;
