@@ -90,6 +90,12 @@ int main()
     rewind(fp);
 
     double **obs = calloc((size_t) fsize, sizeof(double*));
+    if(!obs)
+    {
+        fprintf(stderr, "ERROR: No se ha podido asignar memoria suficiente\n");
+        fclose(fp);
+        exit(3);
+    }
     for(long i=0; i<fsize && !feof(fp); i++)
     {
         fgets(line, 128, fp);
@@ -228,4 +234,8 @@ int main()
     free(r2);
     free(*v2);
     free(v2);
+
+    for(size_t i=0; i<(size_t)fsize; i++)
+        free(obs[i]);
+    free(obs);
 }
