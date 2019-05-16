@@ -93,7 +93,7 @@ set(CMAKE_C_OUTPUT_EXTENSION_REPLACE ON)
 
 if(coverage)
     add_compile_options(-Wall -Wextra -pedantic -g -fprofile-arcs -ftest-coverage)
-    set(OBJECT_DIR ${CMAKE_BINARY_DIR}/CMakeFiles/${PROJECT_NAME}_test.dir)
+    set(OBJECT_DIR ${CMAKE_BINARY_DIR}/CMakeFiles/test-orbit.dir)
     add_custom_target(coverage
         COMMAND gcov -o ${OBJECT_DIR} ${TEST_SOURCES})
     set(N_LIBS
