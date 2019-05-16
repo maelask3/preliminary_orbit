@@ -1,9 +1,8 @@
 cmake_minimum_required(VERSION 3.1)
 
 project(POrbitD)
-#set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 99)
 set(CMAKE_C_STANDARD 99)
-set(p_version 0.2.1)
+set(p_version 0.9.97)
 
 set(N_LIBS
     m)
@@ -116,8 +115,8 @@ if(docs)
         COMMAND PROJECT_NUMBER=${p_version} doxygen Doxyfile)
 endif()
 
-add_executable(${PROJECT_NAME}_test ${TEST_SOURCES})
-target_link_libraries(${PROJECT_NAME}_test ${N_LIBS})
+add_executable(test ${TEST_SOURCES})
+target_link_libraries(test ${N_LIBS})
 
 add_executable(example1 ${DOUBLER_SOURCES} "example1.c")
 target_link_libraries(example1 ${N_LIBS})

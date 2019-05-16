@@ -12,8 +12,9 @@
 #include "rv2coe.h"
 #include "angl.h"
 #include "lambert_gooding.h"
+#include "anglesg.h"
 
-void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double Delta2, double Delta3, double JD1, double JD2, double JD3, double *RS1, double *RS2, double *RS3, double *R2, double *V2){
+void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double Delta2, double Delta3, double JD1, double JD2, double JD3, double *RS1, double *RS2, double *RS3, double **R2, double **V2){
 	double Mu = 398600.4418e9;
 	double Rad_ = 180.0/pi;
 
@@ -113,7 +114,7 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 		for(int i=0; i<3; i++)
 		{
 			R1[i] =  RhoMat[0]*L1[i]/c1 + RS1[i];
-			R2[i] = -RhoMat[1]*L2[i]    + RS2[i];
+            (*R2)[i] = -RhoMat[1]*L2[i]    + RS2[i];
 			R3[i] =  RhoMat[2]*L3[i]/c3 + RS3[i];
 		}
 		double **v2 = malloc(sizeof(double*));
@@ -121,22 +122,22 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 		double theta1 = 0.0;
 		double copa = 0.0;
 		char **error = malloc(sizeof(char*));
-		gibbs(R1, R2, R3, v2, &theta, &theta1, &copa, error);
+        gibbs(R1, *R2, R3, v2, &theta, &theta1, &copa, error);
 		if(!strcmp(*error,"          ok") && (copa < 1.0/Rad_))
 		{
-			hgibbs(R1,R2,R3,JD1,JD2,JD3, v2, &theta, &theta1, &copa, error);
+            hgibbs(R1,*R2,R3,JD1,JD2,JD3, v2, &theta, &theta1, &copa, error);
 		}
 		double v1[3] = {0.0, 0.0, 0.0};
-		lambert_gooding(R1,R2,(JD2-JD1)*86400,Mu,0,1, v1, V2);
+        lambert_gooding(R1,*R2,(JD2-JD1)*86400,Mu,0,1, v1, *V2);
 		double p, a, ecc, incl, omega, argp, Nu, m, u, l, ArgPer;
-        rv2coe(R2, V2, &p, &a, &ecc, &incl, &omega, &argp, &Nu, &m, &u, &l, &ArgPer); // a mucho, argp un poquito
-		double magR2 = norm(R2);
+        rv2coe(*R2, *V2, &p, &a, &ecc, &incl, &omega, &argp, &Nu, &m, &u, &l, &ArgPer); // a mucho, argp un poquito
+        double magR2 = norm(*R2);
 
 		double U, RDot, UDot, TauSqr, f1, g1, f3, g3, Theta, Theta1, magR1, magR3;
 		if(ll <= 2)
 		{
 			U = Mu/(magR2*magR2*magR2);
-			RDot = dot(R2,V2)/magR2;
+            RDot = dot(*R2,*V2)/magR2;
 			UDot = (-3.0*Mu*RDot)/(magR2*magR2*magR2*magR2);
 
 			TauSqr= Tau1*Tau1;
@@ -146,8 +147,8 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 			f3 =  1.0 - 0.5*U*TauSqr -(1.0/6.0)*UDot*TauSqr*Tau3 + (1.0/24.0) * U*U*TauSqr*TauSqr + (1.0/30.0)*U*UDot*TauSqr*TauSqr*Tau3;
 			g3 = Tau3 - (1.0/6.0)*U*Tau3*TauSqr - (1.0/12.0) * UDot*TauSqr*TauSqr + (1.0/120.0)*U*U*TauSqr*TauSqr*Tau3 + (1.0/120.0)*U*UDot*TauSqr*TauSqr*TauSqr;
 		}else{
-			Theta = angl(R1, R2);
-			Theta1 = angl(R2, R3);
+            Theta = angl(R1, *R2);
+            Theta1 = angl(*R2, R3);
 			magR1 = norm(R1);
 			magR3 = norm(R3);
 
@@ -171,7 +172,7 @@ void anglesg(double Alpha1, double Alpha2, double Alpha3, double Delta1, double 
 	for(int i=0; i<3; i++)
 	{
 		R1[i] =  RhoMat[0]*L1[i]/c1 + RS1[i];
-		R2[i] = -RhoMat[1]*L2[i] + RS2[i];
+        (*R2)[i] = -RhoMat[1]*L2[i] + RS2[i];
 		R3[i] =  RhoMat[2]*L3[i]/c3 + RS3[i];
 	}
 	free(LMatIi);
