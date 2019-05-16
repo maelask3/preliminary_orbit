@@ -1197,14 +1197,23 @@ void test_anglesg()
     double RS1[] = {5270137.350067007, -1572248.25164427, 3219350.410842039};
     double RS2[] = {5303269.313360662, -1456667.748237766, 3219314.054634872};
     double RS3[] = {5333865.069033056, -1340390.167468833, 3219280.501208378};
-    double R2[3], V2[3];
+    double **R2, **V2;
+    R2 = malloc(sizeof(double*));
+    V2 = malloc(sizeof(double*));
+    *R2 = calloc(3, sizeof(double));
+    *V2 = calloc(3, sizeof(double));
 
     double R2_sol[] = {20486511.51189425, 1079232.341278148, 1005456.217080705};
     double V2_sol[] = {16.87979502268987, -2654.080029326738, 3734.120046153917};
     anglesg(Alpha1, Alpha2, Alpha3, Delta1, Delta2, Delta3, JD1, JD2, JD3, RS1, RS2, RS3, R2, V2);
 
-    array_test_delta("anglesg() 1, R2", R2_sol, R2, 3, 1e-4);
-    array_test_delta("anglesg() 1, V2", V2_sol, V2, 3, 1e-4);
+    array_test_delta("anglesg() 1, R2", R2_sol, *R2, 3, 1e-4);
+    array_test_delta("anglesg() 1, V2", V2_sol, *V2, 3, 1e-4);
+
+    free(*R2);
+    free(R2);
+    free(*V2);
+    free(V2);
 }
 
 int main()
