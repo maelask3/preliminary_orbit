@@ -102,6 +102,12 @@ int main()
         sscanf(line, "%d/%d/%d %d:%d:%f %f %f", &Y, &M, &D, &h, &m, &s, &rtasc, &decl);
 
         obs[i] = calloc(3, sizeof(double));
+        if(!obs[i])
+        {
+            fprintf(stderr, "ERROR: No se ha podido asignar memoria suficiente\n");
+            fclose(fp);
+            exit(3);
+        }
         obs[i][0] = Mjday(Y, M, D, h, m, (double) s);
         obs[i][1] = Rad*((double) rtasc);
         obs[i][2] = Rad*((double) decl);
