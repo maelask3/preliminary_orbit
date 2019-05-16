@@ -1,13 +1,11 @@
 cmake_minimum_required(VERSION 3.1)
 
 project(POrbitD)
-#set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 99)
 set(CMAKE_C_STANDARD 99)
-set(p_version 0.2.1)
+set(p_version 0.9.97)
 
 set(N_LIBS
-    m
-    mcheck)
+    m)
 
 set(COMMON_SOURCES
     "MatlabUtils.c"
@@ -105,12 +103,6 @@ elseif(NOT coverage)
     add_compile_options(-Wall -Wextra -pedantic)
 endif()
 
-#add_executable(${PROJECT_NAME} ${COMMON_SOURCES})
-add_executable(${PROJECT_NAME}_test ${TEST_SOURCES})
-#target_link_libraries(${PROJECT_NAME} ${N_LIBS})
-target_link_libraries(${PROJECT_NAME}_test ${N_LIBS})
-#set_property(TARGET ${PROJECT_NAME} PROPERTY ENABLE_EXPORTS TRUE)
-
 if(docs)
     if(NOT p_version)
         execute_process(
@@ -123,4 +115,23 @@ if(docs)
         COMMAND PROJECT_NUMBER=${p_version} doxygen Doxyfile)
 endif()
 
+add_executable(test ${TEST_SOURCES})
+target_link_libraries(test ${N_LIBS})
 
+add_executable(example1 ${DOUBLER_SOURCES} "example1.c")
+target_link_libraries(example1 ${N_LIBS})
+
+add_executable(example2 ${DOUBLER_SOURCES} "example2.c")
+target_link_libraries(example2 ${N_LIBS})
+
+add_executable(example3 ${DOUBLER_SOURCES} "example3.c")
+target_link_libraries(example3 ${N_LIBS})
+
+add_executable(example5 ${GAUSS_SOURCES} "example5.c")
+target_link_libraries(example5 ${N_LIBS})
+
+add_executable(example6 ${DOUBLER_SOURCES} "example6.c")
+target_link_libraries(example6 ${N_LIBS})
+
+add_executable(example7 ${DOUBLER_SOURCES} "example7.c")
+target_link_libraries(example7 ${N_LIBS})

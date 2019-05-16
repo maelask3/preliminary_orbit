@@ -4,7 +4,6 @@
  */
 
 #include "MatlabUtils.h"
-#include <stdio.h>
 #include <math.h>
 
 /**

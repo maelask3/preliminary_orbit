@@ -53,7 +53,7 @@ int main()
 
     fclose(fp);
 
-    fp = fopen("sat2.txt","r");
+    fp = fopen("sat7.txt","r");
     if(!fp)
     {
         fprintf(stderr, "ERROR: No se ha podido abrir sat1.txt\n");
@@ -78,4 +78,5 @@ int main()
         fgets(line, 128, fp);
         sscanf(line, "%d/%d/%d %d:%d:%f %f %f", &Y, &M, &D, &h, &m, &s, &rtasc, &decl);
     }
+
 }
