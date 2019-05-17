@@ -66,8 +66,8 @@ int main()
     int h = 0;
     int m = 0;
     float s = 0.F;
-    float rtasc = 0.F;
-    float decl = 0.F;
+    double rtasc = 0.0;
+    double decl = 0.0;
 
     size_t fsize = 3;
 
@@ -82,7 +82,7 @@ int main()
 
     {
         fgets(line, 128, fp);
-        sscanf(line, "%d/%d/%d %d:%d:%f %f %f", &Y, &M, &D, &h, &m, &s, &rtasc, &decl);
+        sscanf(line, "%d/%d/%d %d:%d:%f %lf %lf", &Y, &M, &D, &h, &m, &s, &rtasc, &decl);
 
         obs[i] = calloc(3, sizeof(double));
         if(!obs[i])
