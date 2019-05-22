@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1)
 
 project(POrbitD)
 set(CMAKE_C_STANDARD 99)
-set(p_version 0.9.97)
+set(p_version 1.0.2)
 
 set(N_LIBS
     m)
