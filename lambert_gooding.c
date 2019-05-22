@@ -125,7 +125,7 @@ void lambert_gooding(double *r1, double *r2, double tof, double mu, bool long_wa
                 all_vt2[1][2*i-1] = vt2[1][0];
                 all_vt2[2][2*i-1] = vt2[2][0];
 
-                solution_exists[2*i-1] = true;///Igual esta mal el -1
+                solution_exists[2*i-1] = true;
                 n_solutions ++;
                 break;
             case 2:
