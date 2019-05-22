@@ -92,8 +92,8 @@ int main()
             exit(3);
         }
         obs[i][0] = Mjday(Y, M, D, h, m, (double) s);
-        obs[i][1] = Rad*((double) rtasc);
-        obs[i][2] = Rad*((double) decl);
+        obs[i][1] = Rad*rtasc;
+        obs[i][2] = Rad*decl;
     }
 
     fclose(fp);
@@ -143,8 +143,6 @@ int main()
     free(GNP);
     free(pmxy);
 
-    //Transponer E antes de multiplicar
-
     double **Et = transposeMatrix(E);
     free(E);
 
@@ -170,8 +168,6 @@ int main()
     free(GNP);
     free(pmxy);
 
-    //Transponer E antes de multiplicar
-
     Et = transposeMatrix(E);
     free(E);
 
@@ -196,8 +192,6 @@ int main()
     E = productMatrix(pmxy, GNP);
     free(GNP);
     free(pmxy);
-
-    //Transponer E antes de multiplicar
 
     Et = transposeMatrix(E);
     free(E);
